@@ -1,6 +1,7 @@
 import { expect } from "chai";
 
 import {
+    InsightDataset,
     InsightDatasetKind,
     InsightError,
     NotFoundError
@@ -24,6 +25,13 @@ describe("InsightFacade Add/Remove Dataset", function () {
     // automatically be loaded in the Before All hook.
     const datasetsToLoad: { [id: string]: string } = {
         courses: "./test/data/courses.zip",
+        courses2: "./test/data/courses.zip",
+        emptyDataSet: "./test/data/emptyDataSet.zip",
+        notJSONdataSet: "./test/data/notJSONdataSet.zip",
+        notZIP: "./test/data/notZIP.txt",
+        oneSectionDataSet: "./test/data/oneSectionDataSet.zip",
+        validAndInvalidDataSet: "./test/data/validAndInvalidDataSet.zip",
+        zeroSectionsDataSet: "./test/data/zeroSectionsDataSet.zip",
     };
 
     let insightFacade: InsightFacade;
@@ -79,9 +87,93 @@ describe("InsightFacade Add/Remove Dataset", function () {
             expect(response).to.deep.equal([id]);
         }
     });
+    // list the courses after successfully adding one
+    it("List courses", async () => {
+        let response: InsightDataset[];
 
-    // This is an example of a pending test. Add a callback function to make the test run.
-    it("Should remove the courses dataset");
+        try {
+            response = await insightFacade.listDatasets();
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response.length).to.deep.equal(1);
+        }
+    });
+    //// Add same  dataset with same id
+    it("Should fail trying to add same dataset with same id", async () => {
+        const id: string = "courses";
+        let response: string[];
+
+        try {
+            response = await insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response).to.be.instanceOf(InsightError, "dataset with same id already added");
+        }
+    });
+    // list the courses after unsuccessfully adding one
+    it("List courses", async () => {
+        let response: InsightDataset[];
+
+        try {
+            response = await insightFacade.listDatasets();
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response.length).to.deep.equal(1);
+        }
+    });
+    // Add valid dataset with only 1 section
+    it("Should add a valid dataset with only 1 section", async () => {
+        const id: string = "oneSectionDataSet";
+        let response: string[];
+
+        try {
+            response = await insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response).to.deep.equal(["courses", "oneSectionDataSet"]);
+        }
+    });
+    // list the courses after successfully adding one
+    it("List courses", async () => {
+        let response: InsightDataset[];
+
+        try {
+            response = await insightFacade.listDatasets();
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response.length).to.deep.equal(2);
+        }
+    });
+    // Add same valid dataset again with different id
+    it("Should add a valid dataset with different id", async () => {
+        const id: string = "courses2";
+        let response: string[];
+
+        try {
+            response = await insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response).to.deep.equal(["courses", "oneSectionDataSet", "courses2"]);
+        }
+    });
+    // list the courses after successfully adding same data
+    it("List courses", async () => {
+        let response: InsightDataset[];
+
+        try {
+            response = await insightFacade.listDatasets();
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response.length).to.deep.equal(3);
+        }
+    });
 });
 
 // This test suite dynamically generates tests from the JSON files in test/queries.
