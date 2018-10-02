@@ -1,0 +1,2522 @@
+{
+    "title": "asterik to left test",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_instructor": "*as"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_instructor",
+                "courses_dept",
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_instructor"
+        }
+    },
+    "isQueryValid": true,
+    "result": [{
+        "courses_avg": 93.2,
+        "courses_dept": "edcp",
+        "courses_id": "555",
+        "courses_instructor": "adler, james douglas"
+    }, {
+        "courses_avg": 89.83,
+        "courses_dept": "edcp",
+        "courses_id": "555",
+        "courses_instructor": "adler, james douglas"
+    }, {
+        "courses_avg": 90.14,
+        "courses_dept": "edcp",
+        "courses_id": "555",
+        "courses_instructor": "adler, james douglas"
+    }, {
+        "courses_avg": 91.22,
+        "courses_dept": "educ",
+        "courses_id": "500",
+        "courses_instructor": "adler, james douglas"
+    }, {
+        "courses_avg": 66,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "alba, kamran;wetton, brian thomas"
+    }, {
+        "courses_avg": 86.91,
+        "courses_dept": "caps",
+        "courses_id": "430",
+        "courses_instructor": "allan, douglas"
+    }, {
+        "courses_avg": 77.83,
+        "courses_dept": "comm",
+        "courses_id": "362",
+        "courses_instructor": "allard, thomas"
+    }, {
+        "courses_avg": 77.09,
+        "courses_dept": "biol",
+        "courses_id": "361",
+        "courses_instructor": "altshuler, douglas"
+    }, {
+        "courses_avg": 77.65,
+        "courses_dept": "biol",
+        "courses_id": "361",
+        "courses_instructor": "altshuler, douglas"
+    }, {
+        "courses_avg": 76.49,
+        "courses_dept": "biol",
+        "courses_id": "361",
+        "courses_instructor": "altshuler, douglas"
+    }, {
+        "courses_avg": 80.32,
+        "courses_dept": "biol",
+        "courses_id": "361",
+        "courses_instructor": "altshuler, douglas"
+    }, {
+        "courses_avg": 75.93,
+        "courses_dept": "mtrl",
+        "courses_id": "467",
+        "courses_instructor": "asselin, edouard;barr, peter;dixon, david;militzer, matthias"
+    }, {
+        "courses_avg": 57.04,
+        "courses_dept": "wood",
+        "courses_id": "282",
+        "courses_instructor": "avramidis, stavros;tannert, thomas"
+    }, {
+        "courses_avg": 79.17,
+        "courses_dept": "wood",
+        "courses_id": "282",
+        "courses_instructor": "avramidis, stavros;tannert, thomas"
+    }, {
+        "courses_avg": 77.89,
+        "courses_dept": "wood",
+        "courses_id": "282",
+        "courses_instructor": "avramidis, stavros;tannert, thomas"
+    }, {
+        "courses_avg": 84.45,
+        "courses_dept": "spha",
+        "courses_id": "542",
+        "courses_instructor": "bansback, nicholas"
+    }, {
+        "courses_avg": 88,
+        "courses_dept": "spph",
+        "courses_id": "514",
+        "courses_instructor": "bansback, nicholas"
+    }, {
+        "courses_avg": 86.57,
+        "courses_dept": "spha",
+        "courses_id": "542",
+        "courses_instructor": "bansback, nicholas"
+    }, {
+        "courses_avg": 84.12,
+        "courses_dept": "spha",
+        "courses_id": "542",
+        "courses_instructor": "bansback, nicholas"
+    }, {
+        "courses_avg": 85.92,
+        "courses_dept": "spha",
+        "courses_id": "542",
+        "courses_instructor": "bansback, nicholas"
+    }, {
+        "courses_avg": 89.7,
+        "courses_dept": "spph",
+        "courses_id": "514",
+        "courses_instructor": "bansback, nicholas"
+    }, {
+        "courses_avg": 89.13,
+        "courses_dept": "spph",
+        "courses_id": "514",
+        "courses_instructor": "bansback, nicholas"
+    }, {
+        "courses_avg": 71.8,
+        "courses_dept": "eosc",
+        "courses_id": "322",
+        "courses_instructor": "beinlich, andreas"
+    }, {
+        "courses_avg": 83,
+        "courses_dept": "cens",
+        "courses_id": "202",
+        "courses_instructor": "beringer, alison;salumets, thomas"
+    }, {
+        "courses_avg": 74.58,
+        "courses_dept": "poli",
+        "courses_id": "327",
+        "courses_instructor": "biebricher, thomas"
+    }, {
+        "courses_avg": 65.89,
+        "courses_dept": "apbi",
+        "courses_id": "244",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 74.6,
+        "courses_dept": "apbi",
+        "courses_id": "244",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 69.63,
+        "courses_dept": "apbi",
+        "courses_id": "244",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 69.84,
+        "courses_dept": "apbi",
+        "courses_id": "244",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 72.24,
+        "courses_dept": "apbi",
+        "courses_id": "244",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 71.88,
+        "courses_dept": "apbi",
+        "courses_id": "244",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 67.48,
+        "courses_dept": "apbi",
+        "courses_id": "244",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 69.38,
+        "courses_dept": "geob",
+        "courses_id": "204",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 73.11,
+        "courses_dept": "geob",
+        "courses_id": "204",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 75.03,
+        "courses_dept": "geob",
+        "courses_id": "204",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 73.44,
+        "courses_dept": "geob",
+        "courses_id": "204",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 72.56,
+        "courses_dept": "geob",
+        "courses_id": "204",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 68.64,
+        "courses_dept": "geob",
+        "courses_id": "204",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 67.04,
+        "courses_dept": "geob",
+        "courses_id": "204",
+        "courses_instructor": "black, thomas andrew;christen, andreas"
+    }, {
+        "courses_avg": 73.93,
+        "courses_dept": "geog",
+        "courses_id": "311",
+        "courses_instructor": "brown, loch;christen, andreas"
+    }, {
+        "courses_avg": 69.63,
+        "courses_dept": "phys",
+        "courses_id": "401",
+        "courses_instructor": "bryman, douglas"
+    }, {
+        "courses_avg": 68.63,
+        "courses_dept": "phys",
+        "courses_id": "401",
+        "courses_instructor": "bryman, douglas"
+    }, {
+        "courses_avg": 68.3,
+        "courses_dept": "phys",
+        "courses_id": "401",
+        "courses_instructor": "bryman, douglas"
+    }, {
+        "courses_avg": 65.62,
+        "courses_dept": "phys",
+        "courses_id": "301",
+        "courses_instructor": "bryman, douglas"
+    }, {
+        "courses_avg": 70.66,
+        "courses_dept": "phys",
+        "courses_id": "301",
+        "courses_instructor": "bryman, douglas"
+    }, {
+        "courses_avg": 71.67,
+        "courses_dept": "phys",
+        "courses_id": "301",
+        "courses_instructor": "bryman, douglas"
+    }, {
+        "courses_avg": 80.79,
+        "courses_dept": "frst",
+        "courses_id": "424",
+        "courses_instructor": "bull, gary;marshall, peter;nelson, john douglas"
+    }, {
+        "courses_avg": 80.56,
+        "courses_dept": "frst",
+        "courses_id": "424",
+        "courses_instructor": "bull, gary;marshall, peter;nelson, john douglas"
+    }, {
+        "courses_avg": 82.29,
+        "courses_dept": "frst",
+        "courses_id": "424",
+        "courses_instructor": "bull, gary;nelson, john douglas"
+    }, {
+        "courses_avg": 85.3,
+        "courses_dept": "frst",
+        "courses_id": "424",
+        "courses_instructor": "bull, gary;nelson, john douglas"
+    }, {
+        "courses_avg": 83.89,
+        "courses_dept": "frst",
+        "courses_id": "424",
+        "courses_instructor": "bull, gary;nelson, john douglas"
+    }, {
+        "courses_avg": 82.69,
+        "courses_dept": "phar",
+        "courses_id": "448",
+        "courses_instructor": "chang, thomas"
+    }, {
+        "courses_avg": 82.13,
+        "courses_dept": "phar",
+        "courses_id": "448",
+        "courses_instructor": "chang, thomas"
+    }, {
+        "courses_avg": 79.67,
+        "courses_dept": "phar",
+        "courses_id": "448",
+        "courses_instructor": "chang, thomas"
+    }, {
+        "courses_avg": 83.74,
+        "courses_dept": "phar",
+        "courses_id": "448",
+        "courses_instructor": "chang, thomas"
+    }, {
+        "courses_avg": 83.14,
+        "courses_dept": "phar",
+        "courses_id": "448",
+        "courses_instructor": "chang, thomas"
+    }, {
+        "courses_avg": 81.7,
+        "courses_dept": "phar",
+        "courses_id": "448",
+        "courses_instructor": "chang, thomas"
+    }, {
+        "courses_avg": 74.11,
+        "courses_dept": "phys",
+        "courses_id": "170",
+        "courses_instructor": "charbonneau, arthur;mattison, thomas"
+    }, {
+        "courses_avg": 67.97,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "cheng, man chuen;wetton, brian thomas"
+    }, {
+        "courses_avg": 66.55,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "cheng, man chuen;wetton, brian thomas"
+    }, {
+        "courses_avg": 75.1,
+        "courses_dept": "geob",
+        "courses_id": "401",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 73.41,
+        "courses_dept": "geob",
+        "courses_id": "300",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 71.96,
+        "courses_dept": "geob",
+        "courses_id": "300",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 72.63,
+        "courses_dept": "geob",
+        "courses_id": "300",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 70.27,
+        "courses_dept": "geob",
+        "courses_id": "300",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 70.79,
+        "courses_dept": "geob",
+        "courses_id": "401",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 72.32,
+        "courses_dept": "geob",
+        "courses_id": "401",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 74.63,
+        "courses_dept": "geob",
+        "courses_id": "401",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 71.09,
+        "courses_dept": "geob",
+        "courses_id": "300",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 72.56,
+        "courses_dept": "geob",
+        "courses_id": "401",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 69.84,
+        "courses_dept": "geob",
+        "courses_id": "300",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 72.85,
+        "courses_dept": "geob",
+        "courses_id": "401",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 72.48,
+        "courses_dept": "geob",
+        "courses_id": "300",
+        "courses_instructor": "christen, andreas"
+    }, {
+        "courses_avg": 88.67,
+        "courses_dept": "eece",
+        "courses_id": "584",
+        "courses_instructor": "chrostowski, lukas"
+    }, {
+        "courses_avg": 80.36,
+        "courses_dept": "elec",
+        "courses_id": "463",
+        "courses_instructor": "chrostowski, lukas"
+    }, {
+        "courses_avg": 73.38,
+        "courses_dept": "elec",
+        "courses_id": "413",
+        "courses_instructor": "chrostowski, lukas"
+    }, {
+        "courses_avg": 71.88,
+        "courses_dept": "nest",
+        "courses_id": "101",
+        "courses_instructor": "cooper, elisabeth;hikade, thomas"
+    }, {
+        "courses_avg": 71.02,
+        "courses_dept": "nest",
+        "courses_id": "101",
+        "courses_instructor": "cooper, elisabeth;hikade, thomas"
+    }, {
+        "courses_avg": 80.73,
+        "courses_dept": "baen",
+        "courses_id": "541",
+        "courses_instructor": "cubbon, paul;hellmann, thomas"
+    }, {
+        "courses_avg": 78.33,
+        "courses_dept": "apsc",
+        "courses_id": "541",
+        "courses_instructor": "cubbon, paul;hellmann, thomas"
+    }, {
+        "courses_avg": 81.96,
+        "courses_dept": "baen",
+        "courses_id": "506",
+        "courses_instructor": "cubbon, paul;hellmann, thomas"
+    }, {
+        "courses_avg": 79.77,
+        "courses_dept": "baen",
+        "courses_id": "541",
+        "courses_instructor": "cubbon, paul;hellmann, thomas"
+    }, {
+        "courses_avg": 84.26,
+        "courses_dept": "baen",
+        "courses_id": "506",
+        "courses_instructor": "cubbon, paul;hellmann, thomas"
+    }, {
+        "courses_avg": 82.52,
+        "courses_dept": "apsc",
+        "courses_id": "541",
+        "courses_instructor": "cubbon, paul;hellmann, thomas"
+    }, {
+        "courses_avg": 79.12,
+        "courses_dept": "comm",
+        "courses_id": "398",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 77.67,
+        "courses_dept": "comm",
+        "courses_id": "449",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 80.48,
+        "courses_dept": "cohr",
+        "courses_id": "301",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 79.73,
+        "courses_dept": "cohr",
+        "courses_id": "301",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 76.74,
+        "courses_dept": "comm",
+        "courses_id": "449",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 73.6,
+        "courses_dept": "comm",
+        "courses_id": "441",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 76.22,
+        "courses_dept": "comm",
+        "courses_id": "441",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 75.37,
+        "courses_dept": "comm",
+        "courses_id": "449",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 78.02,
+        "courses_dept": "comm",
+        "courses_id": "449",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 82.16,
+        "courses_dept": "basc",
+        "courses_id": "524",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 73.96,
+        "courses_dept": "comm",
+        "courses_id": "449",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 74.51,
+        "courses_dept": "comm",
+        "courses_id": "449",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 80.02,
+        "courses_dept": "comm",
+        "courses_id": "398",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 77.63,
+        "courses_dept": "comm",
+        "courses_id": "398",
+        "courses_instructor": "culham, thomas"
+    }, {
+        "courses_avg": 85.62,
+        "courses_dept": "baul",
+        "courses_id": "501",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 81.51,
+        "courses_dept": "bapa",
+        "courses_id": "550",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 80.82,
+        "courses_dept": "bapa",
+        "courses_id": "550",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 79.23,
+        "courses_dept": "bapa",
+        "courses_id": "550",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 82.34,
+        "courses_dept": "baul",
+        "courses_id": "501",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 82.29,
+        "courses_dept": "baul",
+        "courses_id": "501",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 79.65,
+        "courses_dept": "bapa",
+        "courses_id": "550",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 80.86,
+        "courses_dept": "bapa",
+        "courses_id": "550",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 82.2,
+        "courses_dept": "bapa",
+        "courses_id": "550",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 83.45,
+        "courses_dept": "baul",
+        "courses_id": "501",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 83.03,
+        "courses_dept": "baul",
+        "courses_id": "501",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 82.59,
+        "courses_dept": "baul",
+        "courses_id": "501",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 84.36,
+        "courses_dept": "baul",
+        "courses_id": "501",
+        "courses_instructor": "davidoff, thomas"
+    }, {
+        "courses_avg": 85.43,
+        "courses_dept": "ling",
+        "courses_id": "532",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 85.13,
+        "courses_dept": "ling",
+        "courses_id": "520",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 79.79,
+        "courses_dept": "ling",
+        "courses_id": "431",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 79.3,
+        "courses_dept": "ling",
+        "courses_id": "431",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 70.02,
+        "courses_dept": "ling",
+        "courses_id": "300",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 70.91,
+        "courses_dept": "ling",
+        "courses_id": "201",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 70.79,
+        "courses_dept": "ling",
+        "courses_id": "100",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 71.7,
+        "courses_dept": "ling",
+        "courses_id": "100",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 74.92,
+        "courses_dept": "ling",
+        "courses_id": "100",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 84.4,
+        "courses_dept": "ling",
+        "courses_id": "520",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 87.57,
+        "courses_dept": "ling",
+        "courses_id": "531",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 84.38,
+        "courses_dept": "ling",
+        "courses_id": "531",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 86,
+        "courses_dept": "ling",
+        "courses_id": "532",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 84,
+        "courses_dept": "ling",
+        "courses_id": "432",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 84.75,
+        "courses_dept": "ling",
+        "courses_id": "432",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 67.64,
+        "courses_dept": "ling",
+        "courses_id": "201",
+        "courses_instructor": "davis, henry thomas"
+    }, {
+        "courses_avg": 87.14,
+        "courses_dept": "frst",
+        "courses_id": "558",
+        "courses_instructor": "de long, deborah;nelson, john douglas"
+    }, {
+        "courses_avg": 84.93,
+        "courses_dept": "frst",
+        "courses_id": "558",
+        "courses_instructor": "de long, deborah;nelson, john douglas"
+    }, {
+        "courses_avg": 69.94,
+        "courses_dept": "mech",
+        "courses_id": "326",
+        "courses_instructor": "dunwoody, a bruce;romilly, douglas"
+    }, {
+        "courses_avg": 68.87,
+        "courses_dept": "mech",
+        "courses_id": "326",
+        "courses_instructor": "dunwoody, a bruce;romilly, douglas"
+    }, {
+        "courses_avg": 69.98,
+        "courses_dept": "mech",
+        "courses_id": "326",
+        "courses_instructor": "dunwoody, a bruce;romilly, douglas"
+    }, {
+        "courses_avg": 78.48,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "england, karin;justice, douglas"
+    }, {
+        "courses_avg": 81.79,
+        "courses_dept": "mech",
+        "courses_id": "328",
+        "courses_instructor": "fengler, markus;klaptocz, voytek;mckesson, christopher;rogak, steven nicholas"
+    }, {
+        "courses_avg": 86.25,
+        "courses_dept": "econ",
+        "courses_id": "560",
+        "courses_instructor": "fortin, nicole;lemieux, thomas"
+    }, {
+        "courses_avg": 86.4,
+        "courses_dept": "econ",
+        "courses_id": "561",
+        "courses_instructor": "fortin, nicole;lemieux, thomas"
+    }, {
+        "courses_avg": 75.57,
+        "courses_dept": "cpsc",
+        "courses_id": "310",
+        "courses_instructor": "fritz, thomas"
+    }, {
+        "courses_avg": 82.65,
+        "courses_dept": "civl",
+        "courses_id": "521",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 85.63,
+        "courses_dept": "civl",
+        "courses_id": "523",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 83.98,
+        "courses_dept": "civl",
+        "courses_id": "523",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 80.7,
+        "courses_dept": "civl",
+        "courses_id": "523",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 84.51,
+        "courses_dept": "civl",
+        "courses_id": "523",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 82.89,
+        "courses_dept": "civl",
+        "courses_id": "493",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 82.56,
+        "courses_dept": "civl",
+        "courses_id": "493",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 84,
+        "courses_dept": "civl",
+        "courses_id": "523",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 83.45,
+        "courses_dept": "civl",
+        "courses_id": "493",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 83.14,
+        "courses_dept": "civl",
+        "courses_id": "521",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 80.1,
+        "courses_dept": "civl",
+        "courses_id": "521",
+        "courses_instructor": "froese, thomas"
+    }, {
+        "courses_avg": 80.17,
+        "courses_dept": "mtrl",
+        "courses_id": "472",
+        "courses_instructor": "garcin, thomas"
+    }, {
+        "courses_avg": 70.7,
+        "courses_dept": "mtrl",
+        "courses_id": "472",
+        "courses_instructor": "garcin, thomas"
+    }, {
+        "courses_avg": 86.92,
+        "courses_dept": "civl",
+        "courses_id": "516",
+        "courses_instructor": "gereke, thomas"
+    }, {
+        "courses_avg": 84.19,
+        "courses_dept": "civl",
+        "courses_id": "439",
+        "courses_instructor": "gereke, thomas"
+    }, {
+        "courses_avg": 79.43,
+        "courses_dept": "comm",
+        "courses_id": "370",
+        "courses_instructor": "gilbert, thomas"
+    }, {
+        "courses_avg": 79.11,
+        "courses_dept": "comm",
+        "courses_id": "370",
+        "courses_instructor": "gilbert, thomas"
+    }, {
+        "courses_avg": 77.85,
+        "courses_dept": "comm",
+        "courses_id": "370",
+        "courses_instructor": "gilbert, thomas"
+    }, {
+        "courses_avg": 78.4,
+        "courses_dept": "comm",
+        "courses_id": "370",
+        "courses_instructor": "gilbert, thomas"
+    }, {
+        "courses_avg": 85.84,
+        "courses_dept": "larc",
+        "courses_id": "551",
+        "courses_instructor": "girling, cynthia;paczkowski, nicholas"
+    }, {
+        "courses_avg": 83.2,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "girling, cynthia;paczkowski, nicholas"
+    }, {
+        "courses_avg": 68.69,
+        "courses_dept": "mech",
+        "courses_id": "222",
+        "courses_instructor": "green, sheldon;ostafichuk, peter;rogak, steven nicholas"
+    }, {
+        "courses_avg": 72.57,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 76.52,
+        "courses_dept": "japn",
+        "courses_id": "101",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 55.27,
+        "courses_dept": "japn",
+        "courses_id": "101",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 70.81,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 72.34,
+        "courses_dept": "asia",
+        "courses_id": "254",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 76.84,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 66.64,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 69.08,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 64.83,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 70.26,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 70.56,
+        "courses_dept": "japn",
+        "courses_id": "100",
+        "courses_instructor": "hall, nicholas"
+    }, {
+        "courses_avg": 68.53,
+        "courses_dept": "math",
+        "courses_id": "307",
+        "courses_instructor": "harland, nicholas"
+    }, {
+        "courses_avg": 70.33,
+        "courses_dept": "math",
+        "courses_id": "253",
+        "courses_instructor": "harland, nicholas"
+    }, {
+        "courses_avg": 70.76,
+        "courses_dept": "math",
+        "courses_id": "105",
+        "courses_instructor": "harland, nicholas"
+    }, {
+        "courses_avg": 73.02,
+        "courses_dept": "thtr",
+        "courses_id": "120",
+        "courses_instructor": "harrison, nicholas"
+    }, {
+        "courses_avg": 79.82,
+        "courses_dept": "thtr",
+        "courses_id": "120",
+        "courses_instructor": "harrison, nicholas"
+    }, {
+        "courses_avg": 85.87,
+        "courses_dept": "cpsc",
+        "courses_id": "221",
+        "courses_instructor": "harvey, nicholas"
+    }, {
+        "courses_avg": 76.24,
+        "courses_dept": "cpsc",
+        "courses_id": "421",
+        "courses_instructor": "harvey, nicholas"
+    }, {
+        "courses_avg": 92.75,
+        "courses_dept": "cpsc",
+        "courses_id": "501",
+        "courses_instructor": "harvey, nicholas"
+    }, {
+        "courses_avg": 77.48,
+        "courses_dept": "cpsc",
+        "courses_id": "421",
+        "courses_instructor": "harvey, nicholas"
+    }, {
+        "courses_avg": 67.29,
+        "courses_dept": "chbe",
+        "courses_id": "351",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 64.47,
+        "courses_dept": "chbe",
+        "courses_id": "251",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 72.87,
+        "courses_dept": "chbe",
+        "courses_id": "251",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 65.55,
+        "courses_dept": "chbe",
+        "courses_id": "251",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 88.25,
+        "courses_dept": "chbe",
+        "courses_id": "554",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 84,
+        "courses_dept": "chbe",
+        "courses_id": "554",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 89.33,
+        "courses_dept": "chbe",
+        "courses_id": "554",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 89,
+        "courses_dept": "chbe",
+        "courses_id": "496",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 70.32,
+        "courses_dept": "chbe",
+        "courses_id": "251",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 94.75,
+        "courses_dept": "chbe",
+        "courses_id": "495",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 65.16,
+        "courses_dept": "chbe",
+        "courses_id": "351",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 64.67,
+        "courses_dept": "chbe",
+        "courses_id": "251",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 68.42,
+        "courses_dept": "chbe",
+        "courses_id": "351",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 67.5,
+        "courses_dept": "chbe",
+        "courses_id": "351",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 70.34,
+        "courses_dept": "chbe",
+        "courses_id": "351",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 69.95,
+        "courses_dept": "chbe",
+        "courses_id": "346",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 63.19,
+        "courses_dept": "chbe",
+        "courses_id": "251",
+        "courses_instructor": "hatzikiriakos, savvas"
+    }, {
+        "courses_avg": 82.84,
+        "courses_dept": "baen",
+        "courses_id": "505",
+        "courses_instructor": "hellmann, thomas"
+    }, {
+        "courses_avg": 83.8,
+        "courses_dept": "baen",
+        "courses_id": "506",
+        "courses_instructor": "hellmann, thomas"
+    }, {
+        "courses_avg": 82.04,
+        "courses_dept": "baen",
+        "courses_id": "505",
+        "courses_instructor": "hellmann, thomas"
+    }, {
+        "courses_avg": 80.05,
+        "courses_dept": "baen",
+        "courses_id": "505",
+        "courses_instructor": "hellmann, thomas"
+    }, {
+        "courses_avg": 83.5,
+        "courses_dept": "nest",
+        "courses_id": "304",
+        "courses_instructor": "hikade, thomas"
+    }, {
+        "courses_avg": 80.61,
+        "courses_dept": "nest",
+        "courses_id": "304",
+        "courses_instructor": "hikade, thomas"
+    }, {
+        "courses_avg": 77.52,
+        "courses_dept": "nest",
+        "courses_id": "101",
+        "courses_instructor": "hikade, thomas"
+    }, {
+        "courses_avg": 81.29,
+        "courses_dept": "nest",
+        "courses_id": "304",
+        "courses_instructor": "hikade, thomas"
+    }, {
+        "courses_avg": 67.72,
+        "courses_dept": "math",
+        "courses_id": "103",
+        "courses_instructor": "hill, nicholas"
+    }, {
+        "courses_avg": 79.41,
+        "courses_dept": "fipr",
+        "courses_id": "230",
+        "courses_instructor": "humphries, nicholas"
+    }, {
+        "courses_avg": 75.25,
+        "courses_dept": "grsj",
+        "courses_id": "301",
+        "courses_instructor": "hunt, dallas"
+    }, {
+        "courses_avg": 85.4,
+        "courses_dept": "asia",
+        "courses_id": "370",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 90.29,
+        "courses_dept": "sans",
+        "courses_id": "200",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 92.5,
+        "courses_dept": "sans",
+        "courses_id": "102",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 83.53,
+        "courses_dept": "asia",
+        "courses_id": "304",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 85.33,
+        "courses_dept": "asia",
+        "courses_id": "348",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 82.32,
+        "courses_dept": "asia",
+        "courses_id": "348",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 80.9,
+        "courses_dept": "sans",
+        "courses_id": "100",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 86.24,
+        "courses_dept": "asia",
+        "courses_id": "370",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 87.3,
+        "courses_dept": "sans",
+        "courses_id": "102",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 89.29,
+        "courses_dept": "sans",
+        "courses_id": "102",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 86.05,
+        "courses_dept": "asia",
+        "courses_id": "370",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 90,
+        "courses_dept": "sans",
+        "courses_id": "102",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 86.43,
+        "courses_dept": "sans",
+        "courses_id": "100",
+        "courses_instructor": "hunter, thomas"
+    }, {
+        "courses_avg": 65.02,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "huruguen, mathieu;wetton, brian thomas"
+    }, {
+        "courses_avg": 90.57,
+        "courses_dept": "plan",
+        "courses_id": "592",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 90.5,
+        "courses_dept": "plan",
+        "courses_id": "592",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 88.42,
+        "courses_dept": "plan",
+        "courses_id": "592",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 81,
+        "courses_dept": "plan",
+        "courses_id": "425",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 88.71,
+        "courses_dept": "plan",
+        "courses_id": "592",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 84.56,
+        "courses_dept": "plan",
+        "courses_id": "425",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 87,
+        "courses_dept": "plan",
+        "courses_id": "592",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 87.88,
+        "courses_dept": "plan",
+        "courses_id": "592",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 87.75,
+        "courses_dept": "plan",
+        "courses_id": "592",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 82.1,
+        "courses_dept": "plan",
+        "courses_id": "425",
+        "courses_instructor": "hutton, thomas"
+    }, {
+        "courses_avg": 64.03,
+        "courses_dept": "math",
+        "courses_id": "104",
+        "courses_instructor": "huxol, tobias"
+    }, {
+        "courses_avg": 84.2,
+        "courses_dept": "eosc",
+        "courses_id": "450",
+        "courses_instructor": "johnson, catherine;mohit, surdas"
+    }, {
+        "courses_avg": 84.36,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 78.32,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 83.95,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 85.47,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 79.58,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 86.17,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 83.44,
+        "courses_dept": "apbi",
+        "courses_id": "322",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 79,
+        "courses_dept": "apbi",
+        "courses_id": "322",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 81.63,
+        "courses_dept": "larc",
+        "courses_id": "316",
+        "courses_instructor": "justice, douglas"
+    }, {
+        "courses_avg": 87.75,
+        "courses_dept": "soci",
+        "courses_id": "500",
+        "courses_instructor": "kemple, thomas"
+    }, {
+        "courses_avg": 80.7,
+        "courses_dept": "cohr",
+        "courses_id": "304",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 78.08,
+        "courses_dept": "cohr",
+        "courses_id": "303",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 75.64,
+        "courses_dept": "comm",
+        "courses_id": "203",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 76.27,
+        "courses_dept": "comm",
+        "courses_id": "203",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 75.84,
+        "courses_dept": "comm",
+        "courses_id": "203",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 80.1,
+        "courses_dept": "cohr",
+        "courses_id": "303",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 78.89,
+        "courses_dept": "cohr",
+        "courses_id": "304",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 80.11,
+        "courses_dept": "bahr",
+        "courses_id": "520",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 82.43,
+        "courses_dept": "cohr",
+        "courses_id": "304",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 78.47,
+        "courses_dept": "cohr",
+        "courses_id": "304",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 77.78,
+        "courses_dept": "comm",
+        "courses_id": "203",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 80.31,
+        "courses_dept": "bahr",
+        "courses_id": "520",
+        "courses_instructor": "knight, thomas"
+    }, {
+        "courses_avg": 67.76,
+        "courses_dept": "math",
+        "courses_id": "100",
+        "courses_instructor": "lages wardil, lucas"
+    }, {
+        "courses_avg": 66.8,
+        "courses_dept": "math",
+        "courses_id": "307",
+        "courses_instructor": "lages wardil, lucas"
+    }, {
+        "courses_avg": 60.66,
+        "courses_dept": "math",
+        "courses_id": "101",
+        "courses_instructor": "lamm, tobias"
+    }, {
+        "courses_avg": 90,
+        "courses_dept": "econ",
+        "courses_id": "640",
+        "courses_instructor": "lemieux, thomas"
+    }, {
+        "courses_avg": 90,
+        "courses_dept": "econ",
+        "courses_id": "640",
+        "courses_instructor": "lemieux, thomas"
+    }, {
+        "courses_avg": 91,
+        "courses_dept": "econ",
+        "courses_id": "640",
+        "courses_instructor": "lemieux, thomas"
+    }, {
+        "courses_avg": 90,
+        "courses_dept": "econ",
+        "courses_id": "640",
+        "courses_instructor": "lemieux, thomas"
+    }, {
+        "courses_avg": 70.91,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 73.14,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 74.54,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 73.72,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 75.4,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 70.68,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 71.38,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 69.94,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 74.48,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 73.5,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 72.36,
+        "courses_dept": "geog",
+        "courses_id": "350",
+        "courses_instructor": "lynch, nicholas"
+    }, {
+        "courses_avg": 72.72,
+        "courses_dept": "geob",
+        "courses_id": "207",
+        "courses_instructor": "maertens, thomas"
+    }, {
+        "courses_avg": 76.38,
+        "courses_dept": "phys",
+        "courses_id": "400",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 75.89,
+        "courses_dept": "phys",
+        "courses_id": "170",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 80.61,
+        "courses_dept": "phys",
+        "courses_id": "210",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 75.96,
+        "courses_dept": "phys",
+        "courses_id": "216",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 80.94,
+        "courses_dept": "phys",
+        "courses_id": "400",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 75.92,
+        "courses_dept": "phys",
+        "courses_id": "170",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 81.7,
+        "courses_dept": "phys",
+        "courses_id": "400",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 79.5,
+        "courses_dept": "phys",
+        "courses_id": "400",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 76.03,
+        "courses_dept": "phys",
+        "courses_id": "401",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 88.5,
+        "courses_dept": "phys",
+        "courses_id": "506",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 86.85,
+        "courses_dept": "phys",
+        "courses_id": "506",
+        "courses_instructor": "mattison, thomas"
+    }, {
+        "courses_avg": 76.37,
+        "courses_dept": "comm",
+        "courses_id": "204",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 74.05,
+        "courses_dept": "comm",
+        "courses_id": "204",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 76.61,
+        "courses_dept": "comm",
+        "courses_id": "204",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 78.02,
+        "courses_dept": "basc",
+        "courses_id": "550",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 79.6,
+        "courses_dept": "basc",
+        "courses_id": "550",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 78.84,
+        "courses_dept": "basc",
+        "courses_id": "550",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 75.07,
+        "courses_dept": "basc",
+        "courses_id": "523",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 76.03,
+        "courses_dept": "basc",
+        "courses_id": "523",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 80.04,
+        "courses_dept": "basc",
+        "courses_id": "523",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 77.24,
+        "courses_dept": "basc",
+        "courses_id": "500",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 80.47,
+        "courses_dept": "basc",
+        "courses_id": "500",
+        "courses_instructor": "mccormick, s thomas"
+    }, {
+        "courses_avg": 83.17,
+        "courses_dept": "sowk",
+        "courses_id": "400",
+        "courses_instructor": "migone, andreas"
+    }, {
+        "courses_avg": 88.45,
+        "courses_dept": "sowk",
+        "courses_id": "501",
+        "courses_instructor": "migone, andreas"
+    }, {
+        "courses_avg": 59.98,
+        "courses_dept": "mtrl",
+        "courses_id": "378",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 68.56,
+        "courses_dept": "mtrl",
+        "courses_id": "475",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 74.67,
+        "courses_dept": "mtrl",
+        "courses_id": "475",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 77.33,
+        "courses_dept": "mtrl",
+        "courses_id": "475",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 63.66,
+        "courses_dept": "mtrl",
+        "courses_id": "378",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 72.69,
+        "courses_dept": "mtrl",
+        "courses_id": "475",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 71.31,
+        "courses_dept": "mtrl",
+        "courses_id": "475",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 65.74,
+        "courses_dept": "mtrl",
+        "courses_id": "478",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 81,
+        "courses_dept": "mtrl",
+        "courses_id": "578",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 64.32,
+        "courses_dept": "mtrl",
+        "courses_id": "378",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 60.59,
+        "courses_dept": "mtrl",
+        "courses_id": "378",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 59.47,
+        "courses_dept": "mtrl",
+        "courses_id": "378",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 65.86,
+        "courses_dept": "mtrl",
+        "courses_id": "475",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 66.07,
+        "courses_dept": "mtrl",
+        "courses_id": "378",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 64.91,
+        "courses_dept": "mtrl",
+        "courses_id": "378",
+        "courses_instructor": "militzer, matthias"
+    }, {
+        "courses_avg": 82,
+        "courses_dept": "path",
+        "courses_id": "406",
+        "courses_instructor": "mock, thomas"
+    }, {
+        "courses_avg": 74.83,
+        "courses_dept": "eosc",
+        "courses_id": "310",
+        "courses_instructor": "mohit, surdas"
+    }, {
+        "courses_avg": 68.45,
+        "courses_dept": "eosc",
+        "courses_id": "310",
+        "courses_instructor": "mohit, surdas"
+    }, {
+        "courses_avg": 76.23,
+        "courses_dept": "comm",
+        "courses_id": "395",
+        "courses_instructor": "mollenhauer, douglas"
+    }, {
+        "courses_avg": 75.85,
+        "courses_dept": "comm",
+        "courses_id": "395",
+        "courses_instructor": "mollenhauer, douglas"
+    }, {
+        "courses_avg": 77.44,
+        "courses_dept": "comm",
+        "courses_id": "395",
+        "courses_instructor": "mollenhauer, douglas"
+    }, {
+        "courses_avg": 77.79,
+        "courses_dept": "comm",
+        "courses_id": "395",
+        "courses_instructor": "mollenhauer, douglas"
+    }, {
+        "courses_avg": 77.2,
+        "courses_dept": "comm",
+        "courses_id": "395",
+        "courses_instructor": "mollenhauer, douglas"
+    }, {
+        "courses_avg": 75.36,
+        "courses_dept": "comm",
+        "courses_id": "395",
+        "courses_instructor": "mollenhauer, douglas"
+    }, {
+        "courses_avg": 69.88,
+        "courses_dept": "math",
+        "courses_id": "101",
+        "courses_instructor": "momeni, abbas"
+    }, {
+        "courses_avg": 91.5,
+        "courses_dept": "cnps",
+        "courses_id": "362",
+        "courses_instructor": "motl, thomas"
+    }, {
+        "courses_avg": 90.19,
+        "courses_dept": "cnps",
+        "courses_id": "362",
+        "courses_instructor": "motl, thomas"
+    }, {
+        "courses_avg": 92.83,
+        "courses_dept": "epse",
+        "courses_id": "592",
+        "courses_instructor": "motl, thomas"
+    }, {
+        "courses_avg": 92.83,
+        "courses_dept": "epse",
+        "courses_id": "535",
+        "courses_instructor": "motl, thomas"
+    }, {
+        "courses_avg": 80.6,
+        "courses_dept": "frst",
+        "courses_id": "452",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 83.12,
+        "courses_dept": "frst",
+        "courses_id": "452",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 79.7,
+        "courses_dept": "wood",
+        "courses_id": "492",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 79.75,
+        "courses_dept": "wood",
+        "courses_id": "492",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 84.91,
+        "courses_dept": "frst",
+        "courses_id": "452",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 80.04,
+        "courses_dept": "frst",
+        "courses_id": "452",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 79.68,
+        "courses_dept": "wood",
+        "courses_id": "492",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 80.95,
+        "courses_dept": "wood",
+        "courses_id": "492",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 77.81,
+        "courses_dept": "frst",
+        "courses_id": "452",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 76.36,
+        "courses_dept": "wood",
+        "courses_id": "492",
+        "courses_instructor": "nelson, john douglas"
+    }, {
+        "courses_avg": 75.54,
+        "courses_dept": "eosc",
+        "courses_id": "350",
+        "courses_instructor": "oldenburg, douglas"
+    }, {
+        "courses_avg": 75.28,
+        "courses_dept": "eosc",
+        "courses_id": "350",
+        "courses_instructor": "oldenburg, douglas"
+    }, {
+        "courses_avg": 77.02,
+        "courses_dept": "eosc",
+        "courses_id": "350",
+        "courses_instructor": "oldenburg, douglas"
+    }, {
+        "courses_avg": 80.44,
+        "courses_dept": "eosc",
+        "courses_id": "350",
+        "courses_instructor": "oldenburg, douglas"
+    }, {
+        "courses_avg": 77.39,
+        "courses_dept": "eosc",
+        "courses_id": "350",
+        "courses_instructor": "oldenburg, douglas"
+    }, {
+        "courses_avg": 73.73,
+        "courses_dept": "eosc",
+        "courses_id": "350",
+        "courses_instructor": "oldenburg, douglas"
+    }, {
+        "courses_avg": 76.38,
+        "courses_dept": "eosc",
+        "courses_id": "350",
+        "courses_instructor": "oldenburg, douglas"
+    }, {
+        "courses_avg": 68.56,
+        "courses_dept": "mech",
+        "courses_id": "222",
+        "courses_instructor": "ollivier-gooch, carl;ostafichuk, peter;rogak, steven nicholas"
+    }, {
+        "courses_avg": 74.89,
+        "courses_dept": "mech",
+        "courses_id": "222",
+        "courses_instructor": "ollivier-gooch, carl;rogak, steven nicholas"
+    }, {
+        "courses_avg": 80.71,
+        "courses_dept": "mech",
+        "courses_id": "535",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 81,
+        "courses_dept": "mech",
+        "courses_id": "535",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 85,
+        "courses_dept": "mech",
+        "courses_id": "535",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 74.33,
+        "courses_dept": "mech",
+        "courses_id": "535",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 79.29,
+        "courses_dept": "mech",
+        "courses_id": "435",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 77.13,
+        "courses_dept": "mech",
+        "courses_id": "435",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 75.73,
+        "courses_dept": "mech",
+        "courses_id": "435",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 77.6,
+        "courses_dept": "mech",
+        "courses_id": "435",
+        "courses_instructor": "oxland, thomas"
+    }, {
+        "courses_avg": 79.03,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "paczkowski, nicholas"
+    }, {
+        "courses_avg": 82.8,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "paczkowski, nicholas"
+    }, {
+        "courses_avg": 78.46,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "paczkowski, nicholas"
+    }, {
+        "courses_avg": 79.51,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "paczkowski, nicholas"
+    }, {
+        "courses_avg": 75.4,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "paczkowski, nicholas"
+    }, {
+        "courses_avg": 76.38,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "paczkowski, nicholas"
+    }, {
+        "courses_avg": 73.08,
+        "courses_dept": "arch",
+        "courses_id": "541",
+        "courses_instructor": "paczkowski, nicholas"
+    }, {
+        "courses_avg": 74.78,
+        "courses_dept": "civl",
+        "courses_id": "331",
+        "courses_instructor": "pina, freddy;tannert, thomas"
+    }, {
+        "courses_avg": 75.39,
+        "courses_dept": "civl",
+        "courses_id": "331",
+        "courses_instructor": "pina, freddy;tannert, thomas"
+    }, {
+        "courses_avg": 84.5,
+        "courses_dept": "ling",
+        "courses_id": "510",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 74.49,
+        "courses_dept": "ling",
+        "courses_id": "200",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 71.2,
+        "courses_dept": "ling",
+        "courses_id": "200",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 76.36,
+        "courses_dept": "ling",
+        "courses_id": "200",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 84.43,
+        "courses_dept": "ling",
+        "courses_id": "510",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 73.15,
+        "courses_dept": "ling",
+        "courses_id": "311",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 85.22,
+        "courses_dept": "ling",
+        "courses_id": "510",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 71.75,
+        "courses_dept": "ling",
+        "courses_id": "200",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 76.29,
+        "courses_dept": "ling",
+        "courses_id": "311",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 77.08,
+        "courses_dept": "ling",
+        "courses_id": "311",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 73.95,
+        "courses_dept": "ling",
+        "courses_id": "311",
+        "courses_instructor": "pulleyblank, douglas"
+    }, {
+        "courses_avg": 86.09,
+        "courses_dept": "libr",
+        "courses_id": "531",
+        "courses_instructor": "quigley, thomas"
+    }, {
+        "courses_avg": 76.84,
+        "courses_dept": "ceen",
+        "courses_id": "501",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 71.52,
+        "courses_dept": "mech",
+        "courses_id": "327",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 80.67,
+        "courses_dept": "ceen",
+        "courses_id": "501",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 90,
+        "courses_dept": "mech",
+        "courses_id": "598",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 74.96,
+        "courses_dept": "ceen",
+        "courses_id": "501",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 83.29,
+        "courses_dept": "mech",
+        "courses_id": "470",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 79.67,
+        "courses_dept": "mech",
+        "courses_id": "470",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 84.53,
+        "courses_dept": "mech",
+        "courses_id": "470",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 79,
+        "courses_dept": "mech",
+        "courses_id": "473",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 79.65,
+        "courses_dept": "mech",
+        "courses_id": "473",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 77.04,
+        "courses_dept": "ceen",
+        "courses_id": "501",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 78,
+        "courses_dept": "ceen",
+        "courses_id": "501",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 70.96,
+        "courses_dept": "mech",
+        "courses_id": "327",
+        "courses_instructor": "rogak, steven nicholas"
+    }, {
+        "courses_avg": 69.75,
+        "courses_dept": "mech",
+        "courses_id": "485",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 76,
+        "courses_dept": "mech",
+        "courses_id": "485",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 69.47,
+        "courses_dept": "mech",
+        "courses_id": "326",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 72.74,
+        "courses_dept": "mech",
+        "courses_id": "329",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 70.04,
+        "courses_dept": "mech",
+        "courses_id": "329",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 70.3,
+        "courses_dept": "mech",
+        "courses_id": "460",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 73.31,
+        "courses_dept": "mech",
+        "courses_id": "329",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 74.21,
+        "courses_dept": "mech",
+        "courses_id": "329",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 71.04,
+        "courses_dept": "mech",
+        "courses_id": "329",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 68.3,
+        "courses_dept": "mech",
+        "courses_id": "329",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 73.73,
+        "courses_dept": "mech",
+        "courses_id": "329",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 69.16,
+        "courses_dept": "mech",
+        "courses_id": "485",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 72.13,
+        "courses_dept": "mech",
+        "courses_id": "485",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 76.88,
+        "courses_dept": "mech",
+        "courses_id": "485",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 70.39,
+        "courses_dept": "mech",
+        "courses_id": "485",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 73.03,
+        "courses_dept": "mech",
+        "courses_id": "485",
+        "courses_instructor": "romilly, douglas"
+    }, {
+        "courses_avg": 79,
+        "courses_dept": "bapa",
+        "courses_id": "501",
+        "courses_instructor": "ross, thomas"
+    }, {
+        "courses_avg": 74.84,
+        "courses_dept": "comm",
+        "courses_id": "394",
+        "courses_instructor": "ross, thomas"
+    }, {
+        "courses_avg": 81.7,
+        "courses_dept": "econ",
+        "courses_id": "566",
+        "courses_instructor": "ross, thomas"
+    }, {
+        "courses_avg": 79.94,
+        "courses_dept": "econ",
+        "courses_id": "566",
+        "courses_instructor": "ross, thomas"
+    }, {
+        "courses_avg": 79.92,
+        "courses_dept": "econ",
+        "courses_id": "566",
+        "courses_instructor": "ross, thomas"
+    }, {
+        "courses_avg": 75.54,
+        "courses_dept": "comm",
+        "courses_id": "374",
+        "courses_instructor": "ruf, thomas"
+    }, {
+        "courses_avg": 79.67,
+        "courses_dept": "stat",
+        "courses_id": "406",
+        "courses_instructor": "salibian-barrera, matias"
+    }, {
+        "courses_avg": 76.3,
+        "courses_dept": "stat",
+        "courses_id": "200",
+        "courses_instructor": "salibian-barrera, matias"
+    }, {
+        "courses_avg": 72.54,
+        "courses_dept": "stat",
+        "courses_id": "305",
+        "courses_instructor": "salibian-barrera, matias"
+    }, {
+        "courses_avg": 79.23,
+        "courses_dept": "cens",
+        "courses_id": "202",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 81.9,
+        "courses_dept": "cens",
+        "courses_id": "202",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 80.6,
+        "courses_dept": "germ",
+        "courses_id": "301",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 81.8,
+        "courses_dept": "germ",
+        "courses_id": "301",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 80.08,
+        "courses_dept": "cens",
+        "courses_id": "202",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 81.35,
+        "courses_dept": "cens",
+        "courses_id": "202",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 80.68,
+        "courses_dept": "cens",
+        "courses_id": "202",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 77.56,
+        "courses_dept": "germ",
+        "courses_id": "302",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 77.19,
+        "courses_dept": "germ",
+        "courses_id": "301",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 76.55,
+        "courses_dept": "germ",
+        "courses_id": "301",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 84.13,
+        "courses_dept": "germ",
+        "courses_id": "301",
+        "courses_instructor": "salumets, thomas"
+    }, {
+        "courses_avg": 70.82,
+        "courses_dept": "nest",
+        "courses_id": "303",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 69.56,
+        "courses_dept": "relg",
+        "courses_id": "306",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 73.75,
+        "courses_dept": "nest",
+        "courses_id": "401",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 71.68,
+        "courses_dept": "nest",
+        "courses_id": "318",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 72.72,
+        "courses_dept": "nest",
+        "courses_id": "303",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 66.55,
+        "courses_dept": "nest",
+        "courses_id": "303",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 68.67,
+        "courses_dept": "nest",
+        "courses_id": "303",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 67.86,
+        "courses_dept": "relg",
+        "courses_id": "306",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 70.57,
+        "courses_dept": "nest",
+        "courses_id": "101",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 68.69,
+        "courses_dept": "nest",
+        "courses_id": "303",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 70.59,
+        "courses_dept": "nest",
+        "courses_id": "101",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 87.5,
+        "courses_dept": "nest",
+        "courses_id": "505",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 70.87,
+        "courses_dept": "nest",
+        "courses_id": "301",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 69.28,
+        "courses_dept": "nest",
+        "courses_id": "301",
+        "courses_instructor": "schneider, thomas"
+    }, {
+        "courses_avg": 80.1,
+        "courses_dept": "astr",
+        "courses_id": "300",
+        "courses_instructor": "scott, douglas"
+    }, {
+        "courses_avg": 72.79,
+        "courses_dept": "astr",
+        "courses_id": "403",
+        "courses_instructor": "scott, douglas"
+    }, {
+        "courses_avg": 68.88,
+        "courses_dept": "astr",
+        "courses_id": "403",
+        "courses_instructor": "scott, douglas"
+    }, {
+        "courses_avg": 73.31,
+        "courses_dept": "astr",
+        "courses_id": "403",
+        "courses_instructor": "scott, douglas"
+    }, {
+        "courses_avg": 76,
+        "courses_dept": "astr",
+        "courses_id": "300",
+        "courses_instructor": "scott, douglas"
+    }, {
+        "courses_avg": 66.15,
+        "courses_dept": "astr",
+        "courses_id": "102",
+        "courses_instructor": "scott, douglas"
+    }, {
+        "courses_avg": 67.27,
+        "courses_dept": "math",
+        "courses_id": "255",
+        "courses_instructor": "seon, thomas"
+    }, {
+        "courses_avg": 69.38,
+        "courses_dept": "math",
+        "courses_id": "215",
+        "courses_instructor": "seon, thomas"
+    }, {
+        "courses_avg": 82.61,
+        "courses_dept": "civl",
+        "courses_id": "331",
+        "courses_instructor": "stiemer, siegfried;tannert, thomas"
+    }, {
+        "courses_avg": 85,
+        "courses_dept": "civl",
+        "courses_id": "516",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 88.43,
+        "courses_dept": "civl",
+        "courses_id": "517",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 75,
+        "courses_dept": "civl",
+        "courses_id": "439",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 78.24,
+        "courses_dept": "civl",
+        "courses_id": "439",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 80.14,
+        "courses_dept": "civl",
+        "courses_id": "439",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 91.32,
+        "courses_dept": "civl",
+        "courses_id": "517",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 80.14,
+        "courses_dept": "civl",
+        "courses_id": "439",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 87.74,
+        "courses_dept": "civl",
+        "courses_id": "517",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 83.69,
+        "courses_dept": "civl",
+        "courses_id": "516",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 86.61,
+        "courses_dept": "civl",
+        "courses_id": "516",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 86.44,
+        "courses_dept": "civl",
+        "courses_id": "516",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 83.17,
+        "courses_dept": "civl",
+        "courses_id": "516",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 82,
+        "courses_dept": "civl",
+        "courses_id": "439",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 88.5,
+        "courses_dept": "civl",
+        "courses_id": "517",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 76.24,
+        "courses_dept": "civl",
+        "courses_id": "231",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 74.2,
+        "courses_dept": "civl",
+        "courses_id": "231",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 73.87,
+        "courses_dept": "civl",
+        "courses_id": "231",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 71.57,
+        "courses_dept": "wood",
+        "courses_id": "476",
+        "courses_instructor": "tannert, thomas"
+    }, {
+        "courses_avg": 80.25,
+        "courses_dept": "arch",
+        "courses_id": "520",
+        "courses_instructor": "waissbluth, nicholas"
+    }, {
+        "courses_avg": 80.78,
+        "courses_dept": "arch",
+        "courses_id": "540",
+        "courses_instructor": "waissbluth, nicholas"
+    }, {
+        "courses_avg": 86.5,
+        "courses_dept": "dent",
+        "courses_id": "599",
+        "courses_instructor": "waterfield, john douglas"
+    }, {
+        "courses_avg": 82.8,
+        "courses_dept": "dent",
+        "courses_id": "544",
+        "courses_instructor": "waterfield, john douglas"
+    }, {
+        "courses_avg": 83,
+        "courses_dept": "dent",
+        "courses_id": "544",
+        "courses_instructor": "waterfield, john douglas"
+    }, {
+        "courses_avg": 85,
+        "courses_dept": "dent",
+        "courses_id": "599",
+        "courses_instructor": "waterfield, john douglas"
+    }, {
+        "courses_avg": 86,
+        "courses_dept": "dent",
+        "courses_id": "599",
+        "courses_instructor": "waterfield, john douglas"
+    }, {
+        "courses_avg": 69.18,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 72.43,
+        "courses_dept": "math",
+        "courses_id": "210",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 88.36,
+        "courses_dept": "math",
+        "courses_id": "521",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 86.38,
+        "courses_dept": "math",
+        "courses_id": "521",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 73.48,
+        "courses_dept": "math",
+        "courses_id": "253",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 68.06,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 89.63,
+        "courses_dept": "math",
+        "courses_id": "521",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 74.5,
+        "courses_dept": "math",
+        "courses_id": "256",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 73.22,
+        "courses_dept": "math",
+        "courses_id": "256",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 73.3,
+        "courses_dept": "math",
+        "courses_id": "256",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 63.26,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 65.04,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 67.19,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 67.03,
+        "courses_dept": "math",
+        "courses_id": "152",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 73.97,
+        "courses_dept": "math",
+        "courses_id": "345",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 76.46,
+        "courses_dept": "math",
+        "courses_id": "400",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 75.27,
+        "courses_dept": "math",
+        "courses_id": "405",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 80.93,
+        "courses_dept": "math",
+        "courses_id": "405",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 79.22,
+        "courses_dept": "math",
+        "courses_id": "406",
+        "courses_instructor": "wetton, brian thomas"
+    }, {
+        "courses_avg": 83.25,
+        "courses_dept": "math",
+        "courses_id": "427",
+        "courses_instructor": "williams, thomas"
+    }, {
+        "courses_avg": 63.62,
+        "courses_dept": "math",
+        "courses_id": "342",
+        "courses_instructor": "williams, thomas"
+    }, {
+        "courses_avg": 70.61,
+        "courses_dept": "math",
+        "courses_id": "308",
+        "courses_instructor": "williams, thomas"
+    }, {
+        "courses_avg": 68.75,
+        "courses_dept": "math",
+        "courses_id": "221",
+        "courses_instructor": "williams, thomas"
+    }, {
+        "courses_avg": 70.8,
+        "courses_dept": "math",
+        "courses_id": "221",
+        "courses_instructor": "williams, thomas"
+    }, {
+        "courses_avg": 58.96,
+        "courses_dept": "math",
+        "courses_id": "184",
+        "courses_instructor": "williams, thomas"
+    }, {
+        "courses_avg": 86,
+        "courses_dept": "math",
+        "courses_id": "527",
+        "courses_instructor": "williams, thomas"
+    }, {
+        "courses_avg": 79.55,
+        "courses_dept": "grsj",
+        "courses_id": "101",
+        "courses_instructor": "zakiuddin, almas"
+    }, {
+        "courses_avg": 75.04,
+        "courses_dept": "grsj",
+        "courses_id": "101",
+        "courses_instructor": "zakiuddin, almas"
+    }
+    ]
+}

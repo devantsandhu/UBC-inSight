@@ -1,0 +1,19 @@
+{
+    "title": "Ordered error",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg":97
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ],
+            "ORDER": "courses_campus"
+        }
+    },
+    "isQueryValid": false,
+    "result": "Ordered by invalid key"
+}

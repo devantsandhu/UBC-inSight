@@ -1,0 +1,20 @@
+{
+    "title": "SELECT dept, avg WHERE avg = empty",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": null
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because condition input empty"]
+}
+

@@ -1,0 +1,20 @@
+{
+    "title": "SELECT dept, avg WHERE dept IS HIST",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_dept": "hi*st"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because wild card cannot be in middle of dept"]
+}
+

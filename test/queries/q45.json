@@ -1,0 +1,18 @@
+{
+    "title": "IS: is left blank)",
+    "query": {
+        "WHERE": {
+            "IS": {
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "need key: input"
+}

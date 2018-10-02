@@ -1,0 +1,29 @@
+{
+    "title": "SELECT dept, avg WHERE avg > 50 and != 51",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "GT": {
+                        "courses_avg": 50
+                    }
+                },
+                {
+                    "NOT": {
+                        "courses_avg": 51
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": false,
+    "result": ["Invalid: Cannot be greater than 50 and not 51"]
+}
+
+

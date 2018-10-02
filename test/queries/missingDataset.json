@@ -1,0 +1,20 @@
+{
+    "title": "SELECT dept, avg WHERE dept > HIST",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "NOTcourses_dept": "hist"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "NOTcourses_dept",
+                "NOTcourses_avg"
+            ]
+        }
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because dataset doesn't exist"]
+}
+

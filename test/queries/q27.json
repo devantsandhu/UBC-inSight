@@ -1,0 +1,14 @@
+{
+    "title": "Options is empty",
+    "query": {
+        "WHERE": {
+            "GreaterThan": {
+                "courses_avg": 97
+            }
+        },
+        "OPTIONS": {
+        }
+    },
+    "isQueryValid": false,
+    "result": "Options is left empty"
+}

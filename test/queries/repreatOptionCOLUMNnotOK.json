@@ -1,0 +1,29 @@
+{
+    "title": "SELECT dept, avg WHERE dept > HIST",
+    "query": {
+        "WHERE": {
+            "AND":{
+                "IS": {
+                    "courses_dept": "hist"
+                },
+                "GT": {
+                    "courses_avg": 80
+                }
+            }
+
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ],
+            "COLUMNS": [
+                "courses_dept"
+            ]
+        }
+    },
+
+    "isQueryValid": false,
+
+    "result":["Invalid query but IDK why"]
+}

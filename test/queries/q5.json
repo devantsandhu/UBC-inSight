@@ -1,0 +1,36 @@
+{
+    "title": "Getting info for specific sections",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_uuid": "10002"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_avg",
+                "courses_instructor",
+                "courses_title",
+                "courses_pass",
+                "courses_fail",
+                "courses_audit",
+                "courses_uuid"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result": [{
+        "courses_audit": 0,
+        "courses_avg": 79.26,
+        "courses_dept": "econ",
+        "courses_fail": 1,
+        "courses_id": "441",
+        "courses_instructor": "francois, patrick",
+        "courses_pass": 93,
+        "courses_title": "process econ dev",
+        "courses_uuid": "10002"
+    }
+    ]
+}

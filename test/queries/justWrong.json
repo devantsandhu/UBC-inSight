@@ -1,0 +1,9 @@
+{
+    "title": "Straight up garbage",
+    "query": { "so bad": "The Yankees"
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because it's literally garbage"]
+}
+

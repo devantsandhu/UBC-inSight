@@ -1,0 +1,28 @@
+{
+    "title": "SELECT dept, avg WHERE avg = 50",
+    "query": {
+        "WHERE": {
+            "NOT": {
+                "NOT": {
+                    "EQ": {
+                        "courses_avg": 50
+                    }
+                }
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": true,
+
+    "result":[
+        {"courses_dept":"busi","courses_avg":50},
+        {"courses_dept":"chbe","courses_avg":50},
+        {"courses_dept":"psyc","courses_avg":50}
+    ]
+}
+

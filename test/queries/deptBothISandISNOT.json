@@ -1,0 +1,25 @@
+{
+    "title": "SELECT dept, avg WHERE dept IS HIST",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_dept": "hist"
+            },
+            "NOT": {
+                "IS": {
+                    "courses_dept": "hist"
+                }
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result": []
+}
+
+

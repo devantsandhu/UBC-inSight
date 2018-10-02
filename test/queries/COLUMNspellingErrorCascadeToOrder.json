@@ -1,0 +1,21 @@
+{
+    "title": "SELECT dept, courseavg WHERE dept = HIST ORDER BY courseavg",
+    "query": {
+        "WHERE": {
+            "EQ": {
+                "courses_dept": "hist"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "coursesavg"
+            ],
+            "ORDER": "coursesavg"
+        }
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because courseavg not a valid COLUMN"]
+}
+

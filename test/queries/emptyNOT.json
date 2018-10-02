@@ -1,0 +1,22 @@
+{
+    "title": "SELECT dept, avg WHERE dept = HIST",
+    "query": {
+        "WHERE": {
+            "EQ": {
+                "courses_dept": "hist"
+            },
+            "NOT": {
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because NOT empty"]
+}
+

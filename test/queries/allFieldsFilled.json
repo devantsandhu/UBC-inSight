@@ -1,0 +1,84 @@
+{
+    "title": "SELECT all fields",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "courses_dept": "hist"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_id": "324"
+                    }
+                },
+                {
+                    "NOT": {
+                        "LT": {
+                            "courses_avg": 50
+                        }
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_instructor": "grittner, colin"
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_title": "inventing canada"
+                    }
+                },
+                {
+                    "GT": {
+                        "courses_pass": 0
+                    }
+                },
+                {
+                    "LT": {
+                        "courses_fail": 100
+                    }
+                },
+                {
+                    "LT": {
+                        "courses_audit": 100
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_uuid": "66671"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_avg",
+                "courses_instructor",
+                "courses_title",
+                "courses_pass",
+                "courses_fail",
+                "courses_audit",
+                "courses_uuid"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": [
+        {
+            "courses_dept": "hist",
+            "courses_id": "324",
+            "courses_avg": 73.23,
+            "courses_instructor": "grittner, colin",
+            "courses_title": "inventing canada",
+            "courses_pass": 43,
+            "courses_fail": 0,
+            "courses_audit": 0,
+            "courses_uuid": "66671"
+        }
+    ]
+}

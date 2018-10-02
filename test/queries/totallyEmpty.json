@@ -1,0 +1,9 @@
+{
+    "title": "totally empty query",
+    "query": {
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because it's empty"]
+}
+

@@ -2,6 +2,8 @@ import Log from "../Util";
 import {IInsightFacade, InsightDataset, InsightDatasetKind} from "./IInsightFacade";
 import {InsightError, NotFoundError} from "./IInsightFacade";
 import DataSetHelper from "./DataSetHelper";
+import QueryValidator from "./QueryValidator";
+import ProcessQuery from "./ProcessQuery";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -108,7 +110,27 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public performQuery(query: any): Promise <any[]> {
-        return Promise.reject("Not implemented.");
+
+        let datasets: object[] = [];
+        let allOfferings: any = []; // unfiltered offerings (BAD! CANNOT REtuRN ALL!!)
+        let returnFilteredOfferings: any = []; // empty array to put offering objects that fit requirements
+        let validatedQuery: any = null;
+        try {
+            validatedQuery = JSON.parse(JSON.stringify(query));
+        } catch (err) {
+            return new Promise(function (fulfill, reject) {
+                throw new InsightError("Invalid query format -- not JSON");
+            });
+        }
+        return Promise.resolve()
+            .then(() => {
+                if (QueryValidator.isQueryValid(validatedQuery)) {
+                    returnFilteredOfferings = ProcessQuery.compareQueryToDataset(datasets, validatedQuery);
+                    return Promise.resolve(returnFilteredOfferings);
+                } else {
+                    throw new InsightError("invalid query 130");
+                }
+            });
     }
 
     public listDatasets(): Promise<InsightDataset[]> {

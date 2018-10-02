@@ -1,0 +1,317 @@
+{
+    "title": "asterik to right test",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_instructor": "as*"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_instructor",
+                "courses_dept",
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_instructor"
+        }
+    },
+    "isQueryValid": true,
+    "result": [{
+        "courses_avg": 80.04,
+        "courses_dept": "thtr",
+        "courses_id": "354",
+        "courses_instructor": "asbeek brusse, marijka"
+    }, {
+        "courses_avg": 81.39,
+        "courses_dept": "thtr",
+        "courses_id": "354",
+        "courses_instructor": "asbeek brusse, marijka"
+    }, {
+        "courses_avg": 79.86,
+        "courses_dept": "thtr",
+        "courses_id": "354",
+        "courses_instructor": "asbeek brusse, marijka"
+    }, {
+        "courses_avg": 82.46,
+        "courses_dept": "thtr",
+        "courses_id": "354",
+        "courses_instructor": "asbeek brusse, marijka"
+    }, {
+        "courses_avg": 79.29,
+        "courses_dept": "cpsc",
+        "courses_id": "302",
+        "courses_instructor": "ascher, uri michael"
+    }, {
+        "courses_avg": 79.46,
+        "courses_dept": "cpsc",
+        "courses_id": "302",
+        "courses_instructor": "ascher, uri michael"
+    }, {
+        "courses_avg": 70.92,
+        "courses_dept": "cpsc",
+        "courses_id": "303",
+        "courses_instructor": "ascher, uri michael"
+    }, {
+        "courses_avg": 77.62,
+        "courses_dept": "cpsc",
+        "courses_id": "303",
+        "courses_instructor": "ascher, uri michael"
+    }, {
+        "courses_avg": 74.82,
+        "courses_dept": "cpsc",
+        "courses_id": "302",
+        "courses_instructor": "ascher, uri michael"
+    }, {
+        "courses_avg": 73.62,
+        "courses_dept": "cpsc",
+        "courses_id": "302",
+        "courses_instructor": "ascher, uri michael"
+    }, {
+        "courses_avg": 78.18,
+        "courses_dept": "cpsc",
+        "courses_id": "302",
+        "courses_instructor": "ascher, uri michael;greif, chen"
+    }, {
+        "courses_avg": 74.46,
+        "courses_dept": "cpsc",
+        "courses_id": "302",
+        "courses_instructor": "ascher, uri michael;greif, chen"
+    }, {
+        "courses_avg": 90.68,
+        "courses_dept": "medi",
+        "courses_id": "501",
+        "courses_instructor": "ashe, maureen;cherkasov, artem;cox, michael;duronio, vincent;mcnagny, kelly marshall;mui, alice;pelech, steven daniel;reiner, neil;roberts, clive;rossi, fabio;sandford, andrew;sly, laura;steiner, theodore;tebbutt, scott;vallance, bruce;wang, yu tian"
+    }, {
+        "courses_avg": 67.46,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 70.02,
+        "courses_dept": "psyc",
+        "courses_id": "320",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 67.41,
+        "courses_dept": "psyc",
+        "courses_id": "320",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 69,
+        "courses_dept": "psyc",
+        "courses_id": "320",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 69.11,
+        "courses_dept": "psyc",
+        "courses_id": "304",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 68.85,
+        "courses_dept": "psyc",
+        "courses_id": "320",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 68.18,
+        "courses_dept": "psyc",
+        "courses_id": "320",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 68.41,
+        "courses_dept": "psyc",
+        "courses_id": "320",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 69.52,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 68.98,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 67.1,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 68.37,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 67.12,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 67.35,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 67.29,
+        "courses_dept": "psyc",
+        "courses_id": "307",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 70.46,
+        "courses_dept": "psyc",
+        "courses_id": "304",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 68.92,
+        "courses_dept": "psyc",
+        "courses_id": "304",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 71.44,
+        "courses_dept": "psyc",
+        "courses_id": "304",
+        "courses_instructor": "assanand, sunaina"
+    }, {
+        "courses_avg": 70.11,
+        "courses_dept": "psyc",
+        "courses_id": "320",
+        "courses_instructor": "assanand, sunaina;king, david"
+    }, {
+        "courses_avg": 69.2,
+        "courses_dept": "psyc",
+        "courses_id": "101",
+        "courses_instructor": "assanand, sunaina;souza, michael"
+    }, {
+        "courses_avg": 78.72,
+        "courses_dept": "mtrl",
+        "courses_id": "458",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 77.06,
+        "courses_dept": "mtrl",
+        "courses_id": "458",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 71.21,
+        "courses_dept": "mtrl",
+        "courses_id": "263",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 78.38,
+        "courses_dept": "mtrl",
+        "courses_id": "458",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 70.78,
+        "courses_dept": "mtrl",
+        "courses_id": "458",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 71.6,
+        "courses_dept": "mtrl",
+        "courses_id": "458",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 71.14,
+        "courses_dept": "mtrl",
+        "courses_id": "250",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 74.9,
+        "courses_dept": "mtrl",
+        "courses_id": "458",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 78.67,
+        "courses_dept": "mtrl",
+        "courses_id": "559",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 66.75,
+        "courses_dept": "mtrl",
+        "courses_id": "250",
+        "courses_instructor": "asselin, edouard"
+    }, {
+        "courses_avg": 77.41,
+        "courses_dept": "mtrl",
+        "courses_id": "467",
+        "courses_instructor": "asselin, edouard;barr, peter;cockcroft, steven;wassink, berend;xia, guangrui"
+    }, {
+        "courses_avg": 75.93,
+        "courses_dept": "mtrl",
+        "courses_id": "467",
+        "courses_instructor": "asselin, edouard;barr, peter;dixon, david;militzer, matthias"
+    }, {
+        "courses_avg": 81.03,
+        "courses_dept": "mtrl",
+        "courses_id": "466",
+        "courses_instructor": "asselin, edouard;cockcroft, steven;dreisinger, david;sinclair, chadwick;wang, rizhi"
+    }, {
+        "courses_avg": 76.06,
+        "courses_dept": "mtrl",
+        "courses_id": "467",
+        "courses_instructor": "asselin, edouard;cockcroft, steven;fernlund, goran;poursartip, anoshiravan"
+    }, {
+        "courses_avg": 80.29,
+        "courses_dept": "mtrl",
+        "courses_id": "467",
+        "courses_instructor": "asselin, edouard;cockcroft, steven;maijer, daan;wang, rizhi"
+    }, {
+        "courses_avg": 72.85,
+        "courses_dept": "mech",
+        "courses_id": "221",
+        "courses_instructor": "asselin, edouard;cripton, peter;fatourechi, mehrdad;ostafichuk, peter;schajer, gary"
+    }, {
+        "courses_avg": 74.46,
+        "courses_dept": "mech",
+        "courses_id": "221",
+        "courses_instructor": "asselin, edouard;croft, elizabeth;fatourechi, mehrdad;okwudire, chinedum;ostafichuk, peter;schajer, gary"
+    }, {
+        "courses_avg": 73.15,
+        "courses_dept": "mech",
+        "courses_id": "221",
+        "courses_instructor": "asselin, edouard;croft, elizabeth;fatourechi, mehrdad;ostafichuk, peter;schajer, gary"
+    }, {
+        "courses_avg": 82.53,
+        "courses_dept": "mtrl",
+        "courses_id": "466",
+        "courses_instructor": "asselin, edouard;dreisinger, david;wang, rizhi"
+    }, {
+        "courses_avg": 75.67,
+        "courses_dept": "igen",
+        "courses_id": "451",
+        "courses_instructor": "asselin, edouard;isaacson, michael d;kirchen, patrick;mikkelsen, jon;wijewickreme, dharmapriya"
+    }, {
+        "courses_avg": 81.38,
+        "courses_dept": "spph",
+        "courses_id": "563",
+        "courses_instructor": "astrakianakis, george"
+    }, {
+        "courses_avg": 84.27,
+        "courses_dept": "spph",
+        "courses_id": "563",
+        "courses_instructor": "astrakianakis, george"
+    }, {
+        "courses_avg": 85.25,
+        "courses_dept": "spph",
+        "courses_id": "563",
+        "courses_instructor": "astrakianakis, george"
+    }, {
+        "courses_avg": 86.11,
+        "courses_dept": "spph",
+        "courses_id": "563",
+        "courses_instructor": "astrakianakis, george"
+    }, {
+        "courses_avg": 88.14,
+        "courses_dept": "spph",
+        "courses_id": "562",
+        "courses_instructor": "astrakianakis, george"
+    }, {
+        "courses_avg": 89.29,
+        "courses_dept": "spph",
+        "courses_id": "563",
+        "courses_instructor": "astrakianakis, george;davies, hugh william"
+    }
+    ]
+}

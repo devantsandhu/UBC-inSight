@@ -1,0 +1,17 @@
+{
+    "title": "SELECT nothing where avg = 100",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 100
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": null
+        }
+    },
+    "isQueryValid": false,
+
+    "result":["Invalid query because column cannot be null"]
+}
+

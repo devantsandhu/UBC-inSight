@@ -1,0 +1,15 @@
+{
+    "title": "SELECT empty WHERE ave > 97",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 97
+            }
+        },
+        "OPTIONS": {
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "Invalid query string because no columns selected"
+    }

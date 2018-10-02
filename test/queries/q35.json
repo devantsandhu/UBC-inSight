@@ -1,0 +1,29 @@
+{
+    "title": "Supposed to be AND not BOTH",
+    "query": {
+        "WHERE": {
+            "BOTH": [
+                {
+                    "GT": {
+                        "courses_avg": 95
+                    }
+                },
+                {
+                    "LT": {
+                        "courses_avg": 10
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "invalid operand"
+}

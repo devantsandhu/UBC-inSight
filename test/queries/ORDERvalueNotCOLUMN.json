@@ -1,0 +1,19 @@
+{
+    "title": "SELECT dept, avg WHERE avg > 97 order by id",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg":97
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "isQueryValid": false,
+    "result": ["Invalid query because order value not a COLUMN"]
+}

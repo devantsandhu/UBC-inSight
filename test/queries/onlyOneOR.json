@@ -1,0 +1,26 @@
+{
+    "title": "SELECT dept, avg WHERE avg = 100 AND nothing",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "EQ": {
+                        "courses_avg": 100
+                    }
+                }
+            ]
+        },
+
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+
+    "isQueryValid": true,
+
+    "result":[]
+}
+

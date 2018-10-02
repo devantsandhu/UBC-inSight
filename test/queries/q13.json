@@ -1,0 +1,19 @@
+{
+    "title": "key invalid)",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "dept": "econ"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "Valid key needs an ID"
+}

@@ -1,0 +1,20 @@
+{
+    "title": "extra Organizer",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 97
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        },
+        "EXTRA": {}
+    },
+    "isQueryValid": false,
+    "result": "EXTRA violates syntax"
+}

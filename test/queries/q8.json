@@ -1,0 +1,16 @@
+{
+    "title": "Courses that had more than one student auditing them",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_audit": 0
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [],
+            "ORDER": "courses_audit"
+        }
+    },
+    "isQueryValid": false,
+    "result": "COLUMNS are empty."
+}

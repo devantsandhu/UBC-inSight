@@ -1,0 +1,23 @@
+{
+    "title": "SELECT dept, avg WHERE instructor IS *bob*",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_instructor": "*bob*"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg",
+                "courses_instructor"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result":[
+        {"courses_dept":"psyc","courses_avg":67.04,"courses_instructor":"fokidis, h. bobby"},
+        {"courses_dept":"psyc","courses_avg":72.94,"courses_instructor":"fokidis, h. bobby"},
+        {"courses_dept":"sowk","courses_avg":81.94,"courses_instructor":"shebib, bob"}
+    ]
+}

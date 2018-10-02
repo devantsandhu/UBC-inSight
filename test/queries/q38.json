@@ -1,0 +1,21 @@
+{
+    "title": "asterik in middle",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_instructor": "a*s"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_instructor",
+                "courses_dept",
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_instructor"
+        }
+    },
+    "isQueryValid": false,
+    "result": "no * in middle of string"
+}

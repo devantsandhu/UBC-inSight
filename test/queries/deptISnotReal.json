@@ -1,0 +1,19 @@
+{
+    "title": "SELECT dept, avg WHERE dept IS poop",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_dept": "poop"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result":[]
+}
+

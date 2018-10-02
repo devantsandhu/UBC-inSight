@@ -1,0 +1,19 @@
+{
+    "title": "key missing id",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses": "econ"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "Valid key needs a key"
+}
