@@ -54,7 +54,7 @@ export default class ProcessQuery {
             const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
             const comparatorValue  = comparatorIDKeyValue[comparatorIDKey];
 
-            for (const offering of allOfferings) {
+            for (let offering of allOfferings) {
                 if (offering[comparatorIDKey] > comparatorValue) {
                     this.result.push(offering);
                     offeringsCount++;

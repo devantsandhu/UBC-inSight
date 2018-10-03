@@ -10,7 +10,7 @@ import ProcessQuery from "./ProcessQuery";
  * Method documentation is in IInsightFacade
  *
  */
-let storedDataSets: Map<string, any> = new Map<string, any>();
+let storedDataSets: Map<string, any> = new Map<string, object[]>();
 let fs = require("fs");
 let JSZip = require("jszip");
 let metaData: InsightDataset[] = [];
@@ -19,7 +19,7 @@ export default class InsightFacade implements IInsightFacade {
 
     constructor() {
         Log.trace("InsightFacadeImpl::init()");
-        storedDataSets = new Map<string, any>();
+        storedDataSets = new Map<string, object[]>();
     }
 
     public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
@@ -111,7 +111,8 @@ export default class InsightFacade implements IInsightFacade {
 
     public performQuery(query: any): Promise <any[]> {
 
-        let datasets: object[] = [];
+        let datasets: any = storedDataSets.get("courses");
+        ProcessQuery.result = [];
         let allOfferings: any = []; // unfiltered offerings (BAD! CANNOT REtuRN ALL!!)
         let returnFilteredOfferings: any = []; // empty array to put offering objects that fit requirements
         let validatedQuery: any = null;

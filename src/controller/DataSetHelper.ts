@@ -17,7 +17,7 @@ export default class DataSetHelper {
         };
         try {
             // Check to see if Offering has all valid keys
-            if (offering.hasOwnProperty("result") &&
+            if (// offering.hasOwnProperty("result") &&
                 offering.hasOwnProperty("Subject") &&
                 offering.hasOwnProperty("Course") &&
                 offering.hasOwnProperty("Avg") &&
