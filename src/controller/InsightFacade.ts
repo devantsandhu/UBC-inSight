@@ -119,14 +119,16 @@ export default class InsightFacade implements IInsightFacade {
         try {
             validatedQuery = JSON.parse(JSON.stringify(query));
         } catch (err) {
-            return new Promise(function (fulfill, reject) {
+         //   return new Promise(function (fulfill, reject) {
                 throw new InsightError("Invalid query format -- not JSON");
-            });
+         //   });
         }
         return Promise.resolve()
             .then(() => {
                 if (QueryValidator.isQueryValid(validatedQuery)) {
                     returnFilteredOfferings = ProcessQuery.compareQueryToDataset(datasets, validatedQuery);
+                    ProcessQuery.columnSort(returnFilteredOfferings, validatedQuery);
+                    ProcessQuery.orderQuery(returnFilteredOfferings, validatedQuery);
                     return Promise.resolve(returnFilteredOfferings);
                 } else {
                     throw new InsightError("invalid query 130");

@@ -39,38 +39,56 @@ export default class ProcessQuery {
         let offeringsCount = 0;
 
         if (comparatorType === "LT") {
-            const comparatorIDKKeyValue = filter[comparatorType]; // id_key = value
-            const comparatorIDKKey = Object.keys(comparatorIDKKeyValue)[0]; // id_key
-            const comparatorValue  = comparatorIDKKeyValue[comparatorIDKKey]; // value
-
-            for (const offering of allOfferings) {
-                if (offering[comparatorIDKKey] < comparatorValue) {
-                    this.result.push(offering);
-                    offeringsCount++;
+            try {
+                const comparatorIDKKeyValue = filter[comparatorType]; // id_key = value
+                const comparatorIDKKey = Object.keys(comparatorIDKKeyValue)[0]; // id_key
+                const comparatorValue = comparatorIDKKeyValue[comparatorIDKKey]; // value
+                if (!isNumber(comparatorValue)) {
+                    throw new InsightError("LT: was not given a number");
                 }
+                for (const offering of allOfferings) {
+                    if (offering[comparatorIDKKey] < comparatorValue) {
+                        this.result.push(offering);
+                        offeringsCount++;
+                    }
+                }
+            } catch (e) {
+                throw new InsightError(e);
             }
         } else if (comparatorType === "GT") {
-            const comparatorIDKeyValue = filter[comparatorType];
-            const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
-            const comparatorValue  = comparatorIDKeyValue[comparatorIDKey];
-
-            for (let offering of allOfferings) {
-                if (offering[comparatorIDKey] > comparatorValue) {
-                    this.result.push(offering);
-                    offeringsCount++;
+            try {
+                const comparatorIDKeyValue = filter[comparatorType];
+                const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
+                const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
+                if (!isNumber(comparatorValue)) {
+                    throw new InsightError("GT: was not given a number");
                 }
+                for (let offering of allOfferings) {
+                    if (offering[comparatorIDKey] > comparatorValue) {
+                        this.result.push(offering);
+                        offeringsCount++;
+                    }
+                }
+            } catch (e) {
+                throw new InsightError(e);
             }
 
         } else if (comparatorType === "EQ") {
-            const comparatorIDKeyValue = filter[comparatorType];
-            const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
-            const comparatorValue  = comparatorIDKeyValue[comparatorIDKey];
-
-            for (let offering of allOfferings) {
-                if (offering[comparatorIDKey] === comparatorValue) {
-                    this.result.push(offering);
-                    offeringsCount++;
+            try {
+                const comparatorIDKeyValue = filter[comparatorType];
+                const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
+                const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
+                if (!isNumber(comparatorValue)) {
+                    throw new InsightError("EQ: was not given a number");
                 }
+                for (let offering of allOfferings) {
+                    if (offering[comparatorIDKey] === comparatorValue) {
+                        this.result.push(offering);
+                        offeringsCount++;
+                    }
+                }
+            } catch (e) {
+                throw new InsightError(e);
             }
         } else if (comparatorType === "NOT") {
             // legit kill me
@@ -82,13 +100,61 @@ export default class ProcessQuery {
             // ahhh howwww
 
         } else if (comparatorType === "IS") {
-            // ahhhhhhh
+            // might be working!
+            try {
+                const comparatorIDKeyValue = filter[comparatorType];
+                const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
+                const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
+                if (isNumber(comparatorValue) || comparatorValue === "") {
+                    throw new InsightError("IS: was not given a string");
+                }
+
+                for (let offering of allOfferings) {
+                    if (offering[comparatorIDKey] === comparatorValue) {
+                        this.result.push(offering);
+                        offeringsCount++;
+                    }
+                }
+            } catch (e) {
+                throw new InsightError(e);
+            }
         }
 
         if ((offeringsCount > 5000) || this.result.length > 5000) {
             throw new InsightError("too big");
         }
-
+        // this.result.sort(function (a, b) {return a["courses_avg"] - b["courses_avg"]; });
         return this.result;
+    }
+
+    // order the query given key if told to order
+    public static orderQuery(result: any, query: any) {
+        if (!query["OPTIONS"].hasOwnProperty("ORDER")) {
+            return;
+        }
+        let orderKey = query["OPTIONS"]["ORDER"];
+        result.sort(function (a: any, b: any) {
+            if (a[orderKey] < b[orderKey]) {
+                return -1;
+            }
+            if (a[orderKey] > b[orderKey]) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+
+    // keep only specified columns in result
+    public static columnSort(result: any, query: any) {
+        let columnKeys = query["OPTIONS"]["COLUMNS"];
+        for (let offering of result) {
+            for (let key in offering) {
+                if (offering.hasOwnProperty(key)) {
+                    if (!columnKeys.includes(key)) {
+                        delete offering[key];
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 import Log from "../Util";
-import {IInsightFacade, InsightDataset, InsightDatasetKind} from "./IInsightFacade";
+import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError} from "./IInsightFacade";
 import {isNumber} from "util";
 import InsightFacade from "./InsightFacade";
 
@@ -30,6 +30,18 @@ export default class QueryValidator {
             return false;
          }
 
+         // ensures options has columns
+        if (!query["OPTIONS"].hasOwnProperty("COLUMNS")) {
+            return false;
+        }
+        // ensures columns is valid
+        if (!this.isColumnsValid(query)) {
+            return false;
+        }
+        // ensures order is valid if included
+        if (!this.isOrderValid(query)) {
+            return false;
+        }
         // ensure all keys are for courses dataset
         // TODO: do they need to be courses or can they be named something else?
         let where: any  = query["WHERE"];
@@ -127,7 +139,7 @@ export default class QueryValidator {
         } else if ("IS" in where) {
             const f = where["IS"];
             const input = Object.values(f)[0];
-            if (input == null || input === undefined) {
+            if (input == null || input === undefined || isNumber(input)) {
                 return false;
             }
             let infoType = f.key;
@@ -155,5 +167,45 @@ export default class QueryValidator {
             }
         }
     }
-
+    private static isColumnsValid(query: any) {
+        let validKeys = ["courses_dept",
+            "courses_id",
+            "courses_avg",
+            "courses_instructor",
+            "courses_title",
+            "courses_pass",
+            "courses_fail",
+            "courses_audit",
+            "courses_uuid",
+            "courses_year"];
+        // ensures columns not empty
+        try {
+            if (query["OPTIONS"]["COLUMNS"].length <= 0) {
+                return false;
+            }
+            // ensures columns only has valid keys
+            for (let key of query["OPTIONS"]["COLUMNS"]) {
+                if (!validKeys.includes(key)) {
+                    return false;
+                }
+            }
+        } catch (e) {
+            throw new InsightError(e);
+        }
+        return true;
+    }
+    private static isOrderValid(query: any) {
+        if (query["OPTIONS"].hasOwnProperty("ORDER")) {
+            // ensures options only has 1 key
+            if (Array.isArray(query["OPTIONS"]["ORDER"])) {
+                return false;
+            }
+            // ensures order key is included in columns
+            let orderKey = query["OPTIONS"]["ORDER"];
+            if (!query["OPTIONS"]["COLUMNS"].includes(orderKey)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
