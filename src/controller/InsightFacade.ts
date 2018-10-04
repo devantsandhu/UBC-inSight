@@ -113,7 +113,6 @@ export default class InsightFacade implements IInsightFacade {
 
         let datasets: any = storedDataSets.get("courses");
         ProcessQuery.result = [];
-        let allOfferings: any = []; // unfiltered offerings (BAD! CANNOT REtuRN ALL!!)
         let returnFilteredOfferings: any = []; // empty array to put offering objects that fit requirements
         let validatedQuery: any = null;
         try {

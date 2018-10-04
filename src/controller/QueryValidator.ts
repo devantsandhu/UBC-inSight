@@ -18,7 +18,8 @@ export default class QueryValidator {
     // TODO: any other basic malformed things to check?
 
     public static isQueryValid(query: any): boolean {
-        if (query === null || query === undefined || query.length <= 0 ||  Object.keys(query).length <= 0) {
+        if (query === null || query === undefined || !(Object.keys(query).length === 2) ||
+            Object.keys(query).length <= 0) {
             return false;
         }
 
@@ -44,15 +45,18 @@ export default class QueryValidator {
         }
         // ensure all keys are for courses dataset
         // TODO: do they need to be courses or can they be named something else?
-        let where: any  = query["WHERE"];
-        let queryID = this.findFilterID(where);
-        if (queryID !== "courses") {
-            return false;
-        } else {
-            this.isQueryFilterValid(where);
+        // let where: any  = query["WHERE"];
+        // let queryID = this.findFilterID(where);
+        // if (queryID !== "courses") {
+        //     return false;
+        // } else {
+        //     this.isQueryFilterValid(where);
+        // }
+        if (Object.keys(query["WHERE"]).length !== 0) {
+            if (!this.isQueryFilterValid(query["WHERE"])) {
+                return false;
+            }
         }
-
-        // if its VERY broadly well-formed continue to the BODY and OPTIONS validation
         return true;
     }
 
@@ -60,7 +64,7 @@ export default class QueryValidator {
     public static getQID(query: any): string {
         return query["OPTIONS"]["COLUMNS"][0].split("_")[0];
     }
-
+    /*
     // either get S/MCOMPARATOR or iterate through LOGIC
     // ensure that we're doing courses/ 1 dataset at a time
     public static findFilterID(filter: any): any {
@@ -96,15 +100,14 @@ export default class QueryValidator {
             filterID = this.findFilterID(not);
         }
         return filterID;
-    }
-
+    }*/
     // check that each filter and each filter information type (ie avg, dept); recurse in AND/OR are valid
-    private static isQueryFilterValid(where: any) {
+    public static isQueryFilterValid(where: any): boolean {
         let courseNumberKey: any = ["avg",  "pass", "fail" , "audit", "year"];
         let courseStringKey: any = ["dept", "id", "title", "uuid", "instructor"];
         // check that if there is a MCOMPARATOR, SCOMPARATOR, or LOGIC  key it's followed by a key
 
-        if (Object.keys(where).length <= 0) {
+        if (Object.keys(where).length !== 1) {
             return false;
         } else if ("LT" in where) {
             const f = where["LT"];
@@ -112,60 +115,80 @@ export default class QueryValidator {
             if (value == null || value === undefined || !isNumber(value)) {
                 return false;
             }
-            let infoType = f.key;
-            if (!courseNumberKey.hasOwnProperty(infoType)) {
+            let infoType = Object.keys(f)[0];
+            let key = infoType.split("_");
+            if (!courseNumberKey.includes(key[1])) {
                 return false;
             }
+            return true;
         } else if ("GT" in where) {
             const f = where["GT"];
             const value = Object.values(f)[0];
             if (value == null || value === undefined || !isNumber(value)) {
                 return false;
             }
-            let infoType = f.key;
-            if (!courseNumberKey.hasOwnProperty(infoType)) {
+            let infoType = Object.keys(f)[0];
+            let key = infoType.split("_");
+            if (!courseNumberKey.includes(key[1])) {
                 return false;
             }
+            return true;
         } else if ("EQ" in where) {
             const f = where["EQ"];
             const value = Object.values(f)[0];
             if (value == null || value === undefined || !isNumber(value)) {
                 return false;
             }
-            let infoType = f.key;
-            if (!courseNumberKey.hasOwnProperty(infoType)) {
+            let infoType = Object.keys(f)[0];
+            let key = infoType.split("_");
+            if (!courseNumberKey.includes(key[1])) {
                 return false;
             }
+            return true;
         } else if ("IS" in where) {
             const f = where["IS"];
             const input = Object.values(f)[0];
             if (input == null || input === undefined || isNumber(input)) {
                 return false;
             }
-            let infoType = f.key;
-            if (!courseStringKey.hasOwnProperty(infoType)) {
+            let infoType = Object.keys(f)[0];
+            let key = infoType.split("_");
+            if (!courseStringKey.includes(key[1])) {
                 return false;
             }
-            if ((input === "*") || (input === "**")) {
-                // TODO: ahhhhh wildcards!
-                return true;
-            }
+            // TODO wildcards
+            return true;
+
         } else if ("AND" in where) {
-            const and = where["AND"];
-            if ((and.length <= 0) || (this.findFilterID(and) === false)) {
-                return false;
+            if (!Array.isArray(where["AND"])) {
+                throw new InsightError("AND is not an array");
             }
+            if (where["AND"].length < 1) {
+                throw new InsightError("AND is empty");
+            }
+            for (let comp of where["AND"]) {
+                 if (!this.isQueryFilterValid(comp)) {
+                     return false;
+                 }
+            }
+            return true;
         } else if ("OR" in where) {
-            const or = where["OR"];
-            if ((or.length <= 0) || (this.findFilterID(or) === false)) {
-                return false;
+            if (!Array.isArray(where["OR"])) {
+                throw new InsightError("OR is not an array");
             }
+            if (where["OR"].length < 1) {
+                throw new InsightError("OR is empty");
+            }
+            for (let comp of where["OR"]) {
+                if (!this.isQueryFilterValid(comp)) {
+                    return false;
+                }
+            }
+            return true;
         } else if ("NOT" in where) {
-            const not = where["NOT"];
-            if ((not.length <= 0) || (this.findFilterID(not) === false)) {
-                return false;
-            }
+            return this.isQueryFilterValid(where["NOT"]);
         }
+        return false;
     }
     private static isColumnsValid(query: any) {
         let validKeys = ["courses_dept",

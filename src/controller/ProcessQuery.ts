@@ -1,9 +1,12 @@
-import Log from "../Util";
 import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError} from "./IInsightFacade";
-import {isNumber} from "util";
+import {isNumber, log} from "util";
 import DataSetHelper from "./DataSetHelper";
 import InsightFacade from "./InsightFacade";
 import QueryValidator from "./QueryValidator";
+
+let offeringsCount = 0;
+let negation = false;
+let unfilteredDataset: any[] = [];
 
 export default class ProcessQuery {
     private insight: InsightFacade;
@@ -18,11 +21,11 @@ export default class ProcessQuery {
         // }
 
         let allOfferings = dataset; // unfiltered offerings
-
-        let offeringsCount = 0;
+        unfilteredDataset = dataset;
 
         let filter = query["WHERE"];
-
+        offeringsCount = 0;
+        negation = false;
         // recursive, same as validation
         return this.comparatorProcess(filter, allOfferings);
 
@@ -30,22 +33,20 @@ export default class ProcessQuery {
 
     private static comparatorProcess(filter: any, allOfferings: any): any[] {
         const comparatorType = Object.keys(filter)[0]; // GT/LT/EQ/IS/AND/NOT
-
+        /*
         if (comparatorType.length <= 1) {
             throw new InsightError("Invalid query");
         }
-
-        // TODO: this is WRONG must be instantiated elsewhere
-        let offeringsCount = 0;
+        */
 
         if (comparatorType === "LT") {
             try {
                 const comparatorIDKKeyValue = filter[comparatorType]; // id_key = value
                 const comparatorIDKKey = Object.keys(comparatorIDKKeyValue)[0]; // id_key
                 const comparatorValue = comparatorIDKKeyValue[comparatorIDKKey]; // value
-                if (!isNumber(comparatorValue)) {
+                /*if (!isNumber(comparatorValue)) {
                     throw new InsightError("LT: was not given a number");
-                }
+                }*/
                 for (const offering of allOfferings) {
                     if (offering[comparatorIDKKey] < comparatorValue) {
                         this.result.push(offering);
@@ -60,9 +61,9 @@ export default class ProcessQuery {
                 const comparatorIDKeyValue = filter[comparatorType];
                 const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
                 const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
-                if (!isNumber(comparatorValue)) {
+                /*if (!isNumber(comparatorValue)) {
                     throw new InsightError("GT: was not given a number");
-                }
+                }*/
                 for (let offering of allOfferings) {
                     if (offering[comparatorIDKey] > comparatorValue) {
                         this.result.push(offering);
@@ -78,9 +79,9 @@ export default class ProcessQuery {
                 const comparatorIDKeyValue = filter[comparatorType];
                 const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
                 const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
-                if (!isNumber(comparatorValue)) {
+                /*if (!isNumber(comparatorValue)) {
                     throw new InsightError("EQ: was not given a number");
-                }
+                }*/
                 for (let offering of allOfferings) {
                     if (offering[comparatorIDKey] === comparatorValue) {
                         this.result.push(offering);
@@ -91,24 +92,35 @@ export default class ProcessQuery {
                 throw new InsightError(e);
             }
         } else if (comparatorType === "NOT") {
-            // legit kill me
+            if (negation) {
+                negation = false;
+            } else { negation = true; }
+            ProcessQuery.comparatorProcess(filter["NOT"], allOfferings);
 
         } else if (comparatorType === "AND") {
-            // ahhh howwww
+            for (let comp of filter["AND"]) {
+                if (filter["AND"][0] === comp) {
+                    ProcessQuery.comparatorProcess(comp, allOfferings);
+                } else {
+                    let tempResults = Array.from(this.result);
+                    this.result = [];
+                    ProcessQuery.comparatorProcess(comp, tempResults);
+                }
+            }
 
         } else if (comparatorType === "OR") {
-            // ahhh howwww
+            for (let comp of filter["OR"]) {
+                    ProcessQuery.comparatorProcess(comp, allOfferings);
+            }
 
         } else if (comparatorType === "IS") {
-            // might be working!
             try {
                 const comparatorIDKeyValue = filter[comparatorType];
                 const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
                 const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
-                if (isNumber(comparatorValue) || comparatorValue === "") {
+                /*if (isNumber(comparatorValue) || comparatorValue === "") {
                     throw new InsightError("IS: was not given a string");
-                }
-
+                }*/
                 for (let offering of allOfferings) {
                     if (offering[comparatorIDKey] === comparatorValue) {
                         this.result.push(offering);
@@ -119,12 +131,26 @@ export default class ProcessQuery {
                 throw new InsightError(e);
             }
         }
-
-        if ((offeringsCount > 5000) || this.result.length > 5000) {
-            throw new InsightError("too big");
+        if (!negation) {
+            if ((offeringsCount > 5000) || this.result.length > 5000) {
+                throw new InsightError("too big");
+            }
         }
         // this.result.sort(function (a, b) {return a["courses_avg"] - b["courses_avg"]; });
-        return this.result;
+        if (negation) {
+            offeringsCount = 0;
+            let negatedResult: any[] = [];
+            for (let offering of unfilteredDataset) {
+                if (!(this.result.includes(offering))) {
+                    negatedResult.push(offering);
+                    offeringsCount++;
+                }
+            }
+            if ((offeringsCount > 5000) || negatedResult.length > 5000) {
+                throw new InsightError("too big");
+            }
+            return negatedResult;
+        } else { return this.result; }
     }
 
     // order the query given key if told to order
