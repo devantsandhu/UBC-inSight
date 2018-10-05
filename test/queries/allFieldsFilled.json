@@ -67,7 +67,7 @@
             "ORDER": "courses_avg"
         }
     },
-    "isQueryValid": false,
+    "isQueryValid": true,
     "result": [
         {
             "courses_dept": "hist",

@@ -1,5 +1,5 @@
 {
-    "title": "SELECT dept, avg WHERE dept IS HIST",
+    "title": "testing NOT and AND",
     "query": {
         "WHERE": {
             "AND":[{
@@ -23,5 +23,3 @@
     "isQueryValid": true,
     "result": []
 }
-
-

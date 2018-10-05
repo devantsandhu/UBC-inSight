@@ -2,14 +2,16 @@
     "title": "SELECT dept, avg WHERE dept = he*",
     "query": {
         "WHERE": {
-            "AND": {
-                "EQ": {
+            "AND": [
+                {
+                "IS": {
                     "courses_dept": "he*"
-                },
-                "GT": {
-                    "courses_avg": 80
-                }
-            }
+                }},
+                {
+                    "GT": {
+                        "courses_avg": 80
+                    }
+            }]
 
         },
         "OPTIONS": {

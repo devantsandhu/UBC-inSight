@@ -13,8 +13,7 @@
             ]
         }
     },
-    "isQueryValid": true,
-
-    "result":[]
+    "isQueryValid": false,
+    "result":""
 }
 

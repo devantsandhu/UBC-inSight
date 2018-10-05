@@ -151,6 +151,11 @@ export default class QueryValidator {
             if (input == null || input === undefined || isNumber(input)) {
                 return false;
             }
+            // Might not need
+            if ((input.endsWith("*") === false) && (input.startsWith("*") === false) && (input.indexOf("*") === true)) {
+                throw new InsightError("cannot have * inside input");
+            }
+
             let infoType = Object.keys(f)[0];
             let key = infoType.split("_");
             if (!courseStringKey.includes(key[1])) {

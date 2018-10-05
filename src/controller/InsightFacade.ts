@@ -125,13 +125,16 @@ export default class InsightFacade implements IInsightFacade {
         return Promise.resolve()
             .then(() => {
                 if (QueryValidator.isQueryValid(validatedQuery)) {
-                    returnFilteredOfferings = ProcessQuery.compareQueryToDataset(datasets, validatedQuery);
-                    ProcessQuery.columnSort(returnFilteredOfferings, validatedQuery);
-                    ProcessQuery.orderQuery(returnFilteredOfferings, validatedQuery);
-                    return Promise.resolve(returnFilteredOfferings);
+                    ProcessQuery.compareQueryToDataset(datasets, validatedQuery);
                 } else {
-                    throw new InsightError("invalid query 130");
+                    throw new InsightError("invalid query");
                 }
+            }).then(() => {
+                ProcessQuery.columnSort(ProcessQuery.result, validatedQuery);
+            }).then(() => {
+                ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
+            }).then(() => {
+                return Promise.resolve(ProcessQuery.result);
             });
     }
 

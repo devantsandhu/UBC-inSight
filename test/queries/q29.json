@@ -2,7 +2,7 @@
     "title": "invalid MCOMP Parameter",
     "query": {
         "WHERE": {
-            "GT": {
+            "TG": {
                 "courses_avg": 97
             }
         },

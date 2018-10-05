@@ -27,11 +27,11 @@ export default class ProcessQuery {
         offeringsCount = 0;
         negation = false;
         // recursive, same as validation
-        return this.comparatorProcess(filter, allOfferings);
+        this.comparatorProcess(filter, allOfferings);
 
     }
 
-    private static comparatorProcess(filter: any, allOfferings: any): any[] {
+    private static comparatorProcess(filter: any, allOfferings: any) {
         const comparatorType = Object.keys(filter)[0]; // GT/LT/EQ/IS/AND/NOT
         /*
         if (comparatorType.length <= 1) {
@@ -73,7 +73,6 @@ export default class ProcessQuery {
             } catch (e) {
                 throw new InsightError(e);
             }
-
         } else if (comparatorType === "EQ") {
             try {
                 const comparatorIDKeyValue = filter[comparatorType];
@@ -96,6 +95,7 @@ export default class ProcessQuery {
                 negation = false;
             } else { negation = true; }
             ProcessQuery.comparatorProcess(filter["NOT"], allOfferings);
+            return;
 
         } else if (comparatorType === "AND") {
             for (let comp of filter["AND"]) {
@@ -107,7 +107,7 @@ export default class ProcessQuery {
                     ProcessQuery.comparatorProcess(comp, tempResults);
                 }
             }
-
+            return;
         } else if (comparatorType === "OR") {
             for (let comp of filter["OR"]) {
                     ProcessQuery.comparatorProcess(comp, allOfferings);
@@ -115,14 +115,56 @@ export default class ProcessQuery {
 
         } else if (comparatorType === "IS") {
             try {
+                // bob* *bob *bob*
                 const comparatorIDKeyValue = filter[comparatorType];
                 const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
                 const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
+                let comparatorValueTrunc = "";
+                let bothEndsWC = false;
+                let startWC = false;
+                let endWC = false;
+                let noWC = false;
                 /*if (isNumber(comparatorValue) || comparatorValue === "") {
                     throw new InsightError("IS: was not given a string");
                 }*/
+
+                if (comparatorValue.startsWith("*")) {
+                    if (comparatorValue.endsWith("*")) {
+                        // both ends *xxx*
+                        bothEndsWC = true;
+                        comparatorValueTrunc = comparatorValue.substring(1, comparatorValue.length - 1);
+                    } else {
+                        // only starts *xxx
+                        startWC = true;
+                        comparatorValueTrunc = comparatorValue.substring(1, comparatorValue.length);
+                    }
+                } else if (comparatorValue.endsWith("*")) {
+                    // only ends xxx*
+                    endWC = true;
+                    comparatorValueTrunc = comparatorValue.substring(0, comparatorValue.length - 1);
+                }  else if ((comparatorValue.endsWith("*") === false)
+                    && (comparatorValue.startsWith("*") === false)
+                    && (comparatorValue.indexOf("*") > 0)) {
+                    throw  new InsightError("cannot have * inside");
+                } else {// no **
+                    noWC = true;
+                    comparatorValueTrunc = comparatorValue;
+                }
+
                 for (let offering of allOfferings) {
-                    if (offering[comparatorIDKey] === comparatorValue) {
+                    // let offeringLength = offering[comparatorIDKey].length;
+                    if (offering === undefined || offering[comparatorIDKey] === undefined) {
+                        offering++;
+                    } else if ((offering[comparatorIDKey].indexOf(comparatorValueTrunc) === 0) &&
+                        ((endWC === true) || (noWC === true))) {
+                        this.result.push(offering);
+                        offeringsCount++;
+                    } else if ((offering[comparatorIDKey].indexOf(comparatorValueTrunc) ===
+                        (offering[comparatorIDKey].length - comparatorValueTrunc.length)) && ((startWC === true))) {
+                        this.result.push(offering);
+                        offeringsCount++;
+                    } else if ((offering[comparatorIDKey].indexOf(comparatorValueTrunc) >= 0)
+                        && (bothEndsWC === true)) {
                         this.result.push(offering);
                         offeringsCount++;
                     }
@@ -140,17 +182,19 @@ export default class ProcessQuery {
         if (negation) {
             offeringsCount = 0;
             let negatedResult: any[] = [];
-            for (let offering of unfilteredDataset) {
+            for (let offering of allOfferings) {
                 if (!(this.result.includes(offering))) {
                     negatedResult.push(offering);
                     offeringsCount++;
                 }
             }
+            /*
             if ((offeringsCount > 5000) || negatedResult.length > 5000) {
                 throw new InsightError("too big");
-            }
-            return negatedResult;
-        } else { return this.result; }
+            }*/
+            this.result = negatedResult;
+            // this.result = Array.from(negatedResult);
+        }
     }
 
     // order the query given key if told to order
