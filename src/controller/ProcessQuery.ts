@@ -188,6 +188,7 @@ export default class ProcessQuery {
                     offeringsCount++;
                 }
             }
+            negation = false;
             /*
             if ((offeringsCount > 5000) || negatedResult.length > 5000) {
                 throw new InsightError("too big");
