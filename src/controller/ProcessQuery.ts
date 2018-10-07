@@ -110,7 +110,18 @@ export default class ProcessQuery {
             return;
         } else if (comparatorType === "OR") {
             for (let comp of filter["OR"]) {
+                if (filter["OR"][0] === comp) {
                     ProcessQuery.comparatorProcess(comp, allOfferings);
+                } else {
+                    let dontRepeat: any[] = [];
+                    for (let offering of allOfferings) {
+                        if (!(this.result.includes(offering))) {
+                            dontRepeat.push(offering);
+                            //       offeringsCount++;
+                        }
+                    }
+                    ProcessQuery.comparatorProcess(comp, dontRepeat);
+                }
             }
 
         } else if (comparatorType === "IS") {
@@ -120,6 +131,7 @@ export default class ProcessQuery {
                 const comparatorIDKey = Object.keys(comparatorIDKeyValue)[0];
                 const comparatorValue = comparatorIDKeyValue[comparatorIDKey];
                 let comparatorValueTrunc = "";
+                let onlyWC = false;
                 let bothEndsWC = false;
                 let startWC = false;
                 let endWC = false;
@@ -127,8 +139,9 @@ export default class ProcessQuery {
                 /*if (isNumber(comparatorValue) || comparatorValue === "") {
                     throw new InsightError("IS: was not given a string");
                 }*/
-
-                if (comparatorValue.startsWith("*")) {
+                if (comparatorValue === "*") {
+                    onlyWC = true;
+                } else if (comparatorValue.startsWith("*")) {
                     if (comparatorValue.endsWith("*")) {
                         // both ends *xxx*
                         bothEndsWC = true;
@@ -154,7 +167,9 @@ export default class ProcessQuery {
                 for (let offering of allOfferings) {
                     // let offeringLength = offering[comparatorIDKey].length;
                     if (offering === undefined || offering[comparatorIDKey] === undefined) {
-                        offering++;
+                        // offering++;
+                    } else if (onlyWC) {
+                        this.result.push(offering);
                     } else if ((offering[comparatorIDKey].indexOf(comparatorValueTrunc) === 0) &&
                         ((endWC === true) || (noWC === true))) {
                         this.result.push(offering);
@@ -173,19 +188,19 @@ export default class ProcessQuery {
                 throw new InsightError(e);
             }
         }
-        if (!negation) {
-            if ((offeringsCount > 5000) || this.result.length > 5000) {
-                throw new InsightError("too big");
-            }
-        }
+        // if (!negation) {
+        //     if ((offeringsCount > 5000) || this.result.length > 5000) {
+        //         throw new InsightError("too big");
+        // }
+        // }
         // this.result.sort(function (a, b) {return a["courses_avg"] - b["courses_avg"]; });
         if (negation) {
-            offeringsCount = 0;
+            // offeringsCount = 0;
             let negatedResult: any[] = [];
             for (let offering of allOfferings) {
                 if (!(this.result.includes(offering))) {
                     negatedResult.push(offering);
-                    offeringsCount++;
+                    //       offeringsCount++;
                 }
             }
             negation = false;

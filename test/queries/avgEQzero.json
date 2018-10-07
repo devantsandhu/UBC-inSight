@@ -14,7 +14,6 @@
         }
     },
     "isQueryValid": true,
-
     "result":[
         {"courses_avg":0,"courses_dept":"frst"},
         {"courses_avg":0,"courses_dept":"lfs"},

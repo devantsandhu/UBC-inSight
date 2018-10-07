@@ -2,36 +2,38 @@ import Log from "../Util";
 import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError} from "./IInsightFacade";
 import {isNumber} from "util";
 import InsightFacade from "./InsightFacade";
+import ProcessQuery from "./ProcessQuery";
 
 export default class QueryValidator {
     private insight: InsightFacade;
     private insightFacade: InsightFacade;
+    private queryDatasetIDs: string [] = [];
 
     // private courseNumberKey: any = ["avg",  "pass", "fail" , "audit", "year"];
     // private courseStringKey: any = ["dept", "id", "title", "uuid", "instructor"];
-
     constructor(facade: InsightFacade) {
         this.insight = facade;
     }
 
     // if there's no query (null/undefined) and basic malformation check of WHERE and COLUMNS
-    // TODO: any other basic malformed things to check?
-
-    public static isQueryValid(query: any): boolean {
-        if (query === null || query === undefined || !(Object.keys(query).length === 2) ||
+    public isQueryValid(query: any): boolean {
+        // let queryDatasetIDs: string[] = [];
+        if (query === null || query === undefined || (Object.keys(query).length > 2) ||
             Object.keys(query).length <= 0) {
             return false;
         }
 
-        if (!query.hasOwnProperty("WHERE")) {
+        // TODO Void test (can support queries without WHERE on small datasets) (need to get datasets into QV)
+        // ((!query.hasOwnProperty("WHERE")) && storedDataSets.get(this.getQueryID()).length > 5000) {
+        if ((!query.hasOwnProperty("WHERE"))) {
             return false;
         }
 
         if (!query.hasOwnProperty("OPTIONS")) {
             return false;
-         }
+        }
 
-         // ensures options has columns
+        // ensures options has columns
         if (!query["OPTIONS"].hasOwnProperty("COLUMNS")) {
             return false;
         }
@@ -43,16 +45,15 @@ export default class QueryValidator {
         if (!this.isOrderValid(query)) {
             return false;
         }
-        // ensure all keys are for courses dataset
-        // TODO: do they need to be courses or can they be named something else?
-        // let where: any  = query["WHERE"];
-        // let queryID = this.findFilterID(where);
-        // if (queryID !== "courses") {
-        //     return false;
-        // } else {
-        //     this.isQueryFilterValid(where);
+
+        // if (!this.confirmALLWhereIDs(query)) {
+        //    return false;
         // }
+        if (!this.confirmALLColumnIDs(query)) {
+            return false;
+        }
         if (Object.keys(query["WHERE"]).length !== 0) {
+            // let queryDatasetIDs: string[] = [];
             if (!this.isQueryFilterValid(query["WHERE"])) {
                 return false;
             }
@@ -60,56 +61,55 @@ export default class QueryValidator {
         return true;
     }
 
-    // OR IF CAN BE FROM DIFFERENT ids (ie doesn't have to be just courses:
-    public static getQID(query: any): string {
-        return query["OPTIONS"]["COLUMNS"][0].split("_")[0];
-    }
     /*
-    // either get S/MCOMPARATOR or iterate through LOGIC
-    // ensure that we're doing courses/ 1 dataset at a time
-    public static findFilterID(filter: any): any {
-        let filterID = "";
-        if ("LT" in filter) {
-            const f = filter["LT"];
-            const key = Object.keys(f)[0];
-            const index = key.indexOf("_");
-            filterID = key.substring(0, index);
-        } else if ("GT" in filter) {
-            const f = filter["GT"];
-            const key = Object.keys(f)[0];
-            const index = key.indexOf("_");
-            filterID = key.substring(0, index);
-        } else if ("EQ" in filter) {
-            const f = filter["EQ"];
-            const key = Object.keys(f)[0];
-            const index = key.indexOf("_");
-            filterID = key.substring(0, index);
-        } else if ("IS" in filter) {
-            const f = filter["IS"];
-            const key = Object.keys(f)[0];
-            const index = key.indexOf("_");
-            filterID = key.substring(0, index);
-        } else if ("AND" in filter) {
-            const and = filter["AND"];
-            filterID = this.findFilterID(and);
-        } else if ("OR" in filter) {
-            const or = filter["OR"];
-            filterID = this.findFilterID(or);
-        } else if ("NOT" in filter) {
-            const not = filter["NOT"];
-            filterID = this.findFilterID(not);
+    // OR IF CAN BE FROM DIFFERENT ids (ie doesn't have to be just courses:
+    public static confirmALLWhereIDs(query: any): boolean {
+        let datasetIds: string[] = [];
+        // let datasetId = ;
+        if (query && query["WHERE"]) {
+            let check = query["WHERE"];
+            for (let i of check) {
+                if (i.includes("_")) {
+                    let id = i.split("_")[0];
+                    datasetIds.push(id);
+                }
+                i++;
+            }
+            return datasetIds.every((x) => x === datasetIds[0]);
         }
-        return filterID;
-    }*/
+    }
+    */
+
+    public confirmALLColumnIDs(query: any): boolean {
+        let datasetIds: string[] = [];
+        // let datasetId = ;
+        if (query["OPTIONS"]["COLUMNS"]) {
+            let columns = query["OPTIONS"]["COLUMNS"];
+            for (let i of columns) {
+                if (i.includes("_")) {
+                    let id = i.split("_")[0];
+                    datasetIds.push(id);
+                }
+                i++;
+            }
+            return datasetIds.every((x) => x === datasetIds[0]);
+        }
+    }
+
     // check that each filter and each filter information type (ie avg, dept); recurse in AND/OR are valid
-    public static isQueryFilterValid(where: any): boolean {
+    public isQueryFilterValid(where: any): boolean {
         let courseNumberKey: any = ["avg",  "pass", "fail" , "audit", "year"];
         let courseStringKey: any = ["dept", "id", "title", "uuid", "instructor"];
         // check that if there is a MCOMPARATOR, SCOMPARATOR, or LOGIC  key it's followed by a key
+        if (this.queryDatasetIDs.length > 1) {
+            if (this.queryDatasetIDs.every((x) => x === this.queryDatasetIDs[0])) {
+                return false;
+            }
+        }
 
-        if (Object.keys(where).length !== 1) {
+        if (Object.keys(where).length > 1) {
             return false;
-        } else if ("LT" in where) {
+        }  else if ("LT" in where) {
             const f = where["LT"];
             const value = Object.values(f)[0];
             if (value == null || value === undefined || !isNumber(value)) {
@@ -117,6 +117,8 @@ export default class QueryValidator {
             }
             let infoType = Object.keys(f)[0];
             let key = infoType.split("_");
+            let id = infoType.split("_")[0];
+            this.queryDatasetIDs.push(id);
             if (!courseNumberKey.includes(key[1])) {
                 return false;
             }
@@ -129,6 +131,8 @@ export default class QueryValidator {
             }
             let infoType = Object.keys(f)[0];
             let key = infoType.split("_");
+            let id = infoType.split("_")[0];
+            this.queryDatasetIDs.push(id);
             if (!courseNumberKey.includes(key[1])) {
                 return false;
             }
@@ -141,6 +145,8 @@ export default class QueryValidator {
             }
             let infoType = Object.keys(f)[0];
             let key = infoType.split("_");
+            let id = infoType.split("_")[0];
+            this.queryDatasetIDs.push(id);
             if (!courseNumberKey.includes(key[1])) {
                 return false;
             }
@@ -148,20 +154,23 @@ export default class QueryValidator {
         } else if ("IS" in where) {
             const f = where["IS"];
             const input = Object.values(f)[0];
-            if (input == null || input === undefined || isNumber(input)) {
+            if (input == null || input === undefined || input === "") {
                 return false;
             }
+            let stringInput = input.toString();
             // Might not need
-            if ((input.endsWith("*") === false) && (input.startsWith("*") === false) && (input.indexOf("*") === true)) {
-                throw new InsightError("cannot have * inside input");
-            }
-
             let infoType = Object.keys(f)[0];
             let key = infoType.split("_");
+            let id = infoType.split("_")[0];
+            this.queryDatasetIDs.push(id);
             if (!courseStringKey.includes(key[1])) {
                 return false;
             }
-            // TODO wildcards
+            if ((stringInput.endsWith("*") === false) &&
+                (stringInput.startsWith("*") === false) &&
+                (stringInput.indexOf("*") === true)) {
+                throw new InsightError("cannot have * inside input");
+            }
             return true;
 
         } else if ("AND" in where) {
@@ -172,9 +181,9 @@ export default class QueryValidator {
                 throw new InsightError("AND is empty");
             }
             for (let comp of where["AND"]) {
-                 if (!this.isQueryFilterValid(comp)) {
-                     return false;
-                 }
+                if (!this.isQueryFilterValid(comp)) {
+                    return false;
+                }
             }
             return true;
         } else if ("OR" in where) {
@@ -194,18 +203,11 @@ export default class QueryValidator {
             return this.isQueryFilterValid(where["NOT"]);
         }
         return false;
+
     }
-    private static isColumnsValid(query: any) {
-        let validKeys = ["courses_dept",
-            "courses_id",
-            "courses_avg",
-            "courses_instructor",
-            "courses_title",
-            "courses_pass",
-            "courses_fail",
-            "courses_audit",
-            "courses_uuid",
-            "courses_year"];
+    private isColumnsValid(query: any) {
+        let validKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year"];
+
         // ensures columns not empty
         try {
             if (query["OPTIONS"]["COLUMNS"].length <= 0) {
@@ -213,7 +215,9 @@ export default class QueryValidator {
             }
             // ensures columns only has valid keys
             for (let key of query["OPTIONS"]["COLUMNS"]) {
-                if (!validKeys.includes(key)) {
+                if (key.indexOf("_") < 0) {
+                    return false;
+                } else if (validKeys.indexOf(key) >= 0) {
                     return false;
                 }
             }
@@ -222,18 +226,27 @@ export default class QueryValidator {
         }
         return true;
     }
-    private static isOrderValid(query: any) {
+    private isOrderValid(query: any) {
         if (query["OPTIONS"].hasOwnProperty("ORDER")) {
-            // ensures options only has 1 key
+            // ensures options only has 1 key/ not an array
             if (Array.isArray(query["OPTIONS"]["ORDER"])) {
                 return false;
             }
             // ensures order key is included in columns
             let orderKey = query["OPTIONS"]["ORDER"];
+            // if (orderKey === null || orderKey === undefined || orderKey === "" ) {
+            //    return false;
+            // }
             if (!query["OPTIONS"]["COLUMNS"].includes(orderKey)) {
                 return false;
             }
         }
         return true;
+    }
+    public getQueryID() {
+        if (this.queryDatasetIDs.every((x) => x === this.queryDatasetIDs[0])) {
+            return this.queryDatasetIDs[0];
+        }
+
     }
 }

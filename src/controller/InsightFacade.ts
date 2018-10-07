@@ -10,19 +10,26 @@ import ProcessQuery from "./ProcessQuery";
  * Method documentation is in IInsightFacade
  *
  */
-let storedDataSets: Map<string, any> = new Map<string, object[]>();
+
 let fs = require("fs");
 let JSZip = require("jszip");
-let metaData: InsightDataset[] = [];
-
+// let metaData: InsightDataset[] = [];
 export default class InsightFacade implements IInsightFacade {
+    public storedDataSets: Map<string, any> = new Map<string, object[]>();
+    private metaData: InsightDataset[] = [];
 
     constructor() {
         Log.trace("InsightFacadeImpl::init()");
-        storedDataSets = new Map<string, object[]>();
-        metaData = [];
+        this.storedDataSets = new Map<string, object[]>();
+        this.metaData = [];
+
         fs = require("fs");
         JSZip = require("jszip");
+
+        // need to store the datasets to data so ensure that a directory for that exists
+        if (!fs.existsSync("./data/")) {
+            fs.mkdirSync("./data");
+        }
     }
 
     public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
@@ -31,14 +38,15 @@ export default class InsightFacade implements IInsightFacade {
         let coursePromises: Array<Promise<string>> = [];
         let parsedOfferings: object[] = [];
         let numRows: number = 0;
+        let context = this;
         return new Promise(function (resolve, reject) {
-            if (id === "") {
+            if (id === "" || id === null || id === undefined) {
                 return reject (new InsightError("id can't be empty string"));
             }
             if (!((typeof id) === (typeof stringType))) {
                 return reject (new InsightError("id must be string"));
             }
-            if (storedDataSets.has(id)) {
+            if (context.storedDataSets.has(id)) {
                 return reject (new InsightError("id already in use"));
             }
             if (!((typeof content) === (typeof stringType))) {
@@ -51,31 +59,32 @@ export default class InsightFacade implements IInsightFacade {
             // return JSZip.loadAsync(fs, {base64: true});
             // fs.readFile(JSZip);
             let zip = new JSZip();
+
             return zip.loadAsync(content, {base64: true})
                 .then(function (result: any) {
                     return result;
                 }).catch(function (error: any) {
                     return reject (new InsightError("non-zip/ corrupt file"));
                 })
-        .then((zipContent: any) => {
-                if (kind === InsightDatasetKind.Courses) {
-                    if (typeof zipContent === JSZip) {
-                        return reject (new InsightError("test"));
-                    }
-                    zipContent.folder("courses").forEach(function (coursePath: any) {
-                        if (DataSetHelper.isJson(coursePath)) {
-                            coursePromises.push(zipContent.folder("courses").file(coursePath).async("string"));
+                .then((zipContent: any) => {
+                    if (kind === InsightDatasetKind.Courses) {
+                        if (typeof zipContent === JSZip) {
+                            return reject (new InsightError("test"));
                         }
-                    });
-                } else {
-                    return reject (new InsightError("Missing Courses folder"));
-                }
-                if (coursePromises.length > 0) {
-                    return Promise.all(coursePromises);
-                } else {
-                    return reject (new InsightError("No courses"));
-                }
-            })
+                        zipContent.folder("courses").forEach(function (coursePath: any, file: any) {
+                            if (DataSetHelper.isJson(coursePath)) {
+                                coursePromises.push(file.async("string"));
+                            }
+                        });
+                    } else {
+                        return reject (new InsightError("Missing Courses folder"));
+                    }
+                    if (coursePromises.length > 0) {
+                        return Promise.all(coursePromises);
+                    } else {
+                        return reject (new InsightError("No courses"));
+                    }
+                })
                 .then((unzippedContent: any) => {
                     let allOfferings: object[] = [];
                     let course: { [key: string]: any };
@@ -106,42 +115,61 @@ export default class InsightFacade implements IInsightFacade {
                         }
                     });
                     // TODO save to Disk
+                    // this.fs.writeFileSync("./src/data" + id + ".json");
+                    // is it already saved on disk (true if path exists)
+                    if (!context.storedDataSets.has(id)) {
+                        let data = fs.writeFileSync("./data/" + id + ".json");
+                        context.storedDataSets.set(id, JSON.stringify(data));
+                    }
+
+                    return context.storedDataSets.keys();
+
                 })
                 .then(() => {
-                    storedDataSets.set(id, parsedOfferings);
+                    context.storedDataSets.set(id, parsedOfferings);
                     let tempInsightDataset: InsightDataset = {id, kind, numRows};
-                    metaData.push(tempInsightDataset);
-                    let keys = Array.from(storedDataSets.keys());
+                    context.metaData.push(tempInsightDataset);
+                    let keys = Array.from(context.storedDataSets.keys());
                     return resolve(keys);
                 }).catch();
         });
     }
 
     public removeDataset(id: string): Promise<string> {
+        let context = this;
         // return Promise.reject("Not implemented.");
         return new Promise(function (resolve, reject) {
-            if (!(storedDataSets.has(id))) {
+            if (!(context.storedDataSets.has(id))) {
                 return reject(new NotFoundError("Dataset does not exist/ already removed"));
             }
-            if (storedDataSets.has(id)) {
-                storedDataSets.delete(id);
-                for (let dataSet of metaData) {
+            if (context.storedDataSets.has(id)) {
+                context.storedDataSets.delete(id);
+
+                for (let dataSet of context.metaData) {
                     if (dataSet.id === id) {
-                        let i = metaData.indexOf(dataSet);
-                        metaData.splice(i, 1);
+                        let i = context.metaData.indexOf(dataSet);
+                        context.metaData.splice(i, 1);
                     }
                 }
+
+                // remove from disk:
+                if (fs.existsSync("./data/" + id + ".json")) {
+                    fs.unlink("./data/" + id + ".json");
+                }
+
                 return resolve (Promise.resolve(id));
-            } else {
-                return reject(new InsightError("removeDataset did not complete for some reason"));
+            } else if (id === null || id === undefined || id === "") {
+                return reject(new InsightError("removeDataset cannot remove null, undefined, or empty id"));
             }
         });
     }
 
     public performQuery(query: any): Promise <any[]> {
+        let context = this;
         return new Promise(function (resolve, reject) {
-            let datasets: any = storedDataSets.get("courses");
+            // let datasets: any = context.storedDataSets.get(QueryValidator.getQueryID());
             ProcessQuery.result = [];
+            let queryValidator: QueryValidator = new QueryValidator(query);
             // let returnFilteredOfferings: any = []; // empty array to put offering objects that fit requirements
             let validatedQuery: any = null;
             try {
@@ -149,8 +177,12 @@ export default class InsightFacade implements IInsightFacade {
             } catch (err) {
                 return reject (new InsightError("Invalid query format -- not JSON"));
             }
-            if (QueryValidator.isQueryValid(validatedQuery)) {
-                ProcessQuery.compareQueryToDataset(datasets, validatedQuery);
+            if (queryValidator.isQueryValid(validatedQuery)) {
+                let dataset: any = context.storedDataSets.get(queryValidator.getQueryID());
+                if (dataset === null || dataset === undefined) {
+                    return reject (new InsightError("dataset for that query doesn't exist"));
+                }
+                ProcessQuery.compareQueryToDataset(dataset, validatedQuery);
             } else {
                 return reject (new InsightError("invalid query"));
             }
@@ -161,7 +193,7 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public listDatasets(): Promise<InsightDataset[]> {
-        return Promise.resolve(metaData);
+        return Promise.resolve(this.metaData);
         // return Promise.reject("Not implemented.");
     }
 }

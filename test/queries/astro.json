@@ -1,0 +1,29 @@
+{
+	"title": "Astro: Should be able to find sections taught by a specific person",
+	"query": {
+		"WHERE": {
+			"IS": {
+				"courses_instructor": "holmes, reid"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"courses_dept",
+				"courses_avg"
+			],
+			"ORDER": "courses_avg"
+		}
+	},
+	"isQueryValid": true,
+		"result": [{
+				"courses_dept": "cpsc",
+				"courses_avg": 79
+			}, {
+				"courses_dept": "cpsc",
+				"courses_avg": 81.17
+			}, {
+				"courses_dept": "cpsc",
+				"courses_avg": 89
+			}
+		]
+	}

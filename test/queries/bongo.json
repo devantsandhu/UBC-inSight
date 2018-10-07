@@ -1,0 +1,67 @@
+{
+    "title": "Bongo: Should be able to find sections with lots of auditors",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_audit": 18
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_avg",
+                "courses_audit"
+            ],
+            "ORDER": "courses_audit"
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        {
+            "courses_dept": "frst",
+            "courses_avg": 85.56,
+            "courses_audit": 19
+        },
+        {
+            "courses_dept": "frst",
+            "courses_avg": 85.56,
+            "courses_audit": 19
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 77.65,
+            "courses_audit": 19
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86,
+            "courses_audit": 19
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87,
+            "courses_audit": 19
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 87.26,
+            "courses_audit": 20
+        },
+        {
+            "courses_dept": "cpsc",
+            "courses_avg": 90.53,
+            "courses_audit": 21
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 86.89,
+            "courses_audit": 21
+        },
+        {
+            "courses_dept": "rhsc",
+            "courses_avg": 88.79,
+            "courses_audit": 23
+        }
+    ]
+}
+
