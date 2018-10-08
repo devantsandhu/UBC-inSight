@@ -92,8 +92,8 @@ export default class QueryValidator {
                 if (i.includes("_")) {
                     let id = i.split("_")[0];
                     datasetIds.push(id);
+                    this.queryDatasetIDs.push(id);
                 }
-                i++;
             }
             return datasetIds.every((x) => x === datasetIds[0]);
         }
@@ -252,6 +252,5 @@ export default class QueryValidator {
         if (this.queryDatasetIDs.every((x) => x === this.queryDatasetIDs[0])) {
             return this.queryDatasetIDs[0];
         }
-
     }
 }

@@ -1,7 +1,11 @@
 {
-    "title": "reject 5000+ result with empty WHERE",
+    "title": "reject 5000+ result with empty string for Instructor",
     "query": {
-        "WHERE": {},
+        "WHERE": {
+            "IS": {
+                "courses_instructor": ""
+            }
+        },
         "OPTIONS": {
             "COLUMNS": [
                 "courses_instructor"

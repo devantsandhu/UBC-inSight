@@ -178,10 +178,27 @@ export default class ProcessQuery {
                         ((endWC === true) || (noWC === true))) {
                         this.result.push(offering);
                         offeringsCount++;
-                    } else if ((offering[comparatorIDKey].indexOf(comparatorValueTrunc) ===
-                        (offering[comparatorIDKey].length - comparatorValueTrunc.length)) && ((startWC === true))) {
+                    } else if (startWC === true) {
+                        let substringLength = comparatorValueTrunc.length;
+                        let maxIndex = null;
+                        for (let i = 1; i < offering[comparatorIDKey].length; i++) {
+                            if (offering[comparatorIDKey].substring(i, i + substringLength) === comparatorValueTrunc) {
+                                maxIndex = i;
+                            }
+                        }
+                        if (maxIndex === (offering[comparatorIDKey].length - (comparatorValueTrunc.length))) {
+                            this.result.push(offering);
+                            offeringsCount++;
+                        }
+
+                        /*
+                        (offering[comparatorIDKey].substring(
+                        (offering[comparatorIDKey].length - comparatorValueTrunc.length),
+                            offering[comparatorIDKey].length) === comparatorValueTrunc) && (startWC === true)) {
                         this.result.push(offering);
                         offeringsCount++;
+                        */
+
                     } else if ((offering[comparatorIDKey].indexOf(comparatorValueTrunc) >= 0)
                         && (bothEndsWC === true)) {
                         this.result.push(offering);

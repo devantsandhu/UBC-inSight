@@ -1,0 +1,23 @@
+{
+    "title":"empty where PASS",
+	"query": {
+        "WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": ["oneSectionDataSet_dept", "oneSectionDataSet_id", "oneSectionDataSet_avg", "oneSectionDataSet_instructor", "oneSectionDataSet_title", "oneSectionDataSet_pass", "oneSectionDataSet_fail", "oneSectionDataSet_audit", "oneSectionDataSet_uuid", "oneSectionDataSet_year"]
+		}
+	},
+    "isQueryValid": true,
+	"result": [{
+			"oneSectionDataSet_audit": 0,
+			"oneSectionDataSet_avg": 82.75,
+			"oneSectionDataSet_dept": "path",
+			"oneSectionDataSet_fail": 0,
+			"oneSectionDataSet_id": "304",
+			"oneSectionDataSet_instructor": "gilks, cyril blake;haley, lawrence;luo, honglin;skinnider, brian;tba",
+			"oneSectionDataSet_pass": 24,
+			"oneSectionDataSet_title": "hum histology",
+			"oneSectionDataSet_uuid": "4556",
+			"oneSectionDataSet_year": 2013
+		}
+	]
+}

@@ -139,6 +139,9 @@ export default class InsightFacade implements IInsightFacade {
         let context = this;
         // return Promise.reject("Not implemented.");
         return new Promise(function (resolve, reject) {
+            if (id === null || id === undefined || id === "") {
+                return reject(new InsightError("removeDataset cannot remove null, undefined, or empty id"));
+            }
             if (!(context.storedDataSets.has(id))) {
                 return reject(new NotFoundError("Dataset does not exist/ already removed"));
             }
@@ -158,8 +161,6 @@ export default class InsightFacade implements IInsightFacade {
                 }
 
                 return resolve (Promise.resolve(id));
-            } else if (id === null || id === undefined || id === "") {
-                return reject(new InsightError("removeDataset cannot remove null, undefined, or empty id"));
             }
         });
     }
@@ -188,8 +189,8 @@ export default class InsightFacade implements IInsightFacade {
                 if (dataset === null || dataset === undefined) {
                     return reject (new InsightError("dataset for that query doesn't exist"));
                 }
-                if (validatedQuery["WHERE"].length === 0) {
-                    ProcessQuery.result = dataset.slice();
+                if (Object.keys(validatedQuery["WHERE"]).length === 0) {
+                    ProcessQuery.result = dataset;
                 } else {
                     ProcessQuery.compareQueryToDataset(dataset, validatedQuery);
                 }
