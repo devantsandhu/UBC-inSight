@@ -179,7 +179,12 @@ export default class InsightFacade implements IInsightFacade {
             }
             if (queryValidator.isQueryValid(validatedQuery)) {
                 // const dataset = context.storedDataSets.get(queryValidator.getQueryID());
-                let dataset: any = context.storedDataSets.get(queryValidator.getQueryID());
+                let dataset: any;
+                try {
+                    dataset = JSON.parse(JSON.stringify(context.storedDataSets.get(queryValidator.getQueryID())));
+                } catch (e) {
+                    return reject (new InsightError("Dataset does not exist"));
+                }
                 if (dataset === null || dataset === undefined) {
                     return reject (new InsightError("dataset for that query doesn't exist"));
                 }
