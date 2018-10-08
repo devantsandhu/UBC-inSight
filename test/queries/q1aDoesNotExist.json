@@ -1,0 +1,19 @@
+{
+    "title": "SELECT dept, avg WHERE avg > 97 on nonexistant dataset",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses22_avg":97
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses22_dept",
+                "courses22_avg"
+            ],
+            "ORDER": "courses22_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "Dataset courses22 does not exist"
+}

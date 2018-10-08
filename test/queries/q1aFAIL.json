@@ -1,0 +1,19 @@
+{
+    "title": "SELECT dept, avg WHERE avg > 97 on courses2 FAILS",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses2_avg":97
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses2_dept",
+                "courses_avg"
+            ],
+            "ORDER": "courses2_avg"
+        }
+    },
+    "isQueryValid": false,
+    "result": "dataset id not consistent"
+}

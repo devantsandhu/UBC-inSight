@@ -1,0 +1,69 @@
+{
+    "title": "SELECT dept, avg WHERE avg > 97 on courses2",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses2_avg":97
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses2_dept",
+                "courses2_avg"
+            ],
+            "ORDER": "courses2_avg"
+        }
+    },
+    "isQueryValid": true,
+    "result": [
+        { "courses2_dept": "epse", "courses2_avg": 97.09 },
+        { "courses2_dept": "math", "courses2_avg": 97.09 },
+        { "courses2_dept": "math", "courses2_avg": 97.09 },
+        { "courses2_dept": "epse", "courses2_avg": 97.09 },
+        { "courses2_dept": "math", "courses2_avg": 97.25 },
+        { "courses2_dept": "math", "courses2_avg": 97.25 },
+        { "courses2_dept": "epse", "courses2_avg": 97.29 },
+        { "courses2_dept": "epse", "courses2_avg": 97.29 },
+        { "courses2_dept": "nurs", "courses2_avg": 97.33 },
+        { "courses2_dept": "nurs", "courses2_avg": 97.33 },
+        { "courses2_dept": "epse", "courses2_avg": 97.41 },
+        { "courses2_dept": "epse", "courses2_avg": 97.41 },
+        { "courses2_dept": "cnps", "courses2_avg": 97.47 },
+        { "courses2_dept": "cnps", "courses2_avg": 97.47 },
+        { "courses2_dept": "math", "courses2_avg": 97.48 },
+        { "courses2_dept": "math", "courses2_avg": 97.48 },
+        { "courses2_dept": "educ", "courses2_avg": 97.5 },
+        { "courses2_dept": "nurs", "courses2_avg": 97.53 },
+        { "courses2_dept": "nurs", "courses2_avg": 97.53 },
+        { "courses2_dept": "epse", "courses2_avg": 97.67 },
+        { "courses2_dept": "epse", "courses2_avg": 97.69 },
+        { "courses2_dept": "epse", "courses2_avg": 97.78 },
+        { "courses2_dept": "crwr", "courses2_avg": 98 },
+        { "courses2_dept": "crwr", "courses2_avg": 98 },
+        { "courses2_dept": "epse", "courses2_avg": 98.08 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.21 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.21 },
+        { "courses2_dept": "epse", "courses2_avg": 98.36 },
+        { "courses2_dept": "epse", "courses2_avg": 98.45 },
+        { "courses2_dept": "epse", "courses2_avg": 98.45 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.5 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.5 },
+        { "courses2_dept": "epse", "courses2_avg": 98.58 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.58 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.58 },
+        { "courses2_dept": "epse", "courses2_avg": 98.58 },
+        { "courses2_dept": "epse", "courses2_avg": 98.7 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.71 },
+        { "courses2_dept": "nurs", "courses2_avg": 98.71 },
+        { "courses2_dept": "eece", "courses2_avg": 98.75 },
+        { "courses2_dept": "eece", "courses2_avg": 98.75 },
+        { "courses2_dept": "epse", "courses2_avg": 98.76 },
+        { "courses2_dept": "epse", "courses2_avg": 98.76 },
+        { "courses2_dept": "epse", "courses2_avg": 98.8 },
+        { "courses2_dept": "spph", "courses2_avg": 98.98 },
+        { "courses2_dept": "spph", "courses2_avg": 98.98 },
+        { "courses2_dept": "cnps", "courses2_avg": 99.19 },
+        { "courses2_dept": "math", "courses2_avg": 99.78 },
+        { "courses2_dept": "math", "courses2_avg": 99.78 }
+    ]
+}

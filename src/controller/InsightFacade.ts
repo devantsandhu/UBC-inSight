@@ -108,7 +108,7 @@ export default class InsightFacade implements IInsightFacade {
                 })
                 .then((tempOfferings: any) => {
                     tempOfferings.forEach((tempOffering: any) => {
-                        let parsedCourse: object = DataSetHelper.parseOffering(tempOffering);
+                        let parsedCourse: object = DataSetHelper.parseOffering(tempOffering, id);
                         if (!(parsedCourse === null)) {
                             numRows++;
                             parsedOfferings.push(parsedCourse);
@@ -182,9 +182,16 @@ export default class InsightFacade implements IInsightFacade {
                 if (dataset === null || dataset === undefined) {
                     return reject (new InsightError("dataset for that query doesn't exist"));
                 }
-                ProcessQuery.compareQueryToDataset(dataset, validatedQuery);
+                if (validatedQuery["WHERE"].length === 0) {
+                    ProcessQuery.result = dataset;
+                } else {
+                    ProcessQuery.compareQueryToDataset(dataset, validatedQuery);
+                }
             } else {
                 return reject (new InsightError("invalid query"));
+            }
+            if (!(ProcessQuery.result.length < 5000)) {
+                return reject (new InsightError("Result is not < 5000"));
             }
             ProcessQuery.columnSort(ProcessQuery.result, validatedQuery);
             ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);

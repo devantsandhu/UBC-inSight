@@ -11,11 +11,13 @@ export default class QueryValidator {
 
     // private courseNumberKey: any = ["avg",  "pass", "fail" , "audit", "year"];
     // private courseStringKey: any = ["dept", "id", "title", "uuid", "instructor"];
+
     constructor(facade: InsightFacade) {
         this.insight = facade;
     }
 
     // if there's no query (null/undefined) and basic malformation check of WHERE and COLUMNS
+
     public isQueryValid(query: any): boolean {
         // let queryDatasetIDs: string[] = [];
         if (query === null || query === undefined || (Object.keys(query).length > 2) ||
@@ -49,6 +51,7 @@ export default class QueryValidator {
         // if (!this.confirmALLWhereIDs(query)) {
         //    return false;
         // }
+
         if (!this.confirmALLColumnIDs(query)) {
             return false;
         }
@@ -101,8 +104,9 @@ export default class QueryValidator {
         let courseNumberKey: any = ["avg",  "pass", "fail" , "audit", "year"];
         let courseStringKey: any = ["dept", "id", "title", "uuid", "instructor"];
         // check that if there is a MCOMPARATOR, SCOMPARATOR, or LOGIC  key it's followed by a key
+
         if (this.queryDatasetIDs.length > 1) {
-            if (this.queryDatasetIDs.every((x) => x === this.queryDatasetIDs[0])) {
+            if (!this.queryDatasetIDs.every((x) => x === this.queryDatasetIDs[0])) {
                 return false;
             }
         }
@@ -154,11 +158,12 @@ export default class QueryValidator {
         } else if ("IS" in where) {
             const f = where["IS"];
             const input = Object.values(f)[0];
-            if (input == null || input === undefined || input === "") {
+            if (input == null || input === undefined) {
                 return false;
             }
             let stringInput = input.toString();
             // Might not need
+
             let infoType = Object.keys(f)[0];
             let key = infoType.split("_");
             let id = infoType.split("_")[0];

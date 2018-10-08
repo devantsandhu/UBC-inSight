@@ -1,0 +1,19 @@
+{
+    "title": "reject 5000+ result with empty Where",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "courses_instructor": ""
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_instructor"
+            ]
+        }
+    },
+
+    "isQueryValid": false,
+
+    "result":"query result too big"
+}

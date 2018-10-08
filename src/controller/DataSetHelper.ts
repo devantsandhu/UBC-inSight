@@ -1,19 +1,19 @@
 export default class DataSetHelper {
 
-    public static parseOffering(offering: any) {
+    public static parseOffering(offering: any, id: string) {
         // object that will be returned
         // offering = JSON.stringify(offering);
         let parsedOffering: {[key: string]: any} = {
-            courses_dept: "",
-            courses_id: "",
-            courses_avg: 0,
-            courses_instructor: "",
-            courses_title: "",
-            courses_pass: 0,
-            courses_fail: 0,
-            courses_audit: 0,
-            courses_uuid: "",
-            courses_year: 0,
+            // courses_dept: "",
+            // courses_id: "",
+            // courses_avg: 0,
+            // courses_instructor: "",
+            // courses_title: "",
+            // courses_pass: 0,
+            // courses_fail: 0,
+            // courses_audit: 0,
+            // courses_uuid: "",
+            // courses_year: 0,
         };
         try {
             // Check to see if Offering has all valid keys
@@ -29,16 +29,16 @@ export default class DataSetHelper {
                 offering.hasOwnProperty("id") &&
                 offering.hasOwnProperty("Year")) {
                 // Assign key values to object
-                parsedOffering["courses_dept"] = offering["Subject"];
-                parsedOffering["courses_id"] = offering["Course"];
-                parsedOffering["courses_avg"] = offering["Avg"];
-                parsedOffering["courses_instructor"] = offering["Professor"];
-                parsedOffering["courses_title"] = offering["Title"];
-                parsedOffering["courses_pass"] = offering["Pass"];
-                parsedOffering["courses_fail"] = offering["Fail"];
-                parsedOffering["courses_audit"] = offering["Audit"];
-                parsedOffering["courses_uuid"] = offering["id"].toString();
-                parsedOffering["courses_year"] = Number(offering["Year"]);
+                parsedOffering[id + "_dept"] = offering["Subject"];
+                parsedOffering[id + "_id"] = offering["Course"];
+                parsedOffering[id + "_avg"] = offering["Avg"];
+                parsedOffering[id + "_instructor"] = offering["Professor"];
+                parsedOffering[id + "_title"] = offering["Title"];
+                parsedOffering[id + "_pass"] = offering["Pass"];
+                parsedOffering[id + "_fail"] = offering["Fail"];
+                parsedOffering[id + "_audit"] = offering["Audit"];
+                parsedOffering[id + "_uuid"] = offering["id"].toString();
+                parsedOffering[id + "_year"] = Number(offering["Year"]);
                 // return object with assigned values
                 return parsedOffering;
             }
