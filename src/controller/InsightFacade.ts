@@ -165,7 +165,7 @@ export default class InsightFacade implements IInsightFacade {
     }
 
     public performQuery(query: any): Promise <any[]> {
-        let context = this;
+        const context = this;
         return new Promise(function (resolve, reject) {
             // let datasets: any = context.storedDataSets.get(QueryValidator.getQueryID());
             ProcessQuery.result = [];
@@ -178,12 +178,13 @@ export default class InsightFacade implements IInsightFacade {
                 return reject (new InsightError("Invalid query format -- not JSON"));
             }
             if (queryValidator.isQueryValid(validatedQuery)) {
+                // const dataset = context.storedDataSets.get(queryValidator.getQueryID());
                 let dataset: any = context.storedDataSets.get(queryValidator.getQueryID());
                 if (dataset === null || dataset === undefined) {
                     return reject (new InsightError("dataset for that query doesn't exist"));
                 }
                 if (validatedQuery["WHERE"].length === 0) {
-                    ProcessQuery.result = dataset;
+                    ProcessQuery.result = dataset.slice();
                 } else {
                     ProcessQuery.compareQueryToDataset(dataset, validatedQuery);
                 }

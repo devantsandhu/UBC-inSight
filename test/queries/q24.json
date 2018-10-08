@@ -14,6 +14,6 @@
             "ORDER": "courses_avg"
         }
     },
-    "isQueryValid": false,
-    "result": "Supposed to give a number (its blank)"
+    "isQueryValid": true,
+    "result": []
 }

@@ -170,6 +170,10 @@ export default class ProcessQuery {
                         // offering++;
                     } else if (onlyWC) {
                         this.result.push(offering);
+                    } else if (noWC) {
+                        if (offering[comparatorIDKey] === comparatorValueTrunc) {
+                            this.result.push(offering);
+                        }
                     } else if ((offering[comparatorIDKey].indexOf(comparatorValueTrunc) === 0) &&
                         ((endWC === true) || (noWC === true))) {
                         this.result.push(offering);

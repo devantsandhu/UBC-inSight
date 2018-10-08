@@ -13,7 +13,7 @@ export default class QueryValidator {
     // private courseStringKey: any = ["dept", "id", "title", "uuid", "instructor"];
 
     constructor(facade: InsightFacade) {
-        this.insight = facade;
+         // this.insight = facade;
     }
 
     // if there's no query (null/undefined) and basic malformation check of WHERE and COLUMNS
