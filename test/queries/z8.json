@@ -1,0 +1,60 @@
+{
+    "title": "MIN, MAX, COUNT and AVG number of seats for each type of room in BUCH",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "rooms_name": "BUCH_*"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_type",
+                "minCapacity",
+                "maxCapacity",
+                "avgCapacity",
+                "count"
+            ],
+            "ORDER": {
+                "dir": "UP",
+                "keys": [
+                    "minCapacity",
+                    "maxCapacity",
+                    "avgCapacity",
+                    "count"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_type"
+            ],
+            "APPLY": [
+                {
+                    "minCapacity": {
+                        "MIN": "rooms_seats"
+                    }
+                },
+                {
+                    "maxCapacity": {
+                        "MAX": "rooms_seats"
+                    }
+                },
+                {
+                    "avgCapacity": {
+                        "AVG": "rooms_seats"
+                    }
+                },
+                {
+                    "count": {
+                        "COUNT": "rooms_seats"
+                    }
+                }
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result":[
+        {"rooms_type":"Small Group","minCapacity":18,"maxCapacity":32,"avgCapacity":27,"count":6},
+        {"rooms_type":"Open Design General Purpose","minCapacity":24,"maxCapacity":50,"avgCapacity":40.56,"count":6},
+        {"rooms_type":"Case Style","minCapacity":56,"maxCapacity":108,"avgCapacity":82.17,"count":4},
+        {"rooms_type":"Tiered Large Group","minCapacity":65,"maxCapacity":275,"avgCapacity":123.8,"count":6}]}

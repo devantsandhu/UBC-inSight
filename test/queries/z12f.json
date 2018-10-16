@@ -1,0 +1,21 @@
+{
+    "title": "invalid keys - not array",
+    "query": {
+        "WHERE":{
+            "GT":{
+                "courses_avg":97
+            }
+        },
+        "OPTIONS":{
+            "COLUMNS":[
+                "courses_avg"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": "maxSeats"
+            }
+        }
+    },
+    "isQueryValid": false,
+    "result":[]
+}

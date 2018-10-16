@@ -1,0 +1,22 @@
+{
+    "title": "empty apply - must fail",
+    "query": {
+        "WHERE": {},
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_uuid"
+            ],
+            "ORDER": "courses_dept"
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_dept",
+                "courses_uuid"
+            ],
+            "APPLY": []
+        }
+    },
+    "isQueryValid": false,
+    "result": []
+}
