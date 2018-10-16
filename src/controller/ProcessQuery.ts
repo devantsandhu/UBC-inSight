@@ -5,7 +5,7 @@ import InsightFacade from "./InsightFacade";
 import QueryValidator from "./QueryValidator";
 
 let offeringsCount = 0;
-let negation = false;
+// let negation = false;
 let unfilteredDataset: any[] = [];
 
 export default class ProcessQuery {
@@ -25,7 +25,7 @@ export default class ProcessQuery {
 
         let filter = query["WHERE"];
         offeringsCount = 0;
-        negation = false;
+        // negation = false;
         // recursive, same as validation
         this.comparatorProcess(filter, allOfferings);
 
@@ -33,6 +33,7 @@ export default class ProcessQuery {
 
     private static comparatorProcess(filter: any, allOfferings: any) {
         const comparatorType = Object.keys(filter)[0]; // GT/LT/EQ/IS/AND/NOT
+        let negation = false;
         /*
         if (comparatorType.length <= 1) {
             throw new InsightError("Invalid query");
@@ -92,10 +93,10 @@ export default class ProcessQuery {
             }
         } else if (comparatorType === "NOT") {
             if (negation) {
-                negation = false;
+              negation = false;
             } else { negation = true; }
             ProcessQuery.comparatorProcess(filter["NOT"], allOfferings);
-            return;
+            // return;
 
         } else if (comparatorType === "AND") {
             for (let comp of filter["AND"]) {
@@ -224,7 +225,7 @@ export default class ProcessQuery {
                     //       offeringsCount++;
                 }
             }
-            negation = false;
+            // negation = false;
             /*
             if ((offeringsCount > 5000) || negatedResult.length > 5000) {
                 throw new InsightError("too big");
