@@ -1,8 +1,9 @@
 import Log from "../Util";
 import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError} from "./IInsightFacade";
-import {isNumber} from "util";
+import {isArray, isNumber} from "util";
 import InsightFacade from "./InsightFacade";
 import ProcessQuery from "./ProcessQuery";
+import {validate} from "jsonschema";
 
 export default class QueryValidator {
     private insight: InsightFacade;
@@ -20,12 +21,11 @@ export default class QueryValidator {
 
     public isQueryValid(query: any): boolean {
         // let queryDatasetIDs: string[] = [];
-        if (query === null || query === undefined || (Object.keys(query).length > 2) ||
+        if (query === null || query === undefined || (Object.keys(query).length > 3) ||
             Object.keys(query).length <= 0) {
             return false;
         }
 
-        // TODO Void test (can support queries without WHERE on small datasets) (need to get datasets into QV)
         // ((!query.hasOwnProperty("WHERE")) && storedDataSets.get(this.getQueryID()).length > 5000) {
         if ((!query.hasOwnProperty("WHERE"))) {
             return false;
@@ -39,6 +39,15 @@ export default class QueryValidator {
         if (!query["OPTIONS"].hasOwnProperty("COLUMNS")) {
             return false;
         }
+
+        if (query.hasOwnProperty("TRANSFORMATIONS")) {
+            if (query["TRANSFORMATIONS"] === null || query["TRANSFORMATIONS"] === undefined) {
+                return false;
+            } else {
+                this.validateTransformation(query["TRANSFORMATIONS"]);
+            }
+        }
+
         // ensures columns is valid
         if (!this.isColumnsValid(query)) {
             return false;
@@ -48,13 +57,26 @@ export default class QueryValidator {
             return false;
         }
 
-        // if (!this.confirmALLWhereIDs(query)) {
-        //    return false;
-        // }
+        // check that all elements in COLUMNS are in either GROUP or APPLY
+        let columnNames: string[];
+        columnNames = query["OPTIONS"]["COLUMNS"];
+        for (let n in columnNames) {
+            if (n.indexOf("_") > -1) { // TODO: currently only checks regular keys, not applykeys.
+                if (!(this.isInGROUP(query["TRANSFORMATIONS"]["GROUP"], n))) {
+                    return false;
+                } else {
+                    if (!(this.isInAPPLY(query["TRANSFORMATIONS"]["APPLY"], n))) {
+                        return false; // in neither GROUP or APPLY at this point
+                    }
+                }
+            }
+        }
 
+        // check that everything from same dataset
         if (!this.confirmALLColumnIDs(query)) {
             return false;
         }
+
         if (Object.keys(query["WHERE"]).length !== 0) {
             // let queryDatasetIDs: string[] = [];
             if (!this.isQueryFilterValid(query["WHERE"])) {
@@ -64,24 +86,26 @@ export default class QueryValidator {
         return true;
     }
 
-    /*
-    // OR IF CAN BE FROM DIFFERENT ids (ie doesn't have to be just courses:
-    public static confirmALLWhereIDs(query: any): boolean {
-        let datasetIds: string[] = [];
-        // let datasetId = ;
-        if (query && query["WHERE"]) {
-            let check = query["WHERE"];
-            for (let i of check) {
-                if (i.includes("_")) {
-                    let id = i.split("_")[0];
-                    datasetIds.push(id);
-                }
-                i++;
+
+    public isInGROUP(queryGROUP: any, name: string) {
+        for (let i of queryGROUP) {
+            if (i === name) {
+                return true;
             }
-            return datasetIds.every((x) => x === datasetIds[0]);
         }
+        return false;
     }
-    */
+
+    public isInAPPLY(queryAPPLY: any, name: string) {
+        for (let i of queryAPPLY) {
+            for (let j of Object.keys(i)) {
+                if (j === name) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public confirmALLColumnIDs(query: any): boolean {
         let datasetIds: string[] = [];
@@ -89,7 +113,7 @@ export default class QueryValidator {
         if (query["OPTIONS"]["COLUMNS"]) {
             let columns = query["OPTIONS"]["COLUMNS"];
             for (let i of columns) {
-                if (i.includes("_")) {
+                if (i.includes("_")) { // else it's an applykey
                     let id = i.split("_")[0];
                     datasetIds.push(id);
                     this.queryDatasetIDs.push(id);
@@ -101,8 +125,9 @@ export default class QueryValidator {
 
     // check that each filter and each filter information type (ie avg, dept); recurse in AND/OR are valid
     public isQueryFilterValid(where: any): boolean {
-        let courseNumberKey: any = ["avg",  "pass", "fail" , "audit", "year"];
-        let courseStringKey: any = ["dept", "id", "title", "uuid", "instructor"];
+        let CRNumberKey: any = ["avg",  "pass", "fail" , "audit", "year", "lat", "lon", "seats"];
+        let CRStringKey: any = ["dept", "id", "title", "uuid", "instructor", "fullname", "shortname",
+            "number", "name", "type", "furniture", "href"];
         // check that if there is a MCOMPARATOR, SCOMPARATOR, or LOGIC  key it's followed by a key
 
         if (this.queryDatasetIDs.length > 1) {
@@ -123,7 +148,7 @@ export default class QueryValidator {
             let key = infoType.split("_");
             let id = infoType.split("_")[0];
             this.queryDatasetIDs.push(id);
-            if (!courseNumberKey.includes(key[1])) {
+            if (!CRNumberKey.includes(key[1])) {
                 return false;
             }
             return true;
@@ -137,7 +162,7 @@ export default class QueryValidator {
             let key = infoType.split("_");
             let id = infoType.split("_")[0];
             this.queryDatasetIDs.push(id);
-            if (!courseNumberKey.includes(key[1])) {
+            if (!CRNumberKey.includes(key[1])) {
                 return false;
             }
             return true;
@@ -151,7 +176,7 @@ export default class QueryValidator {
             let key = infoType.split("_");
             let id = infoType.split("_")[0];
             this.queryDatasetIDs.push(id);
-            if (!courseNumberKey.includes(key[1])) {
+            if (!CRNumberKey.includes(key[1])) {
                 return false;
             }
             return true;
@@ -168,7 +193,7 @@ export default class QueryValidator {
             let key = infoType.split("_");
             let id = infoType.split("_")[0];
             this.queryDatasetIDs.push(id);
-            if (!courseStringKey.includes(key[1])) {
+            if (!CRStringKey.includes(key[1])) {
                 return false;
             }
             if ((stringInput.endsWith("*") === false) &&
@@ -208,11 +233,13 @@ export default class QueryValidator {
             return this.isQueryFilterValid(where["NOT"]);
         }
         return false;
-
     }
-    private isColumnsValid(query: any) {
-        let validKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year"];
 
+    private isColumnsValid(query: any) {
+        let validKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year",
+        "fullname", "shortname", "number", "name", "type", "furniture", "href", "lat", "lon", "seats"];
+
+        let nonValidKeys = [];
         // ensures columns not empty
         try {
             if (query["OPTIONS"]["COLUMNS"].length <= 0) {
@@ -221,6 +248,10 @@ export default class QueryValidator {
             // ensures columns only has valid keys
             for (let key of query["OPTIONS"]["COLUMNS"]) {
                 if (key.indexOf("_") < 0) {
+                    // TODO: refactor
+                    // if it doesn't have an underscore it could be an applykey
+                    // save to an array to check if they're in TRANSFORM later
+                    nonValidKeys.push(key);
                     return false;
                 } else if (validKeys.indexOf(key) >= 0) {
                     return false;
@@ -237,15 +268,48 @@ export default class QueryValidator {
             if (Array.isArray(query["OPTIONS"]["ORDER"])) {
                 return false;
             }
+
             // ensures order key is included in columns
-            let orderKey = query["OPTIONS"]["ORDER"];
-            // if (orderKey === null || orderKey === undefined || orderKey === "" ) {
-            //    return false;
-            // }
-            if (!query["OPTIONS"]["COLUMNS"].includes(orderKey)) {
-                return false;
+            // old version key was a string. validate.
+            if (typeof query["OPTIONS"]["ORDER"] === "string") {
+                let orderKey = query["OPTIONS"]["ORDER"];
+
+                if (!query["OPTIONS"]["COLUMNS"].includes(orderKey)) {
+                    return false;
+                }
+            }
+
+            // expanded: ORDER has 2 objects (dir and key).
+            if (typeof query["OPTIONS"]["ORDER"] === "object") {
+                if ((Object.keys(query["OPTIONS"]).length === 2 )) {
+                    if ((Object.keys(query["OPTIONS"]["ORDER"].hasOwnProperty("dir"))) &&
+                        (Object.keys(query["OPTIONS"]["ORDER"].hasOwnProperty("keys")))) {
+
+                        // keys must be an array
+                        if (!isArray(query["OPTIONS"]["ORDER"]["keys"])) {
+                            return false;
+                        }
+                        let direction: string = query["OPTIONS"]["ORDER"]["dir"];
+                        let ORDERKeysArray: string [] = query["OPTIONS"]["ORDER"]["keys"]; // can have multiple
+
+                        // confirm that dir is UP or DOWN, nothing else
+                        if (!(direction === ("UP" || "DOWN"))) {
+                            return false;
+                        }
+
+                        for (let key in ORDERKeysArray) {
+                            // confirm keys || applykeys are in COLUMNS
+                            if (query["OPTIONS"]["COLUMNS"].indexOf(key) === -1) {
+                                return false; // key in ORDER not in COLUMNS
+                            }
+                        }
+                    }
+                } else {
+                    return false;
+                }
             }
         }
+
         return true;
     }
     public getQueryID() {
@@ -253,4 +317,98 @@ export default class QueryValidator {
             return this.queryDatasetIDs[0];
         }
     }
+
+    private validateTransformation(transform: any) {
+        // neither GROUP nor APPLY can be empty/null/undefined
+        if (transform.hasOwnProperty("GROUP") || transform.hasOwnProperty("APPLY")) {
+            // if (transform["GROUP"] === null || transform["APPLY"] === null) {
+               // return false;
+            // }
+            if (transform["GROUP"] === undefined || transform["APPLY"] === undefined) {
+                return false;
+            }
+            // if ((transform["GROUP"]).length <= 0 || (transform["APPLY"]).length <= 0 ) {
+            //    return false;
+            // }
+
+            if (transform.hasOwnProperty("GROUP") && transform.hasOwnProperty("APPLY")) {
+                if (typeof transform["GROUP"] === "string" && "array") {
+                    return true;
+                }
+                if (typeof transform["APPLY"] === "object" && "array") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            // its OK if a query has neither GROUP nor APPLY
+            if (!transform.hasOwnProperty("GROUP") && !transform.hasOwnProperty("APPLY")) {
+                return true;
+            }
+            // it's NOT OK is a query has only one of GROUP and APPLY
+            if (!transform.hasOwnProperty("GROUP") || !transform.hasOwnProperty("APPLY")) {
+                return false;
+            }
+        }
+
+        this.isAPPLYValid(transform);
+
+        return true;
+    }
+
+
+    private isAPPLYValid(query: any) {
+        let CRNumberKey: any = ["avg",  "pass", "fail" , "audit", "year", "lat", "lon", "seats"];
+
+        let applyKeyArray: string[] = [];
+
+        let apply = query["TRANSFORMATIONS"]["APPLY"];
+        for (let object in apply) {
+            let applykey: any = Object.keys(object)[0];
+            let APPLYTOKENandKey: any = object[applykey];
+            let APPLYTOKEN: string = Object.keys(APPLYTOKENandKey)[0];
+            let key: string = APPLYTOKENandKey[APPLYTOKEN];
+            let keyType = key.split("_")[1];
+
+            // TODO: no two APPLYRULEs can have the same applykey - must be unique
+            // TODO: track all the applykeys used and see if previous APPLYRULE has used this applykey already
+            if (applyKeyArray.indexOf(applykey)) {
+                return false;
+            } else {
+                applyKeyArray.push(applykey);
+            }
+
+            // APPLY token can only be MAX/MIN/AVG/COUNT
+            if (!(APPLYTOKEN === "MAX" ||
+                    APPLYTOKEN === "MIN" ||
+                    APPLYTOKEN === "AVG" ||
+                    APPLYTOKEN === "COUNT" ||
+                    APPLYTOKEN  === "SUM")) {
+                return false;
+            }
+
+            // key must be in GROUP
+            if (query["TRANSFORMATION"]["GROUP"].indexOf(key) < 0) {
+                return false;
+            }
+
+            // applykey must be in COLUMNS
+            if (query["OPTIONS"]["COLUMNS"].indexOf(applykey) < 0) {
+                return false;
+            }
+            // MIN/MAX/AVG must be on Number keys
+            if (APPLYTOKEN === "MAX" ||
+                APPLYTOKEN === "MIN" ||
+                APPLYTOKEN === "AVG" ||
+                APPLYTOKEN  === "SUM") {
+                if (!(keyType.indexOf(CRNumberKey))) {
+                    return false;
+                }
+            }
+
+        }
+
+    }
+
 }
