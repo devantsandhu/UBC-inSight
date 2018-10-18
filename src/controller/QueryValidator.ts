@@ -86,7 +86,6 @@ export default class QueryValidator {
         return true;
     }
 
-
     public isInGROUP(queryGROUP: any, name: string) {
         for (let i of queryGROUP) {
             if (i === name) {
@@ -356,7 +355,6 @@ export default class QueryValidator {
 
         return true;
     }
-
 
     private isAPPLYValid(query: any) {
         let CRNumberKey: any = ["avg",  "pass", "fail" , "audit", "year", "lat", "lon", "seats"];
