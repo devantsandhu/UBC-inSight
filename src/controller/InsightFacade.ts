@@ -4,6 +4,7 @@ import {InsightError, NotFoundError} from "./IInsightFacade";
 import DataSetHelper from "./DataSetHelper";
 import QueryValidator from "./QueryValidator";
 import ProcessQuery from "./ProcessQuery";
+import {log} from "util";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -52,8 +53,8 @@ export default class InsightFacade implements IInsightFacade {
             if (!((typeof content) === (typeof stringType))) {
                 return reject (new InsightError("content must be string"));
             }
-            if (!(kind === InsightDatasetKind.Courses)) {
-                return reject (new InsightError("kind is not Courses"));
+            if (!((kind === InsightDatasetKind.Courses) || (kind === InsightDatasetKind.Rooms))) {
+                return reject (new InsightError("kind is not valid"));
             }
             // fs.readFile(content);
             // return JSZip.loadAsync(fs, {base64: true});
@@ -66,23 +67,34 @@ export default class InsightFacade implements IInsightFacade {
                 }).catch(function (error: any) {
                     return reject (new InsightError("non-zip/ corrupt file"));
                 })
-                .then((zipContent: any) => {
+                .then(async (zipContent: any) => {
                     if (kind === InsightDatasetKind.Courses) {
                         if (typeof zipContent === JSZip) {
-                            return reject (new InsightError("test"));
+                            return reject(new InsightError("test"));
                         }
                         zipContent.folder("courses").forEach(function (coursePath: any, file: any) {
                             if (DataSetHelper.isJson(coursePath)) {
                                 coursePromises.push(file.async("string"));
                             }
                         });
+                        if (coursePromises.length > 0) {
+                            return Promise.all(coursePromises);
+                        } else {
+                            return reject(new InsightError("No courses"));
+                        }
+                    } else if (kind === InsightDatasetKind.Rooms) {
+                        // TODO
+                        const parse5 = require("parse5");
+                        let index = await zipContent.file("index.htm").async("string");
+                        let document = parse5.parse(index);
+                        /*
+                        for (let node of document["childNodes"]) {
+                            if (node.hasOwnProperty( )) {
+                            }
+                        }
+                        */
                     } else {
-                        return reject (new InsightError("Missing Courses folder"));
-                    }
-                    if (coursePromises.length > 0) {
-                        return Promise.all(coursePromises);
-                    } else {
-                        return reject (new InsightError("No courses"));
+                        return reject(new InsightError("Missing Courses folder"));
                     }
                 })
                 .then((unzippedContent: any) => {
@@ -114,7 +126,6 @@ export default class InsightFacade implements IInsightFacade {
                             parsedOfferings.push(parsedCourse);
                         }
                     });
-                    // TODO save to Disk
                     // this.fs.writeFileSync("./src/data" + id + ".json");
                     // is it already saved on disk (true if path exists)
                     if (!context.storedDataSets.has(id)) {

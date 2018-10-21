@@ -32,6 +32,7 @@ describe("InsightFacade Add/Remove Dataset", function () {
         oneSectionDataSet: "./test/data/oneSectionDataSet.zip",
         validAndInvalidDataSet: "./test/data/validAndInvalidDataSet.zip",
         zeroSectionsDataSet: "./test/data/zeroSectionsDataSet.zip",
+        rooms: "./test/data/rooms.zip",
     };
 
     let insightFacade: InsightFacade;
@@ -410,6 +411,19 @@ describe("InsightFacade Add/Remove Dataset", function () {
             response = err;
         } finally {
             expect(response.length).to.deep.equal(3);
+        }
+    });
+    // Add valid rooms datset
+    it("Should add a valid rooms dataset", async () => {
+        const id: string = "rooms";
+        let response: string[];
+
+        try {
+            response = await insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Rooms);
+        } catch (err) {
+            response = err;
+        } finally {
+            expect(response).to.deep.equal(["courses", "oneSectionDataSet", "courses2", "validAndInvalidDataSet", "rooms"]);
         }
     });
 });
