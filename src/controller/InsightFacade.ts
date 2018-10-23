@@ -5,6 +5,7 @@ import DataSetHelper from "./DataSetHelper";
 import QueryValidator from "./QueryValidator";
 import ProcessQuery from "./ProcessQuery";
 import {log} from "util";
+import {resolve} from "url";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -68,6 +69,9 @@ export default class InsightFacade implements IInsightFacade {
                     return reject (new InsightError("non-zip/ corrupt file"));
                 })
                 .then(async (zipContent: any) => {
+                    // gonna put room stuff in another class because I'm scared of promises
+                    // let rachelHatesPromises = new RoomsHelper();
+
                     if (kind === InsightDatasetKind.Courses) {
                         if (typeof zipContent === JSZip) {
                             return reject(new InsightError("test"));
@@ -82,17 +86,52 @@ export default class InsightFacade implements IInsightFacade {
                         } else {
                             return reject(new InsightError("No courses"));
                         }
+
                     } else if (kind === InsightDatasetKind.Rooms) {
+                        // rachelHatesPromises.processZip(id, content);
+
                         // TODO
                         const parse5 = require("parse5");
+
                         let index = await zipContent.file("index.htm").async("string");
+                        // TODO: I don't know if this is right ^^
+
                         let document = parse5.parse(index);
-                        /*
-                        for (let node of document["childNodes"]) {
-                            if (node.hasOwnProperty( )) {
+                        let children = document.childNodes;
+
+                        // tbody where building info
+                        let tbody = context.gettbody(children);
+
+                        // get building info from index
+                        let buildings = this.makeBuilding(tbody);
+
+                        // get rooms from document
+                        let rooms = this.makeRooms(tbody);
+                        let roomsObjects: any [] = [];
+
+                        // combine to create final room objects
+                        for (let b in buildings) {
+                            // TODO: use building paths to get to room directories !!!!
+                            for (let r in rooms) {
+                                // final room object
+                                const room: {[key: string]: any} = {
+                                    // TODO: why does this hate me!!! I'm JUSY COMBINING THINGSSSS
+                                    [id + "_fullname"]: b.fullname,
+                                    [id + "_shortname"]: b.shortname,
+                                    [id + "_number"]: r.number,
+                                    [id + "_name"]: b.shortname + " " + r.number,
+                                    [id + "_address"]: b.address,
+                                    [id + "_lat"]: b.lat,
+                                    [id + "_lon"]: b.lon,
+                                    [id + "_seats"]: r.seats,
+                                    [id + "_type"]: r.type,
+                                    [id + "_furniture"]: r.furniture,
+                                    [id + "_href"]: r.href
+                                };
+                                roomsObjects.push(room);
                             }
                         }
-                        */
+
                     } else {
                         return reject(new InsightError("Missing Courses folder"));
                     }
@@ -144,6 +183,154 @@ export default class InsightFacade implements IInsightFacade {
                     return resolve(keys);
                 }).catch();
         });
+    }
+
+    private makeRooms(tbody: any): any {
+        let arrayOfRooms: any [] = [];
+        for (let tr of tbody) {
+            if (tr.nodeName === "tr") {
+                let roomNumber: string;
+                let roomCapacity: number;
+                let roomFurniture: string;
+                let roomType: string;
+                let roomURL: string;
+                for (let td of tr.childNodes) {
+                    if (td.nodeName === "td") {
+                        let roomProperty = td.attrs[0].value;
+
+                        if (roomProperty === "views-field views-field-field-room-capacity") {
+                            roomCapacity = td.childNodes[0].value;
+                        }
+                        if (roomProperty === "views-field views-field-field-room-furniture") {
+                            roomFurniture = td.childNodes[0].value;
+                        }
+                        if (roomProperty === "views-field views-field-field-room-type") {
+                            roomType = td.childNodes[0].value;
+                        }
+                        if (roomProperty === "views-field views-field-field-room-number") {
+                            roomNumber = td.childNodes[1].attrs[1].value;
+                        }
+                        if (roomProperty === "views-field views-field-field-room-number" &&
+                            roomProperty.name === "href") {
+                            roomURL = td.childNodes[1].attrs[0].value;
+                        }
+                    }
+                }
+                const room: { [key: string]: any } = {
+                    number: roomNumber,
+                    seats: roomCapacity,
+                    type: roomType,
+                    furniture: roomFurniture,
+                    href: roomURL
+                };
+                arrayOfRooms.push(room);
+            }
+        }
+        return arrayOfRooms;
+    }
+
+    public makeBuilding(tbody: any): any {
+        let arrayOfBuildings: any [] = [];
+        for (let tr of tbody) {
+            // get all the information from each tr section (each tr is a building)
+            if (tr.nodeName === "tr") {
+                let buildingCode: string;
+                let buildingTitle: string;
+                let buildingAddress: string;
+                let buildingPath: string;
+
+                // get all the information from each td
+                // each td is <<potentially>> important information for a specific building
+                for (let td of tr.childNodes) {
+                    if (td.nodeName === "td") {
+                        let buildingProperty = td.attrs[0].value;
+                        if (buildingProperty === "views-field views-field-field-building-code") {
+                            buildingCode = td.childNodes[0].value;
+                        }
+                        if (buildingProperty === "views-field views-field-field-building-address") {
+                            buildingAddress = td.childNodes[0].value;
+                        }
+                        if (buildingProperty === "views-field views-field-title") {
+                            buildingTitle = td.childNodes[1].attrs[1].value;
+                        }
+                        if (buildingProperty === "views-field views-field-title" &&
+                            buildingProperty.name === "href") {
+                            buildingPath = td.childNodes[1].attrs[0].value;
+                        }
+                    }
+                }
+
+                // below is getting the lat/lon from the server using the building address we just parsed
+                let convertedAddress = buildingAddress.replace(" ", "%");
+                let link = "http://cs310.ugrad.cs.ubc.ca:11316/api/v1/project_j0a0b_x3o0b/" + convertedAddress;
+
+                let http = require("http");
+                const coordinates = {lat: 0, lon: 0};
+
+                // https://nodejs.org/api/http.html#http_http_get_options_callback
+                // straight up copied this ^^ but replaced '' with "", added any, and made coord object with lat/lon
+                http.get(link, (res: any) => {
+                    const {statusCode} = res;
+                    const contentType = res.headers["content-type"];
+
+                    let error;
+
+                    if (statusCode !== 200) {
+                        error = new Error("Request Failed.\n" +
+                            "Status Code: ${statusCode}");
+                    } else if (!/^application\/json/.test(contentType)) {
+                        error = new Error("Invalid content-type.\n" +
+                            "Expected application/json");
+                    }
+                    if (error) {
+                        res.resume();
+                        return;
+                    }
+
+                    res.setEncoding("utf8");
+                    let rawData = "";
+                    res.on("data", (chunk: any) => { rawData += chunk; });
+                    res.on("end", () => {
+                        try {
+                            const parsedData = JSON.parse(rawData); // this is the lat/lon
+                            coordinates.lat = parsedData.lat;
+                            coordinates.lon = parsedData.lon;
+                        } catch (e) {
+                            throw new Error("Geolocation server error");
+
+                        }
+                    });
+                });
+
+                // let's building this damn building object already
+                const building: {[key: string]: any } = {
+                    shortname: buildingCode,
+                    address: buildingAddress,
+                    fullname: buildingTitle,
+                    link: buildingPath,
+                    lat: coordinates.lat,
+                    lon: coordinates.lon
+                };
+
+                arrayOfBuildings.push(building);
+            }
+        }
+        return arrayOfBuildings;
+    }
+
+    public gettbody(children: any): any {
+        let tbodyArray: any[] = [];
+        for (let child of children) {
+            if (!(child.childNodes === undefined) && (child.nodeName === "tbody")) {
+                tbodyArray = child.childNodes;
+                return child;
+            } else { // undefined or not a tbody keep digging
+                if (this.gettbody(child.childNodes)) {
+                    return this.gettbody(child.childNodes);
+                }
+            }
+        }
+
     }
 
     public removeDataset(id: string): Promise<string> {
