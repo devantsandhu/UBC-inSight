@@ -1,5 +1,7 @@
 import Log from "../Util";
 
+let fs = require("fs");
+
 export default class RoomHelper {
     public static construction(id: any, index: any) {
         const parse5 = require("parse5");
@@ -14,30 +16,35 @@ export default class RoomHelper {
         // get building info from index
         let buildingsA = this.makeBuilding(tbody);
 
-        // get rooms from document
-        let rooms = this.makeRooms(tbody);
-        let roomsObjects: any [] = [];
-
         // combine to create final room objects
         for (let b in buildingsA) {
-            // let path = b.link
+            // each building has a path to get to its directory of room information
+            let path = buildingsA[b].link;
             // Log.trace(b);
+
+            let building =  fs.readFileSync(path);
+            let roomHTML = parse5.parse(building);
+            let Rtbody = this.gettbody(roomHTML);
+
+            let rooms = this.makeRooms(Rtbody);
+            let roomsObjects: any [] = [];
+
             // TODO: use building paths to get to room directories !!!!
             for (let r in rooms) {
                 // final room object
-                const room: {[key: string]: any} = {
+                const room = {
                     // TODO: why does this hate me!!! I'm JUST COMBINING THINGSSSS
-                    // [id + "_fullname"]: b.fullname,
-                    // [id + "_shortname"]: b.shortname,
-                    // [id + "_number"]: r.number,
-                    // [id + "_name"]: b.shortname + " " + r.number,
-                    // [id + "_address"]: b.address,
-                    // [id + "_lat"]: b.lat,
-                    // [id + "_lon"]: b.lon,
-                    // [id + "_seats"]: r.seats,
-                    // [id + "_type"]: r.type,
-                    // [id + "_furniture"]: r.furniture,
-                    // [id + "_href"]: r.href
+                    [id + "_fullname"]: buildingsA[b].fullname,
+                    [id + "_shortname"]: buildingsA[b].shortname,
+                    [id + "_number"]: rooms[r].number,
+                    [id + "_name"]: buildingsA[b].shortname + " " + rooms[r].number,
+                    [id + "_address"]: buildingsA[b].address,
+                    [id + "_lat"]: buildingsA[b].lat,
+                    [id + "_lon"]: buildingsA[b].lon,
+                    [id + "_seats"]: rooms[r].seats,
+                    [id + "_type"]: rooms[r].type,
+                    [id + "_furniture"]: rooms[r].furniture,
+                    [id + "_href"]: rooms[r].href
                 };
                 roomsObjects.push(room);
             }
@@ -110,11 +117,11 @@ export default class RoomHelper {
                             buildingAddress = td.childNodes[0].value.trim();
                         }
                         if (buildingProperty === "views-field views-field-title") {
-                            buildingTitle = td.childNodes[1].attrs[1].value.trim();
+                            buildingTitle = td.childNodes[1].childNodes[0].value.trim();
                         }
                         if (buildingProperty === "views-field views-field-title" &&
                             buildingProperty.name === "href") {
-                            buildingPath = td.childNodes[1].attrs[0].value.trim();
+                            buildingPath = td.childNodes[1].attrs[1].value.trim();
                         }
                     }
                 }
@@ -197,67 +204,5 @@ export default class RoomHelper {
         }
         return null;
     }
-
-    // private static gettbody(root: any): any {
-    //     let todo = [];
-    //     todo.push(root);
-    //
-    //     while (todo.length > 0) {
-    //         let current = todo.pop();
-    //         if (!(current.childNodes === undefined) || !(current.childNodes === null) ) {
-    //             for (let child of current.childNodes) {
-    //                 if (child.nodeName === "tbody") {
-    //                     return child;
-    //                 } else {
-    //                     todo.push(child);
-    //                 }
-    //             }
-    //         }
-    //         return null;
-    //     }
-    // }
-
-    // private static gettbody(root: any): any {
-    //     if (root.nodeName === "tbody") {
-    //         return root;
-    //     } else if (root.childNodes) {
-    //         for (let child of root.childNodes) {
-    //             let current: any = this.gettbody(child);
-    //             if (current !== null) {
-    //                 return current;
-    //             }
-    //         }
-    //         return null;
-    //     }
-    // }
-
-    // private static gettbody(root: any): any {
-    //     if (root.nodeName === "tbody") {
-    //         return root;
-    //     } else if (root.childNodes in root) {
-    //         for (let child of root.childNodes) {
-    //             let tbody = this.gettbody(child);
-    //             if (tbody !== null) {
-    //                 return tbody;
-    //             }
-    //         }
-    //     }
-    //     return null;
-    // }
-
-        // }else if (!(child.childNodes === undefined) || !(child.childNodes == null)) {
-        //     let result = null;
-        //     let i = 0;
-        //     while (i < child.childNodes.length) {
-        //         if (!result === null) {
-        //             return result;
-        //         } else {
-        //             result = this.gettbody(child.childNodes[i]);
-        //         }
-        //         i++;
-        //     }
-        //     return result;
-        // }
-
 
 }
