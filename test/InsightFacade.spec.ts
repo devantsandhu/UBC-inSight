@@ -89,16 +89,16 @@ describe("InsightFacade Add/Remove Dataset", function () {
         }
     });
     //// Add valid dataset
-    it("Should add a valid dataset", async () => {
-        const id: string = "courses";
+    it("Should add a valid rooms dataset", async () => {
+        const id: string = "rooms";
         let response: string[];
 
         try {
-            response = await insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Courses);
+            response = await insightFacade.addDataset(id, datasets[id], InsightDatasetKind.Rooms);
         } catch (err) {
             response = err;
         } finally {
-            expect(response).to.deep.equal(["courses"]);
+            expect(response).to.deep.equal(["rooms"]);
         }
     });
     // list the courses after successfully adding one
