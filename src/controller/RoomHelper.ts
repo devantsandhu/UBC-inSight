@@ -77,7 +77,7 @@ export default class RoomHelper {
                             roomNumber = td.childNodes[1].attrs[1].value;
                         }
                         if (roomProperty === "views-field views-field-field-room-number" &&
-                            roomProperty.name === "href") {
+                            td.childNodes[1].attrs[0].name === "href") {
                             roomURL = td.childNodes[1].attrs[0].value;
                         }
                     }
@@ -120,8 +120,8 @@ export default class RoomHelper {
                             buildingTitle = td.childNodes[1].childNodes[0].value.trim();
                         }
                         if (buildingProperty === "views-field views-field-title" &&
-                            buildingProperty.name === "href") {
-                            buildingPath = td.childNodes[1].attrs[1].value.trim();
+                            td.childNodes[1].attrs[0].name === "href") {
+                            buildingPath = td.childNodes[1].attrs[0].value.trim();
                         }
                     }
                 }
