@@ -292,7 +292,7 @@ export default class QueryValidator {
                         let ORDERKeysArray: string [] = query["OPTIONS"]["ORDER"]["keys"]; // can have multiple
 
                         // confirm that dir is UP or DOWN, nothing else
-                        if (!(direction === ("UP" || "DOWN"))) {
+                        if (!((direction === "UP") || (direction === "DOWN"))) {
                             return false;
                         }
 
