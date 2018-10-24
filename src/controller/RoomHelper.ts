@@ -5,23 +5,23 @@ export default class RoomHelper {
         const parse5 = require("parse5");
 
         let document = parse5.parse(index);
-        let root = document.childNodes;
+        // let root = document.childNodes;
 
         // tbody where building info
         // let tbody: any = [];
-        let tbody = this.gettbody(root);
+        let tbody = this.gettbody(document);
 
         // get building info from index
-        let buildingsA = this.makeBuilding(tbody.childNodes);
+        let buildingsA = this.makeBuilding(tbody);
 
         // get rooms from document
-        let rooms = this.makeRooms(tbody.childNodes);
+        let rooms = this.makeRooms(tbody);
         let roomsObjects: any [] = [];
 
         // combine to create final room objects
         for (let b in buildingsA) {
             // let path = b.link
-            Log.trace(b);
+            // Log.trace(b);
             // TODO: use building paths to get to room directories !!!!
             for (let r in rooms) {
                 // final room object
@@ -104,17 +104,17 @@ export default class RoomHelper {
                     if (td.nodeName === "td") {
                         let buildingProperty = td.attrs[0].value;
                         if (buildingProperty === "views-field views-field-field-building-code") {
-                            buildingCode = td.childNodes[0].value;
+                            buildingCode = td.childNodes[0].value.trim();
                         }
                         if (buildingProperty === "views-field views-field-field-building-address") {
-                            buildingAddress = td.childNodes[0].value;
+                            buildingAddress = td.childNodes[0].value.trim();
                         }
                         if (buildingProperty === "views-field views-field-title") {
-                            buildingTitle = td.childNodes[1].attrs[1].value;
+                            buildingTitle = td.childNodes[1].attrs[1].value.trim();
                         }
                         if (buildingProperty === "views-field views-field-title" &&
                             buildingProperty.name === "href") {
-                            buildingPath = td.childNodes[1].attrs[0].value;
+                            buildingPath = td.childNodes[1].attrs[0].value.trim();
                         }
                     }
                 }
@@ -178,18 +178,58 @@ export default class RoomHelper {
     }
 
     private static gettbody(root: any): any {
-        if (root.nodeName === "tbody") {
-            return root;
-        } else if (root.childNodes) {
-            for (let child of root.childNodes) {
-                let current: any = this.gettbody(child);
-                if (current !== null) {
-                    return current;
+        let childrenToExplore = [];
+        for (let child of root.childNodes) {
+            childrenToExplore.push(child);
+        }
+
+        while (childrenToExplore.length) {
+            let currentChild = childrenToExplore.pop();
+
+            if (currentChild.nodeName === "tbody") {
+                return currentChild.childNodes;
+
+            } else { // undefined or not a tbody keep digging
+                if (!(currentChild.childNodes === undefined)) {
+                    childrenToExplore.push(... currentChild.childNodes);
                 }
             }
-            return null;
         }
+        return null;
     }
+
+    // private static gettbody(root: any): any {
+    //     let todo = [];
+    //     todo.push(root);
+    //
+    //     while (todo.length > 0) {
+    //         let current = todo.pop();
+    //         if (!(current.childNodes === undefined) || !(current.childNodes === null) ) {
+    //             for (let child of current.childNodes) {
+    //                 if (child.nodeName === "tbody") {
+    //                     return child;
+    //                 } else {
+    //                     todo.push(child);
+    //                 }
+    //             }
+    //         }
+    //         return null;
+    //     }
+    // }
+
+    // private static gettbody(root: any): any {
+    //     if (root.nodeName === "tbody") {
+    //         return root;
+    //     } else if (root.childNodes) {
+    //         for (let child of root.childNodes) {
+    //             let current: any = this.gettbody(child);
+    //             if (current !== null) {
+    //                 return current;
+    //             }
+    //         }
+    //         return null;
+    //     }
+    // }
 
     // private static gettbody(root: any): any {
     //     if (root.nodeName === "tbody") {
@@ -219,23 +259,5 @@ export default class RoomHelper {
         //     return result;
         // }
 
-        // let childrenToExplore = [];
-        //     for (let child of children) {
-        //         childrenToExplore.push(child);
-        //     }
-        //
-        //     while (childrenToExplore.length) {
-        //         let currentChild = childrenToExplore.pop();
-        //
-        //         if (currentChild.nodeName === "tbody") {
-        //             return currentChild.childNodes;
-        //
-        //         } else { // undefined or not a tbody keep digging
-        //             if (!(currentChild.childNodes === undefined)) {
-        //                 return this.gettbody(currentChild.childNodes);
-        //             }
-        //             return;
-        //         }
-        //     }
-        // }
+
 }
