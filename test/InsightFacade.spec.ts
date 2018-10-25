@@ -424,7 +424,7 @@ describe("InsightFacade Add/Remove Dataset", function () {
             response = err;
         } finally {
             expect(response).to.deep.equal(["courses", "oneSectionDataSet", "courses2",
-            "validAndInvalidDataSet", "rooms"]);
+                "validAndInvalidDataSet", "rooms"]);
         }
     });
 });

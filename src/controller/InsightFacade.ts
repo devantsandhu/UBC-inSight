@@ -7,8 +7,7 @@ import ProcessQuery from "./ProcessQuery";
 import RoomHelper from "./RoomHelper";
 
 import {log} from "util";
-import {resolve} from "url";
-import {JSZipObject} from "jszip";
+// import {resolve} from "url";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -41,11 +40,10 @@ export default class InsightFacade implements IInsightFacade {
         // return Promise.reject("Not implemented.");
         let stringType = "A string";
         let coursePromises: Array<Promise<string>> = [];
-        let roomPromises: Array<Promise<string>> = [];
         let parsedOfferings: object[] = [];
         let numRows: number = 0;
         let context = this;
-        return new Promise(function (res, reject) {
+        return new Promise(function (resolve, reject) {
             if (id === "" || id === null || id === undefined) {
                 return reject (new InsightError("id can't be empty string"));
             }
@@ -73,6 +71,9 @@ export default class InsightFacade implements IInsightFacade {
                     return reject (new InsightError("non-zip/ corrupt file"));
                 })
                 .then(async (zipContent: any) => {
+                    // gonna put room stuff in another class because I'm scared of promises
+                    // let rachelHatesPromises = new RoomsHelper();
+
                     if (kind === InsightDatasetKind.Courses) {
                         if (typeof zipContent === JSZip) {
                             return reject(new InsightError("test"));
@@ -89,25 +90,12 @@ export default class InsightFacade implements IInsightFacade {
                         }
 
                     } else if (kind === InsightDatasetKind.Rooms) {
+                        // rachelHatesPromises.processZip(id, content);
 
                         let index = await zipContent.file("index.htm").async("string");
-                        RoomHelper.construction(id, index);
+                        // TODO: I don't know if this is right ^^
 
-                        // zipContent.folder("campus").forEach(function (file: any) {
-                        //
-                        //     let directories = [];
-                        //     for (let f in zipContent.files) {
-                        //         roomPromises.push(file.async("string"));
-                        //
-                        //         let unzippedF = zipContent.files[f].async("string");
-                        //         directories.push(unzippedF);
-                        //     }
-                        // });
-                        // if (roomPromises.length > 0) {
-                        //     return Promise.all(roomPromises);
-                        // } else {
-                        //     return reject(new InsightError("No courses"));
-                        // }
+                        RoomHelper.construction(id, index);
 
                     } else {
                         return reject(new InsightError("Missing Courses folder"));
@@ -157,7 +145,7 @@ export default class InsightFacade implements IInsightFacade {
                     let tempInsightDataset: InsightDataset = {id, kind, numRows};
                     context.metaData.push(tempInsightDataset);
                     let keys = Array.from(context.storedDataSets.keys());
-                    return res(keys);
+                    return resolve(keys);
                 }).catch();
         });
     }
@@ -165,7 +153,7 @@ export default class InsightFacade implements IInsightFacade {
     public removeDataset(id: string): Promise<string> {
         let context = this;
         // return Promise.reject("Not implemented.");
-        return new Promise(function (res, reject) {
+        return new Promise(function (resolve, reject) {
             if (id === null || id === undefined || id === "") {
                 return reject(new InsightError("removeDataset cannot remove null, undefined, or empty id"));
             }
@@ -187,14 +175,14 @@ export default class InsightFacade implements IInsightFacade {
                     fs.unlink("./data/" + id + ".json");
                 }
 
-                return res (Promise.resolve(id));
+                return resolve (Promise.resolve(id));
             }
         });
     }
 
     public performQuery(query: any): Promise <any[]> {
         const context = this;
-        return new Promise(function (res, reject) {
+        return new Promise(function (resolve, reject) {
             // let datasets: any = context.storedDataSets.get(QueryValidator.getQueryID());
             ProcessQuery.result = [];
             let queryValidator: QueryValidator = new QueryValidator(query);
@@ -229,7 +217,7 @@ export default class InsightFacade implements IInsightFacade {
             }
             ProcessQuery.columnSort(ProcessQuery.result, validatedQuery);
             ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
-            return res(ProcessQuery.result);
+            return resolve(ProcessQuery.result);
         });
     }
 
