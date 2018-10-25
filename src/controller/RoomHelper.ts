@@ -1,16 +1,15 @@
 import Log from "../Util";
+import DataSetHelper from "./DataSetHelper";
 
 let fs = require("fs");
 
 export default class RoomHelper {
+
     public static construction(id: any, index: any) {
         const parse5 = require("parse5");
-
         let document = parse5.parse(index);
-        // let root = document.childNodes;
 
         // tbody where building info
-        // let tbody: any = [];
         let tbody = this.gettbody(document);
 
         // get building info from index
@@ -19,14 +18,24 @@ export default class RoomHelper {
         // combine to create final room objects
         for (let b in buildingsA) {
             // each building has a path to get to its directory of room information
-            let path = buildingsA[b].link;
-            // Log.trace(b);
+            let path = buildingsA[b].link; // ./courses/.../ALRD
+            let correctPath = path.slice(2); // courses/../ALDR
 
-            let building =  fs.readFileSync(path);
-            let roomHTML = parse5.parse(building);
-            let Rtbody = this.gettbody(roomHTML);
+            let Rtbody: any[];
 
             let rooms = this.makeRooms(Rtbody);
+
+            // let roomAST: string;
+            // for (let r in rooms) {
+            //     if (r === correctPath) {
+            //         roomAST = parse5.parse(r);
+            //         Rtbody = this.gettbody(roomAST);
+            //     }
+            // }
+
+            // let roomAST = parse5.parse(file);
+            // let Rtbody = this.gettbody(roomAST);
+
             let roomsObjects: any [] = [];
 
             // TODO: use building paths to get to room directories !!!!
