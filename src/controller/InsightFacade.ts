@@ -1,12 +1,9 @@
 import Log from "../Util";
-import {IInsightFacade, InsightDataset, InsightDatasetKind} from "./IInsightFacade";
-import {InsightError, NotFoundError} from "./IInsightFacade";
+import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, NotFoundError} from "./IInsightFacade";
 import DataSetHelper from "./DataSetHelper";
 import QueryValidator from "./QueryValidator";
 import ProcessQuery from "./ProcessQuery";
 import RoomHelper from "./RoomHelper";
-
-import {log} from "util";
 // import {resolve} from "url";
 
 /**
@@ -93,15 +90,21 @@ export default class InsightFacade implements IInsightFacade {
                         // rachelHatesPromises.processZip(id, content);
 
                         let index = await zipContent.file("index.htm").async("string");
-                        // TODO: I don't know if this is right ^^
 
-                        RoomHelper.construction(id, index);
+                        let roomsHelper: RoomHelper = new RoomHelper(id, index, zipContent);
+                        await roomsHelper.test();
+                        parsedOfferings = roomsHelper.roomsObjects;
+                        numRows = roomsHelper.roomsObjects.length;
+                        return roomsHelper.roomsObjects;
 
                     } else {
                         return reject(new InsightError("Missing Courses folder"));
                     }
                 })
                 .then((unzippedContent: any) => {
+                    if (kind === InsightDatasetKind.Rooms) {
+                        return unzippedContent;
+                    }
                     let allOfferings: object[] = [];
                     let course: { [key: string]: any };
                     for (let file of unzippedContent) {
@@ -123,13 +126,15 @@ export default class InsightFacade implements IInsightFacade {
                     return allOfferings;
                 })
                 .then((tempOfferings: any) => {
-                    tempOfferings.forEach((tempOffering: any) => {
-                        let parsedCourse: object = DataSetHelper.parseOffering(tempOffering, id);
-                        if (!(parsedCourse === null)) {
-                            numRows++;
-                            parsedOfferings.push(parsedCourse);
-                        }
-                    });
+                    if (kind === InsightDatasetKind.Courses) {
+                        tempOfferings.forEach((tempOffering: any) => {
+                            let parsedCourse: object = DataSetHelper.parseOffering(tempOffering, id);
+                            if (!(parsedCourse === null)) {
+                                numRows++;
+                                parsedOfferings.push(parsedCourse);
+                            }
+                        });
+                    }
                     // this.fs.writeFileSync("./src/data" + id + ".json");
                     // is it already saved on disk (true if path exists)
                     if (!context.storedDataSets.has(id)) {

@@ -1,57 +1,68 @@
 import Log from "../Util";
 
-let fs = require("fs");
-
 export default class RoomHelper {
-    public static construction(id: any, index: any) {
+    private document: any;
+    private tbody: any;
+    private buildingsA: any;
+    private id: "string";
+    private roomsFolder: any;
+    public roomsObjects: object[] = [];
+
+    constructor(id: any, index: any, roomsFolder: any) {
         const parse5 = require("parse5");
-
-        let document = parse5.parse(index);
+        this.document = parse5.parse(index);
         // let root = document.childNodes;
-
+        this.id = id;
+        this.roomsFolder = roomsFolder;
         // tbody where building info
         // let tbody: any = [];
-        let tbody = this.gettbody(document);
+        this.tbody = this.gettbody(this.document);
 
         // get building info from index
-        let buildingsA = this.makeBuilding(tbody);
+        this.buildingsA = this.makeBuilding(this.tbody);
 
         // combine to create final room objects
-        for (let b in buildingsA) {
+    }
+
+    public async test() {
+        const parse5 = require("parse5");
+        for (let b in this.buildingsA) {
             // each building has a path to get to its directory of room information
-            let path = buildingsA[b].link;
+            let path = this.buildingsA[b].link;
+            let correctPath = path.slice(2);
             // Log.trace(b);
 
-            let building =  fs.readFileSync(path);
+            // let building =  fs.readFileSync(path);
+            let building = await this.roomsFolder.file(correctPath).async("string");
             let roomHTML = parse5.parse(building);
             let Rtbody = this.gettbody(roomHTML);
+            if (!(Rtbody === null)) {
+                let rooms = this.makeRooms(Rtbody);
 
-            let rooms = this.makeRooms(Rtbody);
-            let roomsObjects: any [] = [];
-
-            // TODO: use building paths to get to room directories !!!!
-            for (let r in rooms) {
-                // final room object
-                const room = {
-                    // TODO: why does this hate me!!! I'm JUST COMBINING THINGSSSS
-                    [id + "_fullname"]: buildingsA[b].fullname,
-                    [id + "_shortname"]: buildingsA[b].shortname,
-                    [id + "_number"]: rooms[r].number,
-                    [id + "_name"]: buildingsA[b].shortname + " " + rooms[r].number,
-                    [id + "_address"]: buildingsA[b].address,
-                    [id + "_lat"]: buildingsA[b].lat,
-                    [id + "_lon"]: buildingsA[b].lon,
-                    [id + "_seats"]: rooms[r].seats,
-                    [id + "_type"]: rooms[r].type,
-                    [id + "_furniture"]: rooms[r].furniture,
-                    [id + "_href"]: rooms[r].href
-                };
-                roomsObjects.push(room);
+                // TODO: use building paths to get to room directories !!!!
+                for (let r in rooms) {
+                    // final room object
+                    const room = {
+                        // TODO: why does this hate me!!! I'm JUST COMBINING THINGSSSS
+                        [this.id + "_fullname"]: this.buildingsA[b].fullname,
+                        [this.id + "_shortname"]: this.buildingsA[b].shortname,
+                        [this.id + "_number"]: rooms[r].number,
+                        [this.id + "_name"]: this.buildingsA[b].shortname + " " + rooms[r].number,
+                        [this.id + "_address"]: this.buildingsA[b].address,
+                        [this.id + "_lat"]: this.buildingsA[b].lat,
+                        [this.id + "_lon"]: this.buildingsA[b].lon,
+                        [this.id + "_seats"]: rooms[r].seats,
+                        [this.id + "_type"]: rooms[r].type,
+                        [this.id + "_furniture"]: rooms[r].furniture,
+                        [this.id + "_href"]: rooms[r].href
+                    };
+                    this.roomsObjects.push(room);
+                }
             }
         }
     }
 
-    private static makeRooms(tbody: any): any {
+    private makeRooms(tbody: any): any {
         let arrayOfRooms: any [] = [];
         for (let tr of tbody) {
             if (tr.nodeName === "tr") {
@@ -65,16 +76,16 @@ export default class RoomHelper {
                         let roomProperty = td.attrs[0].value;
 
                         if (roomProperty === "views-field views-field-field-room-capacity") {
-                            roomCapacity = td.childNodes[0].value;
+                            roomCapacity = td.childNodes[0].value.trim();
                         }
                         if (roomProperty === "views-field views-field-field-room-furniture") {
-                            roomFurniture = td.childNodes[0].value;
+                            roomFurniture = td.childNodes[0].value.trim();
                         }
                         if (roomProperty === "views-field views-field-field-room-type") {
-                            roomType = td.childNodes[0].value;
+                            roomType = td.childNodes[0].value.trim();
                         }
                         if (roomProperty === "views-field views-field-field-room-number") {
-                            roomNumber = td.childNodes[1].attrs[1].value;
+                            roomNumber = td.childNodes[1].attrs[1].value.trim();
                         }
                         if (roomProperty === "views-field views-field-field-room-number" &&
                             td.childNodes[1].attrs[0].name === "href") {
@@ -95,7 +106,7 @@ export default class RoomHelper {
         return arrayOfRooms;
     }
 
-    private static makeBuilding(tbody: any): any[] {
+    private makeBuilding(tbody: any): any[] {
         let arrayOfBuildings: any [] = [];
         for (let tr of tbody) {
             // get all the information from each tr section (each tr is a building)
@@ -184,7 +195,7 @@ export default class RoomHelper {
         return arrayOfBuildings;
     }
 
-    private static gettbody(root: any): any {
+    private gettbody(root: any): any {
         let childrenToExplore = [];
         for (let child of root.childNodes) {
             childrenToExplore.push(child);
