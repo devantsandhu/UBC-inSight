@@ -339,6 +339,4 @@ export default class ProcessQuery {
         }
         return 0;
     }
-
-
 }
