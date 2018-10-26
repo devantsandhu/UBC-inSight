@@ -298,7 +298,8 @@ export default class QueryValidator {
 
                         for (let key in ORDERKeysArray) {
                             // confirm keys || applykeys are in COLUMNS
-                            if (query["OPTIONS"]["COLUMNS"].indexOf(key) === -1) {
+                            let keyObject = ORDERKeysArray[key];
+                            if (query["OPTIONS"]["COLUMNS"].indexOf(keyObject) === -1) {
                                 return false; // key in ORDER not in COLUMNS
                             }
                         }
