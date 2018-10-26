@@ -92,6 +92,7 @@ export default class InsightFacade implements IInsightFacade {
                         let index = await zipContent.file("index.htm").async("string");
 
                         let roomsHelper: RoomHelper = new RoomHelper(id, index, zipContent);
+                        await roomsHelper.test2();
                         await roomsHelper.test();
                         parsedOfferings = roomsHelper.roomsObjects;
                         numRows = roomsHelper.roomsObjects.length;

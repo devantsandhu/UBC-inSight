@@ -1,4 +1,5 @@
 import Log from "../Util";
+import {log} from "util";
 
 export default class RoomHelper {
     private document: any;
@@ -146,38 +147,6 @@ export default class RoomHelper {
 
                 // https://nodejs.org/api/http.html#http_http_get_options_callback
                 // straight up copied this ^^ but replaced '' with "", added any, and made coord object with lat/lon
-                http.get(link, (res: any) => {
-                    const {statusCode} = res;
-                    const contentType = res.headers["content-type"];
-
-                    let error;
-
-                    if (statusCode !== 200) {
-                        error = new Error("Request Failed.\n" +
-                            "Status Code: ${statusCode}");
-                    } else if (!/^application\/json/.test(contentType)) {
-                        error = new Error("Invalid content-type.\n" +
-                            "Expected application/json");
-                    }
-                    if (error) {
-                        res.resume();
-                        return;
-                    }
-
-                    res.setEncoding("utf8");
-                    let rawData = "";
-                    res.on("data", (chunk: any) => { rawData += chunk; });
-                    res.on("end", () => {
-                        try {
-                            const parsedData = JSON.parse(rawData); // this is the lat/lon
-                            coordinates.lat = parsedData.lat;
-                            coordinates.lon = parsedData.lon;
-                        } catch (e) {
-                            throw new Error("Geolocation server error");
-
-                        }
-                    });
-                });
 
                 // let's building this damn building object already
                 const building = {
@@ -214,6 +183,66 @@ export default class RoomHelper {
             }
         }
         return null;
+    }
+
+    public async test2() {
+        let buildingPromises: any = [];
+        for (let b in this.buildingsA) {
+
+            let convertedAddress = this.buildingsA[b].address.split(" ").join("%20");
+            let link = "http://cs310.ugrad.cs.ubc.ca:11316/api/v1/project_j0a0b_x3o0b/" + convertedAddress;
+            buildingPromises.push(this.test3(link, this.buildingsA[b]));
+            // buildingPromises.push(this.test3(link, this.buildingsA[b]));
+        }
+        await Promise.all(buildingPromises).then((result) => {
+           // TODO
+        });
+        let x: any = 0;
+    }
+
+    private async test3(link: any, building: any) {
+        let http = require("http");
+        const coordinates = {lat: 0, lon: 0};
+        let p = new Promise(function (resolve, reject) {
+            http.get(link, (res: any) => {
+                const {statusCode} = res;
+                const contentType = res.headers["content-type"];
+
+                let error;
+
+                if (statusCode !== 200) {
+                    error = new Error("Request Failed.\n" +
+                        "Status Code: ${statusCode}");
+                } else if (!/^application\/json/.test(contentType)) {
+                    error = new Error("Invalid content-type.\n" +
+                        "Expected application/json");
+                }
+                if (error) {
+                    res.resume();
+                    return;
+                }
+
+                res.setEncoding("utf8");
+                let rawData = "";
+                res.on("data", (chunk: any) => {
+                    rawData += chunk;
+                });
+                res.on("end", () => {
+                    try {
+                        const parsedData = JSON.parse(rawData); // this is the lat/lon
+                        coordinates.lat = parsedData.lat;
+                        coordinates.lon = parsedData.lon;
+                        resolve(parsedData);
+                    } catch (e) {
+                        reject(new Error("Geolocation server error"));
+                    }
+                });
+            });
+        });
+        await p;
+        building.lat = coordinates.lat;
+        building.lon = coordinates.lon;
+        // return p;
     }
 
 }
