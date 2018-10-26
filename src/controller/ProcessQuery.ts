@@ -303,7 +303,7 @@ export default class ProcessQuery {
             }
             if (a[ORDERKeysArray[0]] < b[ORDERKeysArray[0]]) {
                 return 1;
-            } else { // it's a tie
+            } else if (!ORDERKeysArray === undefined) {
                 return this.DOWNtie(a, b, ORDERKeysArray);
             }
         });
@@ -338,5 +338,27 @@ export default class ProcessQuery {
             i++;
         }
         return 0;
+    }
+
+    public static transformHelper(result: any, query: any) {
+        let queryGROUP = query["TRANSFORMATIONS"]["GROUP"];
+        let queryAPPLY = query["TRANSFORMATIONS"]["APPLY"];
+        let allKeys = query["OPTIONS"]["COLUMNS"];
+        let queryRegularKeys = [];
+        let queryAPPLYKEYS = [];
+
+        for (let k in allKeys) {
+            if (k.indexOf("_") > 1) {
+                queryRegularKeys.push(k);
+            } else {
+                queryAPPLYKEYS.push(k);
+            }
+        }
+
+        let transformsTODO = [];
+        for (let i of queryAPPLY) {
+            transformsTODO.push(queryAPPLY[i]);
+        }
+
     }
 }
