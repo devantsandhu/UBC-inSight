@@ -235,25 +235,8 @@ export default class ProcessQuery {
         }
     }
 
-    // order the query given key if told to order
-    public static orderQuery(result: any, query: any) {
-        if (!query["OPTIONS"].hasOwnProperty("ORDER")) {
-            return;
-        }
-        let orderKey = query["OPTIONS"]["ORDER"];
-        result.sort(function (a: any, b: any) {
-            if (a[orderKey] < b[orderKey]) {
-                return -1;
-            }
-            if (a[orderKey] > b[orderKey]) {
-                return 1;
-            }
-            return 0;
-        });
-    }
-
     // keep only specified columns in result
-    public static columnSort(result: any, query: any) {
+    public static columnSelection(result: any, query: any) {
         let columnKeys = query["OPTIONS"]["COLUMNS"];
         for (let offering of result) {
             for (let key in offering) {
@@ -265,4 +248,97 @@ export default class ProcessQuery {
             }
         }
     }
+
+    // order the query given key if told to order
+    public static orderQuery(result: any, query: any) {
+        if (!query["OPTIONS"].hasOwnProperty("ORDER")) {
+            return;
+        }
+        if (typeof query["OPTIONS"]["ORDER"] === "string") {
+            let orderKey = query["OPTIONS"]["ORDER"];
+            result.sort(function (a: any, b: any) {
+                if (a[orderKey] < b[orderKey]) {
+                    return -1;
+                }
+                if (a[orderKey] > b[orderKey]) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+
+        if (typeof query["OPTIONS"]["ORDER"] === "object") {
+            // TODO: ORDER expansion
+            let direction: string = query["OPTIONS"]["ORDER"]["dir"];
+            let ORDERKeysArray: string [] = query["OPTIONS"]["ORDER"]["keys"]; // can have multiple
+
+            if (direction === "UP") {
+                ProcessQuery.sortUP(result, ORDERKeysArray);
+            }
+            if (direction === "DOWN") {
+                ProcessQuery.sortDOWN(result, ORDERKeysArray);
+            }
+        }
+    }
+
+    // same as with typeof string
+    private static sortUP(result: any, ORDERKeysArray: string[]) {
+        result.sort(function (a: any, b: any) {
+            if (a[ORDERKeysArray[0]] < b[ORDERKeysArray[0]]) {
+                return -1;
+            }
+            if (a[ORDERKeysArray[0]] > b[ORDERKeysArray[0]]) {
+                return 1;
+            } else { // it's a tie
+                return this.UPtie(a, b, ORDERKeysArray);
+            }
+        });
+        return result;
+    }
+
+    private static sortDOWN(result: any, ORDERKeysArray: string[]) {
+        result.sort(function (a: any, b: any) {
+            if (a[ORDERKeysArray[0]] > b[ORDERKeysArray[0]]) {
+                return -1;
+            }
+            if (a[ORDERKeysArray[0]] < b[ORDERKeysArray[0]]) {
+                return 1;
+            } else { // it's a tie
+                return this.DOWNtie(a, b, ORDERKeysArray);
+            }
+        });
+        return result;
+    }
+
+    private static UPtie(a: any, b: any, ORDERKeysArray: string[]) {
+        // iteratively go through the remaining keys in ORDERKeysArray to break remaining ties
+        let i = 1;
+        while (i < ORDERKeysArray.length) {
+            if (a[ORDERKeysArray[i]] < b[ORDERKeysArray[i]]) {
+                return -1;
+            }
+            if (a[ORDERKeysArray[i]] > b[ORDERKeysArray[i]]) {
+                return 1;
+            }
+            i++;
+        }
+        return 0;
+    }
+
+    private static DOWNtie(a: any, b: any, ORDERKeysArray: string[]) {
+        // iteratively go through the remaining keys in ORDERKeysArray to break remaining ties
+        let i = 1;
+        while (i < ORDERKeysArray.length) {
+            if (a[ORDERKeysArray[i]] > b[ORDERKeysArray[i]]) {
+                return -1;
+            }
+            if (a[ORDERKeysArray[i]] < b[ORDERKeysArray[i]]) {
+                return 1;
+            }
+            i++;
+        }
+        return 0;
+    }
+
+
 }
