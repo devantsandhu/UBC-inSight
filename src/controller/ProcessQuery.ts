@@ -93,8 +93,10 @@ export default class ProcessQuery {
             }
         } else if (comparatorType === "NOT") {
             if (negation) {
-              negation = false;
-            } else { negation = true; }
+                negation = false;
+            } else {
+                negation = true;
+            }
             ProcessQuery.comparatorProcess(filter["NOT"], allOfferings);
             // return;
 
@@ -156,7 +158,7 @@ export default class ProcessQuery {
                     // only ends xxx*
                     endWC = true;
                     comparatorValueTrunc = comparatorValue.substring(0, comparatorValue.length - 1);
-                }  else if ((comparatorValue.endsWith("*") === false)
+                } else if ((comparatorValue.endsWith("*") === false)
                     && (comparatorValue.startsWith("*") === false)
                     && (comparatorValue.indexOf("*") > 0)) {
                     throw  new InsightError("cannot have * inside");
@@ -310,7 +312,7 @@ export default class ProcessQuery {
         return result;
     }
 
-    private static UPtie(a: any, b: any, ORDERKeysArray: string[]) {
+    private UPtie(a: any, b: any, ORDERKeysArray: string[]) {
         // iteratively go through the remaining keys in ORDERKeysArray to break remaining ties
         let i = 1;
         while (i < ORDERKeysArray.length) {
@@ -340,12 +342,7 @@ export default class ProcessQuery {
         return 0;
     }
 
-    public static transformHelper(result: any, query: any) {
-        // no TRANSFORMATIONS? NO PROBLEM! Get outta here
-        if (!query.hasOwnProperty("TRANSFORMATIONS")) {
-            return;
-        }
-
+    public static transformHelper(result: any, query: any): any {
         let queryGROUP = query["TRANSFORMATIONS"]["GROUP"];
         let queryAPPLY = query["TRANSFORMATIONS"]["APPLY"];
         let allKeys = query["OPTIONS"]["COLUMNS"];
@@ -359,6 +356,8 @@ export default class ProcessQuery {
                 queryAPPLYKEYS.push(allKeys[k]);
             }
         }
+
+        let TRANSFORMATIONresult = [];
 
         let GROUPresult: any = {}; // object
 
@@ -374,81 +373,34 @@ export default class ProcessQuery {
             } else {
                 GROUPresult[groupedType].push(index);
             }
+
+            TRANSFORMATIONresult = ProcessQuery.applyHelper(queryAPPLY, GROUPresult);
         }
+        return TRANSFORMATIONresult;
+    }
 
-        // for each group
+    private static applyHelper(queryAPPLY: any, GROUPresult: any): any {
+        let groupKeys = Object.keys(GROUPresult);
 
-        // for (let i of queryAPPLY.length) {
+        for (let k of groupKeys) {
+            let object = GROUPresult[k];
 
-        // }
+            for (let applyObject of queryAPPLY) {
+                let applykey = Object.keys(applyObject)[0];
+                let APPLYTOKENkey = Object.values(applyObject)[0];
+                let APPLYTOKEN = Object.keys(APPLYTOKENkey)[0];
+                let key = Object.values(APPLYTOKENkey)[0];
 
-        //     for (let GKey of Object.keys(GROUPresult)) {
-        //         //
-        //         let current = GROUPresult[GKey];
-        //
-        //         // do specific apply
-        //         for (let AObject of queryAPPLY) {
-        //             let applykey = Object.keys(AObject)[0];
-        //             let APPLYTOKENkey = Object.values(AObject)[0];
-        //             let APPLYTOKEN = Object.keys(APPLYTOKENkey)[0];
-        //             let key = Object.values(APPLYTOKENkey)[0];
-        //
-        //             if (APPLYTOKEN === "MAX") {
-        //                 //
-        //                 let max = 0;
-        //
-        //                 for (let i of current) {
-        //                     let keyI = i[key];
-        //                     if (keyI === undefined || keyI === null) {
-        //                         return false;
-        //                     }
-        //
-        //                     if (Number(keyI) > max) {
-        //                         max = Number(i[key]);
-        //                     }
-        //                 }
-        //             } else if (APPLYTOKEN === "MIN") {
-        //                 //
-        //                 let min = 0;
-        //
-        //                 for (let i of currentIndex) {
-        //                     let keyI = i[key];
-        //                     if (keyI === undefined || keyI === null) {
-        //                         return false;
-        //                     }
-        //
-        //                     if (Number(keyI) < min) {
-        //                         min = Number(i[key]);
-        //                     }
-        //                 }
-        //             } else if (APPLYTOKEN === "AVG") {
-        //                 //
-        //                 let avg: number = 0;
-        //                 let runningAdd: number = 0;
-        //                 let divisor: number = 0;
-        //
-        //                 for (let i of currentIndex) {
-        //                     let keyI = i[key];
-        //                     if (keyI === undefined || keyI === null) {
-        //                         return false;
-        //                     }
-        //
-        //                     // runningAdd = runningAdd.add(keyI);
-        //                     divisor++;
-        //                 }
-        //                 avg = (Number(runningAdd) / divisor).toFixed(2);
-        //
-        //             } else if (APPLYTOKEN === "SUM") {
-        //                 //
-        //             } else if (APPLYTOKEN === "COUNT") {
-        //                 //
-        //
-        //             }
-        //         }
-        //
-        //     }
-        //
-        // }
+                if (APPLYTOKEN === "MAX") {
+                    let max = 0;
+                    for (let obj of GROUPresult) {
+                        if (obj > max) {
+                            max = obj;
+                        }
+                    }
 
+                }
+            }
+        }
     }
 }

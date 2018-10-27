@@ -225,8 +225,14 @@ export default class InsightFacade implements IInsightFacade {
             }
             ProcessQuery.columnSelection(ProcessQuery.result, validatedQuery);
             ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
-            ProcessQuery.transformHelper(ProcessQuery.result, validatedQuery);
-            return resolve(ProcessQuery.result);
+            // no TRANSFORMATIONS? NO PROBLEM! Get outta here
+            if (!query.hasOwnProperty("TRANSFORMATIONS")) {
+                return resolve(ProcessQuery.result);
+
+            } else {
+                let TResult = ProcessQuery.transformHelper(ProcessQuery.result, validatedQuery);
+                return resolve(TResult);
+            }
         });
     }
 
