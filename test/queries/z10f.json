@@ -1,0 +1,20 @@
+{
+    "title": "missing dir in ORDER",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 77
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": {
+                "keys": "missing dir"
+            }
+        }
+    },
+    "isQueryValid": false,
+    "result":[]
+}

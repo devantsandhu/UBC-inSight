@@ -220,18 +220,25 @@ export default class InsightFacade implements IInsightFacade {
             } else {
                 return reject (new InsightError("invalid query"));
             }
-            if (!(ProcessQuery.result.length < 5000)) {
-                return reject (new InsightError("Result is not < 5000"));
-            }
-            ProcessQuery.columnSelection(ProcessQuery.result, validatedQuery);
-            ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
             // no TRANSFORMATIONS? NO PROBLEM! Get outta here
             if (!query.hasOwnProperty("TRANSFORMATIONS")) {
-                return resolve(ProcessQuery.result);
-
+                if (!(ProcessQuery.result.length < 5000)) {
+                return reject (new InsightError("Result is not < 5000"));
+                } else {
+                    ProcessQuery.columnSelection(ProcessQuery.result, validatedQuery);
+                    ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
+                    return resolve(ProcessQuery.result);
+                }
             } else {
                 let TResult = ProcessQuery.transformHelper(ProcessQuery.result, validatedQuery);
-                return resolve(TResult);
+                if (!(TResult.length < 5000)) {
+                    return reject (new InsightError("Result is not < 5000"));
+                } else {
+                    ProcessQuery.columnSelection(ProcessQuery.result, validatedQuery);
+                    ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
+
+                    return resolve(TResult);
+                }
             }
         });
     }

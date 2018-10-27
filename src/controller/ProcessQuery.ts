@@ -3,6 +3,7 @@ import {isNumber, log} from "util";
 import DataSetHelper from "./DataSetHelper";
 import InsightFacade from "./InsightFacade";
 import QueryValidator from "./QueryValidator";
+import {Decimal} from "decimal.js";
 
 let offeringsCount = 0;
 // let negation = false;
@@ -270,7 +271,6 @@ export default class ProcessQuery {
         }
 
         if (typeof query["OPTIONS"]["ORDER"] === "object") {
-            // TODO: ORDER expansion
             let direction: string = query["OPTIONS"]["ORDER"]["dir"];
             let ORDERKeysArray: string [] = query["OPTIONS"]["ORDER"]["keys"]; // can have multiple
 
@@ -292,7 +292,7 @@ export default class ProcessQuery {
             if (a[ORDERKeysArray[0]] > b[ORDERKeysArray[0]]) {
                 return 1;
             } else { // it's a tie
-                return this.UPtie(a, b, ORDERKeysArray);
+                return ProcessQuery.UPtie(a, b, ORDERKeysArray);
             }
         });
         return result;
@@ -312,7 +312,7 @@ export default class ProcessQuery {
         return result;
     }
 
-    private UPtie(a: any, b: any, ORDERKeysArray: string[]) {
+    private static UPtie(a: any, b: any, ORDERKeysArray: string[]) {
         // iteratively go through the remaining keys in ORDERKeysArray to break remaining ties
         let i = 1;
         while (i < ORDERKeysArray.length) {
@@ -345,62 +345,108 @@ export default class ProcessQuery {
     public static transformHelper(result: any, query: any): any {
         let queryGROUP = query["TRANSFORMATIONS"]["GROUP"];
         let queryAPPLY = query["TRANSFORMATIONS"]["APPLY"];
-        let allKeys = query["OPTIONS"]["COLUMNS"];
-        let queryRegularKeys = [];
-        let queryAPPLYKEYS = [];
-
-        for (let k in allKeys) {
-            if (allKeys[k].indexOf("_") > 1) {
-                queryRegularKeys.push(allKeys[k]);
-            } else {
-                queryAPPLYKEYS.push(allKeys[k]);
-            }
-        }
-
-        let TRANSFORMATIONresult = [];
+        // let allKeys = query["OPTIONS"]["COLUMNS"];
 
         let GROUPresult: any = {}; // object
 
         for (let index of result) {
-            let groupedType = "";
+            let groupedType: any = [];
             for (let group of queryGROUP) {
-                groupedType += index[group] + "~";
+                groupedType.push(index[group]);
             }
 
-            if (!GROUPresult.hasOwnProperty(groupedType)) { // doesn't have
-                GROUPresult[groupedType] = [];
-                GROUPresult[groupedType].push(index);
+            let groupedAllTogether = groupedType.join("~");
+
+            if (!GROUPresult.hasOwnProperty(groupedAllTogether)) { // doesn't have
+                GROUPresult[groupedAllTogether] = [];
+                GROUPresult[groupedAllTogether].push(index);
             } else {
-                GROUPresult[groupedType].push(index);
+                GROUPresult[groupedAllTogether].push(index);
             }
 
-            TRANSFORMATIONresult = ProcessQuery.applyHelper(queryAPPLY, GROUPresult);
         }
+
+        // make object of groups an array to iterate through it
+        let GROUPresultArray = [];
+        for (let i in GROUPresult) {
+            GROUPresultArray.push(GROUPresult[i]);
+        }
+
+        // take group and do its APPLYs
+        let TRANSFORMATIONresult = ProcessQuery.applyHelper(queryAPPLY, GROUPresultArray);
+
         return TRANSFORMATIONresult;
     }
 
-    private static applyHelper(queryAPPLY: any, GROUPresult: any): any {
-        let groupKeys = Object.keys(GROUPresult);
+    private static applyHelper(queryAPPLY: any, GROUPresultArray: any): any {
+        let TRANSFORMATIONresult = [];
 
-        for (let k of groupKeys) {
-            let object = GROUPresult[k];
+        for (let grouping of GROUPresultArray) {
+            for (let coupling of queryAPPLY) { // coupling: {applykey: {APPLYTOKEN: key}}
+                let applykey = Object.keys(coupling)[0];  // applykey (sumDept, countAVG)
+                let APPLYTOKENkey = Object.values(coupling)[0]; // {APPLYTOKEN : key}
+                let APPLYTOKEN = Object.keys(APPLYTOKENkey)[0]; // APPLYTOKEN (MIN/MAX/etc)
+                let keyValue = Object.values(APPLYTOKENkey)[0]; // key (coureses_avg, courses_dept)
 
-            for (let applyObject of queryAPPLY) {
-                let applykey = Object.keys(applyObject)[0];
-                let APPLYTOKENkey = Object.values(applyObject)[0];
-                let APPLYTOKEN = Object.keys(APPLYTOKENkey)[0];
-                let key = Object.values(APPLYTOKENkey)[0];
+                let aResult;
 
                 if (APPLYTOKEN === "MAX") {
-                    let max = 0;
-                    for (let obj of GROUPresult) {
-                        if (obj > max) {
-                            max = obj;
+                    let max: number = 0;
+
+                    for (let item of grouping) {
+                        if (item[keyValue] > max) {
+                            max = item[keyValue];
                         }
                     }
-
+                    aResult = max;
                 }
+                if (APPLYTOKEN === "MIN") {
+                    let min: number = 666666666666666666;
+
+                    for (let item of grouping) {
+                        if (item[keyValue] < min) {
+                            min = item[keyValue];
+                        }
+                    }
+                    aResult = min;
+                }
+                if (APPLYTOKEN === "AVG") {
+                    let runningCount = new Decimal(0);
+                    let divisor: number = 0;
+                    let avg: any;
+
+                    for (let item of grouping) {
+                        runningCount = runningCount.add(new Decimal(item[keyValue]));
+                        divisor++;
+
+                    }
+                    avg = (runningCount.toNumber() / divisor).toFixed(2);
+                    aResult = avg;
+                }
+                if (APPLYTOKEN === "SUM") {
+                    let runningCount: number = 0;
+
+                    for (let item of grouping) {
+                        runningCount += item[keyValue];
+                    }
+                    aResult = runningCount;
+                }
+                if (APPLYTOKEN === "COUNT") { // check if has multiples/already seen it
+                    let count = 0;
+                    let seen: any = {};
+
+                    for (let item of grouping) {
+                        if (!seen.hasOwnProperty(item[keyValue])) {
+                            count++;
+                            seen[item[keyValue]] = 1;
+                        }
+                    }
+                    aResult = count;
+                }
+                grouping[0][applykey] = aResult;
             }
+            TRANSFORMATIONresult.push(grouping[0]);
         }
+        return TRANSFORMATIONresult;
     }
 }

@@ -1,0 +1,23 @@
+{
+    "title": "invalid rooms key",
+    "query": {
+        "WHERE": {
+            "AND": [{
+                "IS": {
+                    "rooms_furniture": "*Tables*"
+                }
+            }, {
+                "GT": {
+                    "rooms_poop": 300
+                }
+            }]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "rooms_poop"
+            ]
+        }
+    },
+    "isQueryValid": false,
+    "result":[]}

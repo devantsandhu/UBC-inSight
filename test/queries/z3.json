@@ -2,61 +2,33 @@
     "title": "this stuff is confusing",
     "query": {
         "WHERE": {
-            "NOT": {
-                "OR": [
-                    {
-                        "NOT": {
-                            "LT": {
-                                "courses_avg": 50
-                            }
-                        }
-                    },
-                    {
-                        "IS": {
-                            "courses_dept": "hist"
-                        }
-                    },
-                    {
-                        "EQ": {
-                            "courses_fail": 10
-                        }
-                    }
-                ]
+            "LT": {
+                "courses_avg": 50
             }
         },
         "OPTIONS": {
             "COLUMNS": [
                 "courses_avg",
-                "courses_dept",
-                "countAVG",
-                "sumDEPT"
+                "sumAVG"
             ],
             "ORDER": {
                 "dir": "DOWN",
                 "keys": [
-                    "courses_avg",
-                    "courses_dept"
+                    "courses_avg"
                 ]
             }
         },
         "TRANSFORMATIONS": {
             "GROUP": [
-                "courses_avg",
-                "courses_dept"
-            ],
+                "courses_avg"    ],
             "APPLY": [
                 {
-                    "countAVG": {
-                        "COUNT": "courses_avg"
-                    }
-                },
-                {
-                    "sumDEPT": {
-                        "COUNT": "courses_dept"
+                    "sumAVG": {
+                        "SUM": "courses_avg"
                     }
                 }
             ]
         }
     },
     "isQueryValid": true,
-    "result":[{"courses_avg":49.95,"courses_dept":"math","countAVG":1,"sumDEPT":1},{"courses_avg":49.86,"courses_dept":"lled","countAVG":1,"sumDEPT":1},{"courses_avg":49.73,"courses_dept":"lled","countAVG":1,"sumDEPT":1},{"courses_avg":49.47,"courses_dept":"busi","countAVG":1,"sumDEPT":1},{"courses_avg":49.25,"courses_dept":"civl","countAVG":1,"sumDEPT":1},{"courses_avg":49.17,"courses_dept":"busi","countAVG":1,"sumDEPT":1},{"courses_avg":49.14,"courses_dept":"frst","countAVG":1,"sumDEPT":1},{"courses_avg":49.07,"courses_dept":"comm","countAVG":1,"sumDEPT":1},{"courses_avg":48.9,"courses_dept":"lled","countAVG":1,"sumDEPT":1},{"courses_avg":47.82,"courses_dept":"lled","countAVG":1,"sumDEPT":1},{"courses_avg":47.29,"courses_dept":"lled","countAVG":1,"sumDEPT":1},{"courses_avg":46.95,"courses_dept":"busi","countAVG":1,"sumDEPT":1},{"courses_avg":46.71,"courses_dept":"comm","countAVG":1,"sumDEPT":1},{"courses_avg":46.59,"courses_dept":"frst","countAVG":1,"sumDEPT":1},{"courses_avg":46.52,"courses_dept":"math","countAVG":1,"sumDEPT":1},{"courses_avg":46.5,"courses_dept":"busi","countAVG":1,"sumDEPT":1},{"courses_avg":44.88,"courses_dept":"chbe","countAVG":1,"sumDEPT":1},{"courses_avg":43.33,"courses_dept":"psyc","countAVG":1,"sumDEPT":1},{"courses_avg":42.64,"courses_dept":"busi","countAVG":1,"sumDEPT":1},{"courses_avg":42.5,"courses_dept":"chem","countAVG":1,"sumDEPT":1},{"courses_avg":42,"courses_dept":"chbe","countAVG":1,"sumDEPT":1},{"courses_avg":39.03,"courses_dept":"educ","countAVG":1,"sumDEPT":1},{"courses_avg":33.2,"courses_dept":"phil","countAVG":1,"sumDEPT":1},{"courses_avg":33,"courses_dept":"civl","countAVG":1,"sumDEPT":1},{"courses_avg":4.5,"courses_dept":"fopr","countAVG":1,"sumDEPT":1},{"courses_avg":4,"courses_dept":"busi","countAVG":1,"sumDEPT":1},{"courses_avg":1,"courses_dept":"wood","countAVG":1,"sumDEPT":1},{"courses_avg":0,"courses_dept":"lfs","countAVG":1,"sumDEPT":1},{"courses_avg":0,"courses_dept":"frst","countAVG":1,"sumDEPT":1}]}
+    "result":[{"courses_avg":49.95,"sumAVG":49.95},{"courses_avg":49.86,"sumAVG":49.86},{"courses_avg":49.73,"sumAVG":49.73},{"courses_avg":49.47,"sumAVG":98.94},{"courses_avg":49.25,"sumAVG":49.25},{"courses_avg":49.17,"sumAVG":49.17},{"courses_avg":49.15,"sumAVG":49.15},{"courses_avg":49.14,"sumAVG":49.14},{"courses_avg":49.07,"sumAVG":49.07},{"courses_avg":48.9,"sumAVG":48.9},{"courses_avg":47.82,"sumAVG":47.82},{"courses_avg":47.29,"sumAVG":47.29},{"courses_avg":47.13,"sumAVG":47.13},{"courses_avg":46.95,"sumAVG":46.95},{"courses_avg":46.71,"sumAVG":46.71},{"courses_avg":46.59,"sumAVG":46.59},{"courses_avg":46.52,"sumAVG":46.52},{"courses_avg":46.5,"sumAVG":46.5},{"courses_avg":46.33,"sumAVG":92.66},{"courses_avg":44.88,"sumAVG":44.88},{"courses_avg":43.33,"sumAVG":43.33},{"courses_avg":42.64,"sumAVG":85.28},{"courses_avg":42.5,"sumAVG":42.5},{"courses_avg":42,"sumAVG":42},{"courses_avg":39.03,"sumAVG":78.06},{"courses_avg":34,"sumAVG":34},{"courses_avg":33.2,"sumAVG":33.2},{"courses_avg":33,"sumAVG":33},{"courses_avg":4.5,"sumAVG":4.5},{"courses_avg":4,"sumAVG":8},{"courses_avg":1,"sumAVG":1},{"courses_avg":0,"sumAVG":0}]}

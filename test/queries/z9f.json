@@ -1,0 +1,20 @@
+{
+    "title": "missing key in order",
+    "query": {
+        "WHERE": {
+            "LT": {
+                "courses_avg": 77
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": {
+                "dir": "DOWN"
+            }
+        }
+    },
+    "isQueryValid": false,
+    "result": []
+}
