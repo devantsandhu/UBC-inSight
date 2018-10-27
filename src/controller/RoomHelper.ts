@@ -86,7 +86,7 @@ export default class RoomHelper {
                             roomType = td.childNodes[0].value.trim();
                         }
                         if (roomProperty === "views-field views-field-field-room-number") {
-                            roomNumber = td.childNodes[1].attrs[1].value.trim();
+                            roomNumber = td.childNodes[1].childNodes[0].value.trim();
                         }
                         if (roomProperty === "views-field views-field-field-room-number" &&
                             td.childNodes[1].attrs[0].name === "href") {
