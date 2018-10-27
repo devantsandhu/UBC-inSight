@@ -194,9 +194,9 @@ export default class RoomHelper {
             buildingPromises.push(this.test3(link, this.buildingsA[b]));
             // buildingPromises.push(this.test3(link, this.buildingsA[b]));
         }
-        await Promise.all(buildingPromises).then((result) => {
-           // TODO
-        });
+        // await Promise.all(buildingPromises).then((result) => {
+        //    // TODO
+        // });
         let x: any = 0;
     }
 

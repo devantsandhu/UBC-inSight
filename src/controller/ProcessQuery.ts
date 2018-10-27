@@ -341,6 +341,11 @@ export default class ProcessQuery {
     }
 
     public static transformHelper(result: any, query: any) {
+        // no TRANSFORMATIONS? NO PROBLEM! Get outta here
+        if (!query.hasOwnProperty("TRANSFORMATIONS")) {
+            return;
+        }
+
         let queryGROUP = query["TRANSFORMATIONS"]["GROUP"];
         let queryAPPLY = query["TRANSFORMATIONS"]["APPLY"];
         let allKeys = query["OPTIONS"]["COLUMNS"];
@@ -348,17 +353,102 @@ export default class ProcessQuery {
         let queryAPPLYKEYS = [];
 
         for (let k in allKeys) {
-            if (k.indexOf("_") > 1) {
-                queryRegularKeys.push(k);
+            if (allKeys[k].indexOf("_") > 1) {
+                queryRegularKeys.push(allKeys[k]);
             } else {
-                queryAPPLYKEYS.push(k);
+                queryAPPLYKEYS.push(allKeys[k]);
             }
         }
 
-        let transformsTODO = [];
-        for (let i of queryAPPLY) {
-            transformsTODO.push(queryAPPLY[i]);
+        let GROUPresult: any = {}; // object
+
+        for (let index of result) {
+            let groupedType = "";
+            for (let group of queryGROUP) {
+                groupedType += index[group] + "~";
+            }
+
+            if (!GROUPresult.hasOwnProperty(groupedType)) { // doesn't have
+                GROUPresult[groupedType] = [];
+                GROUPresult[groupedType].push(index);
+            } else {
+                GROUPresult[groupedType].push(index);
+            }
         }
+
+        // for each group
+
+        // for (let i of queryAPPLY.length) {
+
+        // }
+
+        //     for (let GKey of Object.keys(GROUPresult)) {
+        //         //
+        //         let current = GROUPresult[GKey];
+        //
+        //         // do specific apply
+        //         for (let AObject of queryAPPLY) {
+        //             let applykey = Object.keys(AObject)[0];
+        //             let APPLYTOKENkey = Object.values(AObject)[0];
+        //             let APPLYTOKEN = Object.keys(APPLYTOKENkey)[0];
+        //             let key = Object.values(APPLYTOKENkey)[0];
+        //
+        //             if (APPLYTOKEN === "MAX") {
+        //                 //
+        //                 let max = 0;
+        //
+        //                 for (let i of current) {
+        //                     let keyI = i[key];
+        //                     if (keyI === undefined || keyI === null) {
+        //                         return false;
+        //                     }
+        //
+        //                     if (Number(keyI) > max) {
+        //                         max = Number(i[key]);
+        //                     }
+        //                 }
+        //             } else if (APPLYTOKEN === "MIN") {
+        //                 //
+        //                 let min = 0;
+        //
+        //                 for (let i of currentIndex) {
+        //                     let keyI = i[key];
+        //                     if (keyI === undefined || keyI === null) {
+        //                         return false;
+        //                     }
+        //
+        //                     if (Number(keyI) < min) {
+        //                         min = Number(i[key]);
+        //                     }
+        //                 }
+        //             } else if (APPLYTOKEN === "AVG") {
+        //                 //
+        //                 let avg: number = 0;
+        //                 let runningAdd: number = 0;
+        //                 let divisor: number = 0;
+        //
+        //                 for (let i of currentIndex) {
+        //                     let keyI = i[key];
+        //                     if (keyI === undefined || keyI === null) {
+        //                         return false;
+        //                     }
+        //
+        //                     // runningAdd = runningAdd.add(keyI);
+        //                     divisor++;
+        //                 }
+        //                 avg = (Number(runningAdd) / divisor).toFixed(2);
+        //
+        //             } else if (APPLYTOKEN === "SUM") {
+        //                 //
+        //             } else if (APPLYTOKEN === "COUNT") {
+        //                 //
+        //
+        //             }
+        //         }
+        //
+        //     }
+        //
+        // }
 
     }
 }

@@ -251,7 +251,7 @@ export default class QueryValidator {
                     // if it doesn't have an underscore it could be an applykey
                     // save to an array to check if they're in TRANSFORM later
                     nonValidKeys.push(key);
-                    return false;
+                    // return false;
                 } else if (validKeys.indexOf(key) >= 0) {
                     return false;
                 }

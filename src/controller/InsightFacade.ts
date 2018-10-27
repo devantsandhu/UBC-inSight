@@ -139,8 +139,8 @@ export default class InsightFacade implements IInsightFacade {
                     // this.fs.writeFileSync("./src/data" + id + ".json");
                     // is it already saved on disk (true if path exists)
                     if (!context.storedDataSets.has(id)) {
-                        let data = fs.writeFileSync("./data/" + id + ".json");
-                        context.storedDataSets.set(id, JSON.stringify(data));
+                        fs.writeFileSync("./data/" + id + ".json", JSON.stringify(parsedOfferings));
+                        context.storedDataSets.set(id, JSON.stringify(parsedOfferings));
                     }
 
                     return context.storedDataSets.keys();
@@ -203,7 +203,9 @@ export default class InsightFacade implements IInsightFacade {
                 // const dataset = context.storedDataSets.get(queryValidator.getQueryID());
                 let dataset: any;
                 try {
-                    dataset = JSON.parse(JSON.stringify(context.storedDataSets.get(queryValidator.getQueryID())));
+                    let id: any = queryValidator.getQueryID();
+                    let d: any = [...context.storedDataSets.get(id)];
+                    dataset = JSON.parse(JSON.stringify(d));
                 } catch (e) {
                     return reject (new InsightError("Dataset does not exist"));
                 }
@@ -223,6 +225,7 @@ export default class InsightFacade implements IInsightFacade {
             }
             ProcessQuery.columnSelection(ProcessQuery.result, validatedQuery);
             ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
+            ProcessQuery.transformHelper(ProcessQuery.result, validatedQuery);
             return resolve(ProcessQuery.result);
         });
     }
