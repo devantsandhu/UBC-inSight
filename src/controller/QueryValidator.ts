@@ -44,7 +44,9 @@ export default class QueryValidator {
             if (query["TRANSFORMATIONS"] === null || query["TRANSFORMATIONS"] === undefined) {
                 return false;
             } else {
-                this.validateTransformation(query["TRANSFORMATIONS"]);
+                if (!(this.validateTransformation(query["TRANSFORMATIONS"]))) {
+                    return false;
+                }
             }
         }
 
@@ -55,21 +57,6 @@ export default class QueryValidator {
         // ensures order is valid if included
         if (!this.isOrderValid(query)) {
             return false;
-        }
-
-        // check that all elements in COLUMNS are in either GROUP or APPLY
-        let columnNames: string[];
-        columnNames = query["OPTIONS"]["COLUMNS"];
-        for (let n in columnNames) {
-            if (n.indexOf("_") > -1) { // TODO: currently only checks regular keys, not applykeys.
-                if (!(this.isInGROUP(query["TRANSFORMATIONS"]["GROUP"], n))) {
-                    return false;
-                } else {
-                    if (!(this.isInAPPLY(query["TRANSFORMATIONS"]["APPLY"], n))) {
-                        return false; // in neither GROUP or APPLY at this point
-                    }
-                }
-            }
         }
 
         // check that everything from same dataset
@@ -238,7 +225,8 @@ export default class QueryValidator {
         let validKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year",
         "fullname", "shortname", "number", "name", "type", "furniture", "href", "lat", "lon", "seats"];
 
-        let nonValidKeys = [];
+        let potentialApplyKeys = [];
+        let approvedValidKeys = [];
         // ensures columns not empty
         try {
             if (query["OPTIONS"]["COLUMNS"].length <= 0) {
@@ -247,20 +235,80 @@ export default class QueryValidator {
             // ensures columns only has valid keys
             for (let key of query["OPTIONS"]["COLUMNS"]) {
                 if (key.indexOf("_") < 0) {
-                    // TODO: refactor
                     // if it doesn't have an underscore it could be an applykey
                     // save to an array to check if they're in TRANSFORM later
-                    nonValidKeys.push(key);
-                    // return false;
+                    if (!query["TRANSFORMATIONS"]["GROUP"]) {
+                        return false;
+                    } else {
+                        potentialApplyKeys.push(key);
+                    }
                 } else if (validKeys.indexOf(key) >= 0) {
-                    return false;
+                    let checkValidKey = key.split("_")[1];
+                    if (key.indexOf(validKeys) < 0) {
+                        return false;
+                    } else {
+                        approvedValidKeys.push(key);
+                    }
+
                 }
+            }
+            if (query["TRANSFORMATIONS"]["GROUP"]) {
+                this.validateColumnKeysInGroup(query, approvedValidKeys, potentialApplyKeys);
             }
         } catch (e) {
             throw new InsightError(e);
         }
         return true;
     }
+
+    private validateColumnKeysInGroup(query: any, approvedValidKeys: any[], potentialApplyKeys: any[]) {
+        // TODO: check that if GROUP exists, all COMUMNS must correspond to GROUP key or applykey
+        let APPLY = query["TRANSFORMATIONS"]["APPLY"];
+        let GROUP = query["TRANSFORMATIONS"]["GROUP"];
+
+        let keysArray = [];
+        let applykeyArray = [];
+
+        for (let i of APPLY) {
+            let applykey = Object.keys(i)[0];  // applykey (sumDept, countAVG)
+            let APPLYTOKENkey = Object.values(i)[0]; // {APPLYTOKEN : key}
+            let keyValue = Object.values(APPLYTOKENkey)[0]; // key (coureses_avg, courses_dept)
+
+            keysArray.push(keyValue);
+            applykeyArray.push(applykey);
+        }
+
+        // if GROUP doesn't have a key from COLUMNS reject
+        for (let i of approvedValidKeys) {
+            if ((GROUP.indexOf(approvedValidKeys[i]) < 0) || (keysArray.indexOf(approvedValidKeys[i]) < 0)) {
+                return false;
+            }
+        }
+
+        // all applykeys in column must be in an apply object
+        // TODO: check that only used once?
+        for (let i of potentialApplyKeys) {
+            if (applykeyArray.indexOf(potentialApplyKeys[i]) < 0) {
+                return false;
+            }
+        }
+
+        // check that all elements in COLUMNS are in either GROUP or APPLY
+        let columnNames: string[];
+        columnNames = query["OPTIONS"]["COLUMNS"];
+        for (let n in columnNames) {
+            if (n.indexOf("_") > -1) { // TODO: currently only checks regular keys, not applykeys.
+                if (!(this.isInGROUP(query["TRANSFORMATIONS"]["GROUP"], n))) {
+                    return false;
+                } else {
+                    if (!(this.isInAPPLY(query["TRANSFORMATIONS"]["APPLY"], n))) {
+                        return false; // in neither GROUP or APPLY at this point
+                    }
+                }
+            }
+        }
+    }
+
     private isOrderValid(query: any) {
         if (query["OPTIONS"].hasOwnProperty("ORDER")) {
             // ensures options only has 1 key/ not an array
@@ -299,10 +347,12 @@ export default class QueryValidator {
                         for (let key in ORDERKeysArray) {
                             // confirm keys || applykeys are in COLUMNS
                             let keyObject = ORDERKeysArray[key];
-                            if (query["OPTIONS"]["COLUMNS"].indexOf(keyObject) === -1) {
+                            if (query["OPTIONS"]["COLUMNS"].indexOf(keyObject) < 0) {
                                 return false; // key in ORDER not in COLUMNS
                             }
                         }
+                    } else {
+                        return false;
                     }
                 } else {
                     return false;
@@ -319,17 +369,22 @@ export default class QueryValidator {
     }
 
     private validateTransformation(transform: any) {
+        // its OK if a query has neither GROUP nor APPLY
+        if (!transform.hasOwnProperty("GROUP") && !transform.hasOwnProperty("APPLY")) {
+            return true;
+        }
+
         // neither GROUP nor APPLY can be empty/null/undefined
         if (transform.hasOwnProperty("GROUP") || transform.hasOwnProperty("APPLY")) {
-            // if (transform["GROUP"] === null || transform["APPLY"] === null) {
-               // return false;
-            // }
+            if (transform["GROUP"] === null || transform["APPLY"] === null) {
+                return false;
+            }
             if (transform["GROUP"] === undefined || transform["APPLY"] === undefined) {
                 return false;
             }
-            // if ((transform["GROUP"]).length <= 0 || (transform["APPLY"]).length <= 0 ) {
-            //    return false;
-            // }
+            if ((transform["GROUP"]).length <= 0 || (transform["APPLY"]).length <= 0 ) {
+               return false;
+            }
 
             if (transform.hasOwnProperty("GROUP") && transform.hasOwnProperty("APPLY")) {
                 if (typeof transform["GROUP"] === "string" && "array") {
@@ -342,10 +397,6 @@ export default class QueryValidator {
                 }
             }
 
-            // its OK if a query has neither GROUP nor APPLY
-            if (!transform.hasOwnProperty("GROUP") && !transform.hasOwnProperty("APPLY")) {
-                return true;
-            }
             // it's NOT OK is a query has only one of GROUP and APPLY
             if (!transform.hasOwnProperty("GROUP") || !transform.hasOwnProperty("APPLY")) {
                 return false;
