@@ -47,6 +47,9 @@ export default class QueryValidator {
                 if (!(this.validateTransformation(query["TRANSFORMATIONS"]))) {
                     return false;
                 }
+                if (!(this.isAPPLYValid(query))) {
+                    return false;
+                }
             }
         }
 
@@ -242,9 +245,9 @@ export default class QueryValidator {
                     } else {
                         potentialApplyKeys.push(key);
                     }
-                } else if (validKeys.indexOf(key) >= 0) {
+                } else {
                     let checkValidKey = key.split("_")[1];
-                    if (checkValidKey.indexOf(validKeys) < 0) {
+                    if (!(validKeys.includes(checkValidKey))) {
                         return false;
                     } else {
                         approvedValidKeys.push(key);
@@ -252,7 +255,9 @@ export default class QueryValidator {
                 }
             }
             if (query["TRANSFORMATIONS"] && query["TRANSFORMATIONS"]["GROUP"]) {
-                this.validateColumnKeysInGroup(query, approvedValidKeys, potentialApplyKeys);
+                if (!(this.validateColumnKeysInGroup(query, approvedValidKeys, potentialApplyKeys))) {
+                    return false;
+                }
             }
         } catch (e) {
             throw new InsightError(e);
@@ -278,15 +283,16 @@ export default class QueryValidator {
 
         // if GROUP doesn't have a key from COLUMNS reject
         for (let i of approvedValidKeys) {
-            if ((GROUP.indexOf(approvedValidKeys[i]) < 0) || (keysArray.indexOf(approvedValidKeys[i]) < 0)) {
+            if ((!(GROUP.includes(i))) && (!(keysArray.includes(i)))) {
                 return false;
             }
         }
 
         // all applykeys in column must be in an apply object
         // TODO: check that only used once?
+
         for (let i of potentialApplyKeys) {
-            if (applykeyArray.indexOf(potentialApplyKeys[i]) < 0) {
+            if (!(potentialApplyKeys.includes(i))) {
                 return false;
             }
         }
@@ -305,6 +311,7 @@ export default class QueryValidator {
                 }
             }
         }
+        return true;
     }
 
     private isOrderValid(query: any) {
@@ -368,40 +375,28 @@ export default class QueryValidator {
 
     private validateTransformation(transform: any) {
         // its OK if a query has neither GROUP nor APPLY
-        if (!transform.hasOwnProperty("GROUP") && !transform.hasOwnProperty("APPLY")) {
-            return true;
+        if (!transform.hasOwnProperty("GROUP") || !transform.hasOwnProperty("APPLY")) {
+            return false;
         }
 
         // neither GROUP nor APPLY can be empty/null/undefined
-        if (transform.hasOwnProperty("GROUP") || transform.hasOwnProperty("APPLY")) {
-            if (transform["GROUP"] === null || transform["APPLY"] === null) {
+        if (transform["GROUP"] === null || transform["APPLY"] === null) {
                 return false;
             }
-            if (transform["GROUP"] === undefined || transform["APPLY"] === undefined) {
+        if (transform["GROUP"] === undefined || transform["APPLY"] === undefined) {
                 return false;
             }
-            if ((transform["GROUP"]).length <= 0 || (transform["APPLY"]).length <= 0 ) {
+        if ((transform["GROUP"]).length <= 0 || (transform["APPLY"]).length <= 0 ) {
                return false;
             }
-
-            if (transform.hasOwnProperty("GROUP") && transform.hasOwnProperty("APPLY")) {
-                if (typeof transform["GROUP"] === "string" && "array") {
-                    return true;
-                }
-                if (typeof transform["APPLY"] === "object" && "array") {
-                    return true;
-                } else {
+            /*
+        if (!(typeof transform["GROUP"] === "string" && "array")) {
                     return false;
                 }
-            }
-
-            // it's NOT OK is a query has only one of GROUP and APPLY
-            if (!transform.hasOwnProperty("GROUP") || !transform.hasOwnProperty("APPLY")) {
-                return false;
-            }
-        }
-
-        this.isAPPLYValid(transform);
+        if (!(typeof transform["APPLY"] === "object" && "array")) {
+                    return false;
+                }
+            */
 
         return true;
     }
@@ -412,7 +407,7 @@ export default class QueryValidator {
         let applyKeyArray: string[] = [];
 
         let apply = query["TRANSFORMATIONS"]["APPLY"];
-        for (let object in apply) {
+        for (let object of apply) {
             let applykey: any = Object.keys(object)[0];
             let APPLYTOKENandKey: any = object[applykey];
             let APPLYTOKEN: string = Object.keys(APPLYTOKENandKey)[0];
@@ -421,7 +416,7 @@ export default class QueryValidator {
 
             // TODO: no two APPLYRULEs can have the same applykey - must be unique
             // TODO: track all the applykeys used and see if previous APPLYRULE has used this applykey already
-            if (applyKeyArray.indexOf(applykey)) {
+            if (applyKeyArray.includes(applykey)) {
                 return false;
             } else {
                 applyKeyArray.push(applykey);
@@ -436,13 +431,15 @@ export default class QueryValidator {
                 return false;
             }
 
+            /*
             // key must be in GROUP
             if (query["TRANSFORMATION"]["GROUP"].indexOf(key) < 0) {
                 return false;
             }
+            */
 
             // applykey must be in COLUMNS
-            if (query["OPTIONS"]["COLUMNS"].indexOf(applykey) < 0) {
+            if (!(query["OPTIONS"]["COLUMNS"].includes(applykey))) {
                 return false;
             }
             // MIN/MAX/AVG must be on Number keys
@@ -450,13 +447,13 @@ export default class QueryValidator {
                 APPLYTOKEN === "MIN" ||
                 APPLYTOKEN === "AVG" ||
                 APPLYTOKEN  === "SUM") {
-                if (!(keyType.indexOf(CRNumberKey))) {
+                if (!(CRNumberKey.includes(keyType))) {
                     return false;
                 }
             }
 
         }
-
+        return true;
     }
 
 }
