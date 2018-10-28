@@ -395,7 +395,7 @@ export default class ProcessQuery {
 
                     for (let item of grouping) {
                         if (item[keyValue] > max) {
-                            max = item[keyValue];
+                            max = Number(item[keyValue]);
                         }
                     }
                     aResult = max;
@@ -408,7 +408,7 @@ export default class ProcessQuery {
                             min = item[keyValue];
                         }
                     }
-                    aResult = min;
+                    aResult = Number(min);
                 }
                 if (APPLYTOKEN === "AVG") {
                     let runningCount = new Decimal(0);
@@ -421,7 +421,7 @@ export default class ProcessQuery {
 
                     }
                     avg = (runningCount.toNumber() / divisor).toFixed(2);
-                    aResult = avg;
+                    aResult = Number(avg);
                 }
                 if (APPLYTOKEN === "SUM") {
                     let runningCount: number = 0;
@@ -429,7 +429,7 @@ export default class ProcessQuery {
                     for (let item of grouping) {
                         runningCount += item[keyValue];
                     }
-                    aResult = runningCount;
+                    aResult = Number(runningCount);
                 }
                 if (APPLYTOKEN === "COUNT") { // check if has multiples/already seen it
                     let count = 0;
@@ -441,7 +441,7 @@ export default class ProcessQuery {
                             seen[item[keyValue]] = 1;
                         }
                     }
-                    aResult = count;
+                    aResult = Number(count);
                 }
                 grouping[0][applykey] = aResult;
             }
