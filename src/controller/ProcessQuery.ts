@@ -424,12 +424,14 @@ export default class ProcessQuery {
                     aResult = Number(avg);
                 }
                 if (APPLYTOKEN === "SUM") {
-                    let runningCount: number = 0;
+                    let runningCount = new Decimal(0);
 
                     for (let item of grouping) {
-                        runningCount += item[keyValue];
+                        runningCount = runningCount.add(new Decimal(item[keyValue]));
                     }
-                    aResult = Number(runningCount);
+
+                    let roundedRunningCount = (runningCount.toNumber()).toFixed(2);
+                    aResult = Number(roundedRunningCount);
                 }
                 if (APPLYTOKEN === "COUNT") { // check if has multiples/already seen it
                     let count = 0;
