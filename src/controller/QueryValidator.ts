@@ -244,15 +244,14 @@ export default class QueryValidator {
                     }
                 } else if (validKeys.indexOf(key) >= 0) {
                     let checkValidKey = key.split("_")[1];
-                    if (key.indexOf(validKeys) < 0) {
+                    if (checkValidKey.indexOf(validKeys) < 0) {
                         return false;
                     } else {
                         approvedValidKeys.push(key);
                     }
-
                 }
             }
-            if (query["TRANSFORMATIONS"]["GROUP"]) {
+            if (query["TRANSFORMATIONS"] && query["TRANSFORMATIONS"]["GROUP"]) {
                 this.validateColumnKeysInGroup(query, approvedValidKeys, potentialApplyKeys);
             }
         } catch (e) {
@@ -262,7 +261,6 @@ export default class QueryValidator {
     }
 
     private validateColumnKeysInGroup(query: any, approvedValidKeys: any[], potentialApplyKeys: any[]) {
-        // TODO: check that if GROUP exists, all COMUMNS must correspond to GROUP key or applykey
         let APPLY = query["TRANSFORMATIONS"]["APPLY"];
         let GROUP = query["TRANSFORMATIONS"]["GROUP"];
 

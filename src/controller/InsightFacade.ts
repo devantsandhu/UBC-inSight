@@ -223,7 +223,7 @@ export default class InsightFacade implements IInsightFacade {
             // no TRANSFORMATIONS? NO PROBLEM! Get outta here
             if (!query.hasOwnProperty("TRANSFORMATIONS")) {
                 if (!(ProcessQuery.result.length < 5000)) {
-                return reject (new InsightError("Result is not < 5000"));
+                    return reject (new InsightError("Result is not < 5000"));
                 } else {
                     ProcessQuery.columnSelection(ProcessQuery.result, validatedQuery);
                     ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);

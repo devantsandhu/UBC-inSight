@@ -1,25 +1,27 @@
 {
-    "title": "MIN, MAX, COUNT and AVG number of seats for each type of room in BUCH",
+    "title": "SUM, MAX, COUNT and AVG number of seats for each type of room in BUCH",
     "query": {
         "WHERE": {
             "IS": {
-                "rooms_name": "BUCH_*"
+                "rooms_name": "BUCH*"
             }
         },
         "OPTIONS": {
             "COLUMNS": [
                 "rooms_type",
-                "minCapacity",
+                "sumCapacity",
                 "maxCapacity",
                 "avgCapacity",
+                "sumLat",
                 "count"
             ],
             "ORDER": {
                 "dir": "UP",
                 "keys": [
-                    "minCapacity",
+                    "sumCapacity",
                     "maxCapacity",
                     "avgCapacity",
+                    "sumLat",
                     "count"
                 ]
             }
@@ -30,8 +32,8 @@
             ],
             "APPLY": [
                 {
-                    "minCapacity": {
-                        "MIN": "rooms_seats"
+                    "sumCapacity": {
+                        "SUM": "rooms_seats"
                     }
                 },
                 {
@@ -48,9 +50,14 @@
                     "count": {
                         "COUNT": "rooms_seats"
                     }
+                },
+                {
+                    "sumLat": {
+                        "SUM": "rooms_lat"
+                    }
                 }
             ]
         }
     },
     "isQueryValid": true,
-    "result":[{"rooms_type":"Small Group","minCapacity":18,"maxCapacity":32,"avgCapacity":27,"count":6},{"rooms_type":"Open Design General Purpose","minCapacity":24,"maxCapacity":50,"avgCapacity":40.56,"count":6},{"rooms_type":"Case Style","minCapacity":56,"maxCapacity":108,"avgCapacity":82.17,"count":4},{"rooms_type":"Tiered Large Group","minCapacity":65,"maxCapacity":275,"avgCapacity":123.8,"count":6}]}
+    "result":[{"rooms_type":"Case Style","sumCapacity":493,"maxCapacity":108,"avgCapacity":82.17,"sumLat":295.61,"count":4},{"rooms_type":"Small Group","sumCapacity":729,"maxCapacity":32,"avgCapacity":27,"sumLat":1330.24,"count":6},{"rooms_type":"Open Design General Purpose","sumCapacity":730,"maxCapacity":50,"avgCapacity":40.56,"sumLat":886.83,"count":6},{"rooms_type":"Tiered Large Group","sumCapacity":1238,"maxCapacity":275,"avgCapacity":123.8,"sumLat":492.68,"count":6}]}
