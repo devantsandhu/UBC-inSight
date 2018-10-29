@@ -48,7 +48,7 @@ export default class RoomHelper {
                         [this.id + "_fullname"]: this.buildingsA[b].fullname,
                         [this.id + "_shortname"]: this.buildingsA[b].shortname,
                         [this.id + "_number"]: rooms[r].number,
-                        [this.id + "_name"]: this.buildingsA[b].shortname + " " + rooms[r].number,
+                        [this.id + "_name"]: this.buildingsA[b].shortname + "_" + rooms[r].number,
                         [this.id + "_address"]: this.buildingsA[b].address,
                         [this.id + "_lat"]: this.buildingsA[b].lat,
                         [this.id + "_lon"]: this.buildingsA[b].lon,

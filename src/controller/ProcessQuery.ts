@@ -285,6 +285,8 @@ export default class ProcessQuery {
 
     // same as with typeof string
     private static sortUP(result: any, ORDERKeysArray: string[]) {
+        result.sort(this.sortByMultipleKeyUP(ORDERKeysArray));
+        /*
         result.sort(function (a: any, b: any) {
             if (a[ORDERKeysArray[0]] < b[ORDERKeysArray[0]]) {
                 return -1;
@@ -296,24 +298,67 @@ export default class ProcessQuery {
             }
         });
         return result;
+        */
     }
 
     private static sortDOWN(result: any, ORDERKeysArray: string[]) {
+        result.sort(this.sortByMultipleKeyDOWN(ORDERKeysArray));
+        /*
         result.sort(function (a: any, b: any) {
             if (a[ORDERKeysArray[0]] > b[ORDERKeysArray[0]]) {
                 return -1;
             }
             if (a[ORDERKeysArray[0]] < b[ORDERKeysArray[0]]) {
                 return 1;
-            } else if (!ORDERKeysArray === undefined) {
+            } else  if (!ORDERKeysArray === undefined) {
                 return this.DOWNtie(a, b, ORDERKeysArray);
             }
         });
         return result;
+         */
     }
 
+    // https://stackoverflow.com/questions/13211709/javascript-sort-array-by-multiple-number-fields
+    private static sortByMultipleKeyDOWN(keys: any) {
+        return function (a: any, b: any): any {
+            if (keys.length === 0) {
+                return 0;
+            }
+            let key = keys[0];
+            if (a[key] < b[key]) {
+                return 1;
+            } else if (a[key] > b[key]) {
+                return -1;
+            } else {
+                if ((keys.length > 1) && (!(keys === undefined))) {
+                    let newKeys = keys.slice(1);
+                    return ProcessQuery.sortByMultipleKeyDOWN(newKeys)(a, b);
+                }
+            }
+        };
+    }
+    private static sortByMultipleKeyUP(keys: any) {
+        return function (a: any, b: any): any {
+            if (keys.length === 0) {
+                return 0;
+            }
+            let key = keys[0];
+            if (a[key] < b[key]) {
+                return -1;
+            } else if (a[key] > b[key]) {
+                return 1;
+            } else {
+                if ((keys.length > 1) && (!(keys === undefined))) {
+                    let newKeys = keys.slice(1);
+                    return ProcessQuery.sortByMultipleKeyDOWN(newKeys)(a, b);
+                }
+            }
+        };
+    }
+    /*
     private static UPtie(a: any, b: any, ORDERKeysArray: string[]) {
         // iteratively go through the remaining keys in ORDERKeysArray to break remaining ties
+
         let i = 1;
         while (i < ORDERKeysArray.length) {
             if (a[ORDERKeysArray[i]] < b[ORDERKeysArray[i]]) {
@@ -325,6 +370,7 @@ export default class ProcessQuery {
             i++;
         }
         return 0;
+
     }
 
     private static DOWNtie(a: any, b: any, ORDERKeysArray: string[]) {
@@ -341,7 +387,7 @@ export default class ProcessQuery {
         }
         return 0;
     }
-
+    */
     public static transformHelper(result: any, query: any): any {
         let queryGROUP = query["TRANSFORMATIONS"]["GROUP"];
         let queryAPPLY = query["TRANSFORMATIONS"]["APPLY"];

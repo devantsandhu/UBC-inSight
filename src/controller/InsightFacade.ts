@@ -234,8 +234,8 @@ export default class InsightFacade implements IInsightFacade {
                 if (!(TResult.length < 5000)) {
                     return reject (new InsightError("Result is not < 5000"));
                 } else {
-                    ProcessQuery.columnSelection(ProcessQuery.result, validatedQuery);
-                    ProcessQuery.orderQuery(ProcessQuery.result, validatedQuery);
+                    ProcessQuery.columnSelection(TResult, validatedQuery);
+                    ProcessQuery.orderQuery(TResult, validatedQuery);
 
                     return resolve(TResult);
                 }

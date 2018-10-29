@@ -3,7 +3,7 @@
     "query": {
         "WHERE": {
             "IS": {
-                "rooms_name": "BUCH_*"
+                "rooms_name": "BUCH*"
             }
         },
         "OPTIONS": {
