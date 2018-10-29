@@ -1,0 +1,45 @@
+{
+    "title": "not all dataset id the same",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "AND":[
+                        {
+                            "EQ": {
+                                "courses_vg": 70
+                            }
+                        },
+                        {
+                            "LT": {
+                                "courses_ail": 6
+                            }
+                        },
+                        {
+                            "GT": {
+                                "courses_ass":2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "EQ": {
+                        "courses_avg":95
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_pass",
+                "courses_fail",
+                "courses_avg"
+            ],
+            "ORDER": "courses_dept"
+        }
+    },
+    "isQueryValid": false,
+    "result": []
+}
