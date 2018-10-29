@@ -13,7 +13,7 @@
                 "countAVG"
             ],
             "ORDER": {
-                "dir": "DOWN",
+                "dir": "UP",
                 "keys": [
                     "courses_avg",
                     "courses_dept"
@@ -35,4 +35,4 @@
         }
     },
     "isQueryValid": true,
-    "result":[{"courses_avg":99.78,"courses_dept":"math","countAVG":1},{"courses_avg":99.19,"courses_dept":"cnps","countAVG":1},{"courses_avg":98.98,"courses_dept":"spph","countAVG":1},{"courses_avg":98.8,"courses_dept":"epse","countAVG":1},{"courses_avg":98.76,"courses_dept":"epse","countAVG":1},{"courses_avg":98.75,"courses_dept":"eece","countAVG":1},{"courses_avg":98.71,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.7,"courses_dept":"epse","countAVG":1},{"courses_avg":98.58,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.58,"courses_dept":"epse","countAVG":1},{"courses_avg":98.5,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.45,"courses_dept":"epse","countAVG":1},{"courses_avg":98.36,"courses_dept":"epse","countAVG":1},{"courses_avg":98.21,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.08,"courses_dept":"epse","countAVG":1}]}
+    "result":[{"courses_avg":98.08,"courses_dept":"epse","countAVG":1},{"courses_avg":98.21,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.36,"courses_dept":"epse","countAVG":1},{"courses_avg":98.45,"courses_dept":"epse","countAVG":1},{"courses_avg":98.5,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.58,"courses_dept":"epse","countAVG":1},{"courses_avg":98.58,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.7,"courses_dept":"epse","countAVG":1},{"courses_avg":98.71,"courses_dept":"nurs","countAVG":1},{"courses_avg":98.75,"courses_dept":"eece","countAVG":1},{"courses_avg":98.76,"courses_dept":"epse","countAVG":1},{"courses_avg":98.8,"courses_dept":"epse","countAVG":1},{"courses_avg":98.98,"courses_dept":"spph","countAVG":1},{"courses_avg":99.19,"courses_dept":"cnps","countAVG":1},{"courses_avg":99.78,"courses_dept":"math","countAVG":1}]}
