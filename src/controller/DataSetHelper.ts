@@ -38,7 +38,11 @@ export default class DataSetHelper {
                 parsedOffering[id + "_fail"] = offering["Fail"];
                 parsedOffering[id + "_audit"] = offering["Audit"];
                 parsedOffering[id + "_uuid"] = offering["id"].toString();
-                parsedOffering[id + "_year"] = Number(offering["Year"]);
+                if (offering["Section"] === "overall") {
+                    parsedOffering[id + "_year"] = 1900;
+                } else {
+                    parsedOffering[id + "_year"] = Number(offering["Year"]);
+                }
                 // return object with assigned values
                 return parsedOffering;
             }

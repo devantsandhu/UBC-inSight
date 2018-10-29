@@ -1,0 +1,21 @@
+{
+    "title": "key not in COLUMNS/APPLY",
+    "query": {
+        "WHERE":{
+            "GT":{
+                "courses_avg":77
+            }
+        },
+        "OPTIONS":{
+            "COLUMNS":[
+                "courses_avg"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": ["maxSeats"]
+            }
+        }
+    },
+    "isQueryValid": false,
+    "result":[]
+}

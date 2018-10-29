@@ -1,0 +1,19 @@
+{
+    "title": "oneSection1900year",
+    "query":{
+        "WHERE": {
+            "IS": {
+                "courses_uuid": "16428"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id",
+                "courses_year",
+                "courses_uuid"
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result":[{"courses_dept":"busi","courses_id":"330","courses_year":1900,"courses_uuid":"16428"}]}

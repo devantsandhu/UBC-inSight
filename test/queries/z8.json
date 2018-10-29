@@ -18,11 +18,13 @@
             "ORDER": {
                 "dir": "UP",
                 "keys": [
+                    "count",
                     "sumCapacity",
                     "maxCapacity",
                     "avgCapacity",
                     "sumLat",
-                    "count"
+                    "sumCapacity"
+
                 ]
             }
         },

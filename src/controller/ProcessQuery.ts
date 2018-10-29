@@ -350,7 +350,7 @@ export default class ProcessQuery {
             } else {
                 if ((keys.length > 1) && (!(keys === undefined))) {
                     let newKeys = keys.slice(1);
-                    return ProcessQuery.sortByMultipleKeyDOWN(newKeys)(a, b);
+                    return ProcessQuery.sortByMultipleKeyUP(newKeys)(a, b);
                 }
             }
         };
@@ -451,10 +451,10 @@ export default class ProcessQuery {
 
                     for (let item of grouping) {
                         if (item[keyValue] < min) {
-                            min = item[keyValue];
+                            min = Number(item[keyValue]);
                         }
                     }
-                    aResult = Number(min);
+                    aResult = min;
                 }
                 if (APPLYTOKEN === "AVG") {
                     let runningCount = new Decimal(0);
