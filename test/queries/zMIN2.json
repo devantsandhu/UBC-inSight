@@ -1,0 +1,31 @@
+{
+    "title": "this stuff is confusing",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "rooms_name": "BUCH*"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "minSeats",
+                "rooms_type"
+            ],
+            "ORDER":
+                    "minSeats"
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_type"
+            ],
+            "APPLY": [
+                {
+                    "minSeats": {
+                        "MIN": "rooms_seats"
+                    }
+                }
+            ]
+        }
+    },
+    "isQueryValid": true,
+    "result":[{"minSeats":18,"rooms_type":"Small Group"},{"minSeats":24,"rooms_type":"Open Design General Purpose"},{"minSeats":56,"rooms_type":"Case Style"},{"minSeats":65,"rooms_type":"Tiered Large Group"}]}
