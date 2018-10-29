@@ -1,0 +1,22 @@
+{
+    "title": "given from spec: rooms with more than 300 seats",
+    "query": {
+        "WHERE": {
+            "IS": {
+                "rooms_address": "2207 Main Mall"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_lat",
+                "rooms_number",
+                "rooms_lon"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": ["rooms_number"]
+            }
+        }
+    },
+    "isQueryValid": true,
+    "result":[{"rooms_lat":49.26274,"rooms_number":"2012","rooms_lon":-123.25224},{"rooms_lat":49.26274,"rooms_number":"1013","rooms_lon":-123.25224},{"rooms_lat":49.26274,"rooms_number":"1012","rooms_lon":-123.25224}]}
