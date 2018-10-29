@@ -3,7 +3,7 @@
     "query": {
         "WHERE": {
             "IS": {
-                "rooms_address": "*Agronomy Road*"
+                "rooms_address": "Agronomy Road*"
             }
         },
         "OPTIONS": {

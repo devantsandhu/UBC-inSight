@@ -116,7 +116,7 @@ export default class QueryValidator {
     public isQueryFilterValid(where: any): boolean {
         let CRNumberKey: any = ["avg",  "pass", "fail" , "audit", "year", "lat", "lon", "seats"];
         let CRStringKey: any = ["dept", "id", "title", "uuid", "instructor", "fullname", "shortname",
-            "number", "name", "type", "furniture", "href"];
+            "number", "name", "type", "furniture", "href", "address"];
         // check that if there is a MCOMPARATOR, SCOMPARATOR, or LOGIC  key it's followed by a key
 
         if (this.queryDatasetIDs.length > 1) {
@@ -226,7 +226,7 @@ export default class QueryValidator {
 
     private isColumnsValid(query: any) {
         let validKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year",
-        "fullname", "shortname", "number", "name", "type", "furniture", "href", "lat", "lon", "seats"];
+        "fullname", "shortname", "number", "name", "type", "furniture", "href", "lat", "lon", "seats", "address"];
 
         let potentialApplyKeys = [];
         let approvedValidKeys = [];
