@@ -77,7 +77,7 @@ export default class RoomHelper {
                         let roomProperty = td.attrs[0].value;
 
                         if (roomProperty === "views-field views-field-field-room-capacity") {
-                            roomCapacity = td.childNodes[0].value.trim();
+                            roomCapacity = Number(td.childNodes[0].value.trim());
                         }
                         if (roomProperty === "views-field views-field-field-room-furniture") {
                             roomFurniture = td.childNodes[0].value.trim();

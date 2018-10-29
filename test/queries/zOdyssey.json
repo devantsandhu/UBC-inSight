@@ -1,0 +1,41 @@
+{
+    "title": "given from spec: rooms with more than 300 seats",
+    "query": {
+        "WHERE": {
+            "AND": [
+                {
+                    "GT": {
+                        "rooms_lat": 49.2623
+                    }
+                },
+                {
+                    "LT": {
+                        "rooms_lat": 49.2683
+                    }
+                },
+                {
+                    "GT": {
+                        "rooms_lon": -123.248
+                    }
+                }, {
+                    "LT": {
+                        "rooms_lat": -123.255
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "rooms_lat",
+                "rooms_lon",
+                "rooms_address"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": ["rooms_shortname"]
+            }
+        }
+    },
+    "isQueryValid": true,
+    "result":[{}]}
