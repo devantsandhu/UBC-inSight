@@ -22,17 +22,31 @@ export default class QueryValidator {
     public isQueryValid(query: any): boolean {
         // let queryDatasetIDs: string[] = [];
         if (query === null || query === undefined || (Object.keys(query).length > 3) ||
-            Object.keys(query).length <= 0) {
+            (Object.keys(query).length <= 1) || Object.keys(query).length <= 0) {
             return false;
         }
 
         // ((!query.hasOwnProperty("WHERE")) && storedDataSets.get(this.getQueryID()).length > 5000) {
-        if ((!query.hasOwnProperty("WHERE"))) {
-            return false;
-        }
+        if (Object.keys(query).length === 2) {
+            if ((!query.hasOwnProperty("WHERE"))) {
+                return false;
+            }
 
-        if (!query.hasOwnProperty("OPTIONS")) {
-            return false;
+            if (!query.hasOwnProperty("OPTIONS")) {
+                return false;
+            }
+        }
+        if (Object.keys(query).length === 3) {
+            if ((!query.hasOwnProperty("WHERE"))) {
+                return false;
+            }
+
+            if (!query.hasOwnProperty("OPTIONS")) {
+                return false;
+            }
+            if (!query.hasOwnProperty("TRANSFORMATIONS")) {
+                return false;
+            }
         }
 
         // ensures options has columns

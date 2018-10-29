@@ -139,10 +139,10 @@ export default class RoomHelper {
                 }
 
                 // below is getting the lat/lon from the server using the building address we just parsed
-                let convertedAddress = buildingAddress.replace(" ", "%");
-                let link = "http://cs310.ugrad.cs.ubc.ca:11316/api/v1/project_j0a0b_x3o0b/" + convertedAddress;
+                // let convertedAddress = buildingAddress.replace(" ", "%");
+                // let link = "http://cs310.ugrad.cs.ubc.ca:11316/api/v1/project_j0a0b_x3o0b/" + convertedAddress;
 
-                let http = require("http");
+                // let http = require("http");
                 const coordinates = {lat: 0, lon: 0};
 
                 // https://nodejs.org/api/http.html#http_http_get_options_callback
