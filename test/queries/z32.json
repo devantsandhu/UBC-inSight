@@ -1,0 +1,40 @@
+{
+    "title": "Column key not GROUP or APPLY",
+    "query": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 90
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_title",
+                "overallAvg",
+                "overallAvg2"
+            ]
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_title"
+            ],
+            "APPLY": [
+                {
+                    "overallAvg": {
+                        "AVG": "courses_avg"
+                    }
+                },
+                {
+                    "overallAvg2": {
+                        "AVG": "courses_avg"
+                    }
+                },
+                {
+                    "overallAvg2": {
+                        "AVG": "courses_fail"
+                    }
+                }
+            ]
+        }
+    },
+    "isQueryValid": false,
+    "result":[]}

@@ -255,7 +255,7 @@ export default class QueryValidator {
                 }
             }
             if (query["TRANSFORMATIONS"] && query["TRANSFORMATIONS"]["GROUP"]) {
-                if (!(this.validateColumnKeysInGroup(query, approvedValidKeys, potentialApplyKeys))) {
+                if (!(this.validateColumnKeysInGroupOrApply(query, approvedValidKeys, potentialApplyKeys))) {
                     return false;
                 }
             }
@@ -265,49 +265,21 @@ export default class QueryValidator {
         return true;
     }
 
-    private validateColumnKeysInGroup(query: any, approvedValidKeys: any[], potentialApplyKeys: any[]) {
+    private validateColumnKeysInGroupOrApply(query: any, approvedValidKeys: any[], potentialApplyKeys: any[]) {
         let APPLY = query["TRANSFORMATIONS"]["APPLY"];
         let GROUP = query["TRANSFORMATIONS"]["GROUP"];
+        let COLUMNS = query["OPTIONS"]["COLUMNS"];
 
-        let keysArray = [];
-        let applykeyArray = [];
+        let applyKeyArray: string[] = [];
 
-        for (let i of APPLY) {
-            let applykey = Object.keys(i)[0];  // applykey (sumDept, countAVG)
-            let APPLYTOKENkey = Object.values(i)[0]; // {APPLYTOKEN : key}
-            let keyValue = Object.values(APPLYTOKENkey)[0]; // key (coureses_avg, courses_dept)
-
-            keysArray.push(keyValue);
-            applykeyArray.push(applykey);
+        for (let object of APPLY) {
+            let applykey: any = Object.keys(object)[0];
+            applyKeyArray.push(applykey);
         }
-
-        // if GROUP doesn't have a key from COLUMNS reject
-        for (let i of approvedValidKeys) {
-            if ((!(GROUP.includes(i))) && (!(keysArray.includes(i)))) {
-                return false;
-            }
-        }
-
-        // all applykeys in column must be in an apply object
-        // TODO: check that only used once?
-
-        for (let i of potentialApplyKeys) {
-            if (!(potentialApplyKeys.includes(i))) {
-                return false;
-            }
-        }
-
-        // check that all elements in COLUMNS are in either GROUP or APPLY
-        let columnNames: string[];
-        columnNames = query["OPTIONS"]["COLUMNS"];
-        for (let n in columnNames) {
-            if (n.indexOf("_") > -1) { // TODO: currently only checks regular keys, not applykeys.
-                if (!(this.isInGROUP(query["TRANSFORMATIONS"]["GROUP"], n))) {
+        for (let c of COLUMNS) {
+            if (!(applyKeyArray.includes(c))) {
+                if (!(GROUP.includes(c))) {
                     return false;
-                } else {
-                    if (!(this.isInAPPLY(query["TRANSFORMATIONS"]["APPLY"], n))) {
-                        return false; // in neither GROUP or APPLY at this point
-                    }
                 }
             }
         }
@@ -438,10 +410,6 @@ export default class QueryValidator {
             }
             */
 
-            // applykey must be in COLUMNS
-            if (!(query["OPTIONS"]["COLUMNS"].includes(applykey))) {
-                return false;
-            }
             // MIN/MAX/AVG must be on Number keys
             if (APPLYTOKEN === "MAX" ||
                 APPLYTOKEN === "MIN" ||
