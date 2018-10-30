@@ -493,7 +493,7 @@ export default class QueryValidator {
                 } else if (validRKeys.indexOf(i) >= 0) {
                     room = true;
                 }
-                if (((room === true) && (course === true)) || (!(room === true) && !(course === true)) ) {
+                if ((room === true) && (course === true)) {
                     return false;
                 }
             }

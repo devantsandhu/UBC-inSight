@@ -337,6 +337,7 @@ export default class ProcessQuery {
             }
         };
     }
+    // https://stackoverflow.com/questions/13211709/javascript-sort-array-by-multiple-number-fields
     private static sortByMultipleKeyUP(keys: any) {
         return function (a: any, b: any): any {
             if (keys.length === 0) {

@@ -28,38 +28,42 @@ export default class RoomHelper {
     public async test() {
         const parse5 = require("parse5");
         for (let b in this.buildingsA) {
-            // each building has a path to get to its directory of room information
-            let path = this.buildingsA[b].link;
-            let correctPath = path.slice(2);
-            // Log.trace(b);
+            // if (!((this.buildingsA[b].lat === 0) && (this.buildingsA[b].lat === 0))) {
+                // each building has a path to get to its directory of room information
+                let path = this.buildingsA[b].link;
+                let correctPath = path.slice(2);
+                // Log.trace(b);
 
-            // let building =  fs.readFileSync(path);
-            let building = await this.roomsFolder.file(correctPath).async("string");
-            let roomHTML = parse5.parse(building);
-            let Rtbody = this.gettbody(roomHTML);
-            if (!(Rtbody === null)) {
-                let rooms = this.makeRooms(Rtbody);
+                // let building =  fs.readFileSync(path);
+                let building = await this.roomsFolder.file(correctPath).async("string");
+                let roomHTML = parse5.parse(building);
+                let Rtbody = this.gettbody(roomHTML);
+                if (!(Rtbody === null)) {
+                    let rooms = this.makeRooms(Rtbody);
 
-                // TODO: use building paths to get to room directories !!!!
-                for (let r in rooms) {
-                    // final room object
-                    const room = {
-                        // TODO: why does this hate me!!! I'm JUST COMBINING THINGSSSS
-                        [this.id + "_fullname"]: this.buildingsA[b].fullname,
-                        [this.id + "_shortname"]: this.buildingsA[b].shortname,
-                        [this.id + "_number"]: rooms[r].number,
-                        [this.id + "_name"]: this.buildingsA[b].shortname + "_" + rooms[r].number,
-                        [this.id + "_address"]: this.buildingsA[b].address,
-                        [this.id + "_lat"]: this.buildingsA[b].lat,
-                        [this.id + "_lon"]: this.buildingsA[b].lon,
-                        [this.id + "_seats"]: rooms[r].seats,
-                        [this.id + "_type"]: rooms[r].type,
-                        [this.id + "_furniture"]: rooms[r].furniture,
-                        [this.id + "_href"]: rooms[r].href
-                    };
-                    this.roomsObjects.push(room);
+                    // TODO: use building paths to get to room directories !!!!
+                    for (let r in rooms) {
+                        // final room object
+                        const room = {
+                            // TODO: why does this hate me!!! I'm JUST COMBINING THINGSSSS
+                            [this.id + "_fullname"]: this.buildingsA[b].fullname,
+                            [this.id + "_shortname"]: this.buildingsA[b].shortname,
+                            [this.id + "_number"]: rooms[r].number,
+                            [this.id + "_name"]: this.buildingsA[b].shortname + "_" + rooms[r].number,
+                            [this.id + "_address"]: this.buildingsA[b].address,
+                            [this.id + "_lat"]: this.buildingsA[b].lat,
+                            [this.id + "_lon"]: this.buildingsA[b].lon,
+                            [this.id + "_seats"]: rooms[r].seats,
+                            [this.id + "_type"]: rooms[r].type,
+                            [this.id + "_furniture"]: rooms[r].furniture,
+                            [this.id + "_href"]: rooms[r].href
+                        };
+                        if (!(this.buildingsA[b].lat === 0)) {
+                            this.roomsObjects.push(room);
+                        }
+                    }
                 }
-            }
+            // }
         }
     }
 
@@ -194,10 +198,10 @@ export default class RoomHelper {
             buildingPromises.push(this.test3(link, this.buildingsA[b]));
             // buildingPromises.push(this.test3(link, this.buildingsA[b]));
         }
-        // await Promise.all(buildingPromises).then((result) => {
+        // return Promise.all(buildingPromises);
         //    // TODO
         // });
-        let x: any = 0;
+        // let x: any = 0;
     }
 
     private async test3(link: any, building: any) {
@@ -240,6 +244,11 @@ export default class RoomHelper {
             });
         });
         await p;
+        if (coordinates.lat === 0) {
+            let index = this.buildingsA.indexOf(building);
+            this.buildingsA.slice(index, 1);
+            let x: any = 0;
+        }
         building.lat = coordinates.lat;
         building.lon = coordinates.lon;
         // return p;
