@@ -75,6 +75,7 @@ describe("InsightFacade Add/Remove Dataset", function () {
     afterEach(function () {
         Log.test(`AfterTest: ${this.currentTest.title}`);
     });
+
     // list the courses before adding any (should be 0)
     it("List courses", async () => {
         let response: InsightDataset[];
@@ -412,6 +413,7 @@ describe("InsightFacade Add/Remove Dataset", function () {
             expect(response.length).to.deep.equal(3);
         }
     });
+
     // Add valid rooms datset
     it("Should add a valid rooms dataset", async () => {
         const id: string = "rooms";

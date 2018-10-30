@@ -64,6 +64,9 @@ export default class QueryValidator {
                 if (!(this.isAPPLYValid(query))) {
                     return false;
                 }
+                if (!(this.isGROUPValid(query))) {
+                    return false;
+                }
             }
         }
 
@@ -327,6 +330,10 @@ export default class QueryValidator {
                         if (!isArray(query["OPTIONS"]["ORDER"]["keys"])) {
                             return false;
                         }
+                        // keys can't be empty array
+                        if ((query["OPTIONS"]["ORDER"]["keys"]).length === 0) {
+                            return false;
+                        }
                         let direction: string = query["OPTIONS"]["ORDER"]["dir"];
                         let ORDERKeysArray: string [] = query["OPTIONS"]["ORDER"]["keys"]; // can have multiple
 
@@ -372,7 +379,7 @@ export default class QueryValidator {
         if (transform["GROUP"] === undefined || transform["APPLY"] === undefined) {
                 return false;
             }
-        if ((transform["GROUP"]).length <= 0 || (transform["APPLY"]).length <= 0 ) {
+        if ((transform["GROUP"]).length <= 0) {
                return false;
             }
             /*
@@ -393,6 +400,9 @@ export default class QueryValidator {
         let applyKeyArray: string[] = [];
 
         let apply = query["TRANSFORMATIONS"]["APPLY"];
+        if (Object.keys(apply).length === 0) {
+            return true;
+        }
         for (let object of apply) {
             let applykey: any = Object.keys(object)[0];
             let APPLYTOKENandKey: any = object[applykey];
@@ -435,7 +445,38 @@ export default class QueryValidator {
             }
 
         }
+        for (let aKey of applyKeyArray) {
+            if (!(aKey.indexOf("_") < 0)) {
+                return false;
+            }
+        }
         return true;
     }
 
+    private isGROUPValid(query: any) {
+        let validKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year",
+            "fullname", "shortname", "number", "name", "type", "furniture", "href", "lat", "lon", "seats", "address"];
+
+        try {
+            // ensures columns only has valid keys
+            for (let key of query["TRANSFORMATIONS"]["GROUP"]) {
+                if (key.indexOf("_") < 0) {
+                    return false;
+                }
+                if (this.confirmALLColumnIDs(query)) {
+                    let groupID = key.split("_")[0];
+                    let groupKEY = key.split("_")[1];
+                    if (!(groupID === this.queryDatasetIDs[0])) {
+                        return false;
+                    }
+                    if (!(validKeys.includes(groupKEY))) {
+                        return false;
+                    }
+                }
+            }
+        } catch (e) {
+            throw new InsightError(e);
+        }
+        return true;
+    }
 }
