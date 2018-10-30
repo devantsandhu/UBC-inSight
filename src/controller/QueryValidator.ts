@@ -457,9 +457,16 @@ export default class QueryValidator {
         let validKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year",
             "fullname", "shortname", "number", "name", "type", "furniture", "href", "lat", "lon", "seats", "address"];
 
+        let validRKeys = ["fullname", "shortname", "number", "name", "type", "furniture", "href", "lat", "lon",
+            "seats", "address"];
+        let validCKeys = ["dept", "id", "avg", "instructor", "title", "pass", "fail", "audit", "uuid", "year"];
+
         try {
+            let KArray = [];
+
             // ensures columns only has valid keys
             for (let key of query["TRANSFORMATIONS"]["GROUP"]) {
+                // let GidArray = [];
                 if (key.indexOf("_") < 0) {
                     return false;
                 }
@@ -469,9 +476,25 @@ export default class QueryValidator {
                     if (!(groupID === this.queryDatasetIDs[0])) {
                         return false;
                     }
+                    // GidArray.push(groupID);
+
                     if (!(validKeys.includes(groupKEY))) {
                         return false;
+                    } else {
+                        KArray.push(groupKEY);
                     }
+                }
+            }
+            let room = false;
+            let course = false;
+            for (let i of KArray) {
+                if (validCKeys.indexOf(i) >= 0) {
+                    course = true;
+                } else if (validRKeys.indexOf(i) >= 0) {
+                    room = true;
+                }
+                if (((room === true) && (course === true)) || (!(room === true) && !(course === true)) ) {
+                    return false;
                 }
             }
         } catch (e) {
