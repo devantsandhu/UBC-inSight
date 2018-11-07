@@ -1,3 +1,45 @@
 {
-    "query1": "simple query IS comparison for department with two columns and old order syntax"
+    "query1": "simple query IS comparison for department with two columns and old order syntax",
+
+    "query2": "simple query IS comparison for rooms name with a couple columns and d1 order syntax",
+
+    "3Beecolusa": "simple MComp and single order key",
+
+    "4Beecamelot": "AND and order key",
+
+    "5Beefirefly": "AND no order",
+
+    "6Beeglavin": "query with MComparison of float number",
+
+    "7Beeivory": "OR",
+
+    "8Beejiro": "SComp and order",
+
+    "9Beegermanium": "asterisk*",
+
+    "10Beehelium": "*asterisk*",
+
+    "11Beekleene": "AND then NOT",
+
+    "12Beeodyssey": "complecx AND (just a lot of ANDS)",
+
+    "13Beepisces": "all columns selected",
+
+    "14Beequicksilver": "all items",
+
+    "15Beerevolution": "two orders selected",
+
+    "16Beeromeo": "all orders selected",
+
+    "17Beerutabaga": "1 transform (MAX)",
+
+    "18Beesagittarius": "1 transform (AVG)",
+
+    "19Beesteamedham": "COUNT and MIN transforms",
+
+    "20Beevanadium": "minAvg and maxAVG for hist",
+
+    "21Beexenon": "super complex?"
+
 }
+
