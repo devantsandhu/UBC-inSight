@@ -1,0 +1,46 @@
+{
+    "title": "given from spec: rooms with more than 300 seats",
+    "query": {"WHERE": {
+        "AND": [
+            {
+                "IS": {
+                    "rooms_number": "101"
+                }
+            },
+            {
+                "NOT": {
+                    "OR": [
+                        {
+                            "IS": {
+                                "rooms_shortname": "DMP"
+                            }
+                        },
+                        {
+                            "IS": {
+                                "rooms_shortname": "GEOG"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+    ,
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_name",
+                "rooms_address",
+                "rooms_lat",
+                "rooms_number",
+                "rooms_lon"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "rooms_number"
+                ]
+            }
+        }
+    },
+    "isQueryValid": true,
+    "result":[{"rooms_name":"CHBE_101","rooms_address":"2360 East Mall V6T 1Z3","rooms_lat":49.26228,"rooms_number":"101","rooms_lon":-123.24718},{"rooms_name":"UCLL_101","rooms_address":"6331 Crescent Road V6T 1Z1","rooms_lat":49.26867,"rooms_number":"101","rooms_lon":-123.25692}]}

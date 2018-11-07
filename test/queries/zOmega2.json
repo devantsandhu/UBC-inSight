@@ -1,0 +1,42 @@
+{
+    "title": "given from spec: rooms with more than 300 seats",
+    "query": {
+        "WHERE": {
+            "OR": [
+                {
+                    "IS": {
+                        "rooms_name": "ALRD_113"
+                    }
+                },
+                {
+                    "IS": {
+                        "rooms_name": "BUCH_D*"
+                    }
+                },
+
+                {
+                    "IS": {
+                        "rooms_name": "IBLC_264"
+                    }
+                }
+
+
+            ]
+
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_name",
+                "rooms_address",
+                "rooms_lat",
+                "rooms_number",
+                "rooms_lon"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": ["rooms_number"]
+            }
+        }
+    },
+    "isQueryValid": true,
+    "result":[{"rooms_name":"BUCH_D325","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D325","rooms_lon":-123.25468},{"rooms_name":"BUCH_D323","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D323","rooms_lon":-123.25468},{"rooms_name":"BUCH_D322","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D322","rooms_lon":-123.25468},{"rooms_name":"BUCH_D319","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D319","rooms_lon":-123.25468},{"rooms_name":"BUCH_D317","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D317","rooms_lon":-123.25468},{"rooms_name":"BUCH_D316","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D316","rooms_lon":-123.25468},{"rooms_name":"BUCH_D315","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D315","rooms_lon":-123.25468},{"rooms_name":"BUCH_D314","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D314","rooms_lon":-123.25468},{"rooms_name":"BUCH_D313","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D313","rooms_lon":-123.25468},{"rooms_name":"BUCH_D312","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D312","rooms_lon":-123.25468},{"rooms_name":"BUCH_D307","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D307","rooms_lon":-123.25468},{"rooms_name":"BUCH_D306","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D306","rooms_lon":-123.25468},{"rooms_name":"BUCH_D304","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D304","rooms_lon":-123.25468},{"rooms_name":"BUCH_D301","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D301","rooms_lon":-123.25468},{"rooms_name":"BUCH_D229","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D229","rooms_lon":-123.25468},{"rooms_name":"BUCH_D228","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D228","rooms_lon":-123.25468},{"rooms_name":"BUCH_D222","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D222","rooms_lon":-123.25468},{"rooms_name":"BUCH_D221","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D221","rooms_lon":-123.25468},{"rooms_name":"BUCH_D219","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D219","rooms_lon":-123.25468},{"rooms_name":"BUCH_D218","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D218","rooms_lon":-123.25468},{"rooms_name":"BUCH_D217","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D217","rooms_lon":-123.25468},{"rooms_name":"BUCH_D216","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D216","rooms_lon":-123.25468},{"rooms_name":"BUCH_D214","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D214","rooms_lon":-123.25468},{"rooms_name":"BUCH_D213","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D213","rooms_lon":-123.25468},{"rooms_name":"BUCH_D209","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D209","rooms_lon":-123.25468},{"rooms_name":"BUCH_D207","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D207","rooms_lon":-123.25468},{"rooms_name":"BUCH_D205","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D205","rooms_lon":-123.25468},{"rooms_name":"BUCH_D204","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D204","rooms_lon":-123.25468},{"rooms_name":"BUCH_D201","rooms_address":"1866 Main Mall","rooms_lat":49.26826,"rooms_number":"D201","rooms_lon":-123.25468},{"rooms_name":"IBLC_264","rooms_address":"1961 East Mall V6T 1Z1","rooms_lat":49.26766,"rooms_number":"264","rooms_lon":-123.2521},{"rooms_name":"ALRD_113","rooms_address":"1822 East Mall","rooms_lat":49.2699,"rooms_number":"113","rooms_lon":-123.25318}]}
