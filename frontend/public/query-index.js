@@ -9,3 +9,21 @@
  */
 
 // TODO: implement!
+// https://github.com/aahung/cpsc310-geolocation-ui
+
+// 1
+document.getElementById("submit-button").addEventListener("click", function() {
+    // 2
+    let query = CampusExplorer.buildQuery();
+
+    // 3
+    sendQuery(query)
+        .then(function(result) {
+            // 4
+            CampusExplorer.renderResult(JSON.parse(resolve));
+            console.log(result);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+});
