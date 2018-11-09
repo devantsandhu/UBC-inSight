@@ -94,7 +94,7 @@ CampusExplorer.buildQuery = function() {
 
 processComparator = function(cond) {
     // TODO: fix:
-    let isNOTcond = cond.firstElementChild.getElementsByTagName("input")[0].getAttribute("checked");
+    let isNOTcond = (cond.firstElementChild.getElementsByTagName("input")[0].getAttribute("checked") === "checked");
 
     let allFields = cond.getElementsByClassName("control fields")[0].getElementsByTagName("option");
     let selectedField = "";
@@ -103,6 +103,7 @@ processComparator = function(cond) {
 
         if (selected === "selected"){
             selectedField = allFields[field].getAttribute("value"); // audit/agv/dept/etc.
+            break; // we got it, just get out
         }
     }
 
@@ -111,9 +112,11 @@ processComparator = function(cond) {
     let allOperators = cond.getElementsByClassName("control operators")[0].getElementsByTagName("option");
     let selectedOperator = "";
     for (let operator of allOperators) {
-        let selected = allOperators[operator].getAttribute("selected");
+        let selected = operator.getAttribute("selected");
+
         if (selected == "selected") {
-            selectedOperator = allOperators[operator].getAttribute("value"); // IS/GT/EQ/LT
+            selectedOperator = operator.getAttribute("value"); // IS/GT/EQ/LT
+            break;
         }
     }
 
