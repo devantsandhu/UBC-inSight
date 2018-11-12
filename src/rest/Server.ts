@@ -5,6 +5,10 @@
 import fs = require("fs");
 import restify = require("restify");
 import Log from "../Util";
+import InsightFacade from "../controller/InsightFacade";
+import {InsightDatasetKind, NotFoundError} from "../controller/IInsightFacade";
+import {readFileSync} from "fs";
+import TestUtil from "../../test/TestUtil";
 
 /**
  * This configures the REST endpoints for the server.
@@ -13,10 +17,12 @@ export default class Server {
 
     private port: number;
     private rest: restify.Server;
+    private static insightFacade: InsightFacade;
 
     constructor(port: number) {
         Log.info("Server::<init>( " + port + " )");
         this.port = port;
+        Server.insightFacade = new InsightFacade();
     }
 
     /**
@@ -64,6 +70,10 @@ export default class Server {
                 that.rest.get("/echo/:msg", Server.echo);
 
                 // NOTE: your endpoints should go here
+                that.rest.put("/dataset/:id/:kind", Server.sAddDataset);
+                that.rest.del("/dataset/:id", Server.sRemoveDataset);
+                that.rest.post("/query", Server.sPerformQuery);
+                that.rest.get("/dataset", Server.sListDatasets);
 
                 // This must be the last endpoint!
                 that.rest.get("/.*", Server.getStatic);
@@ -130,4 +140,78 @@ export default class Server {
         });
     }
 
+    private static async sAddDataset(req: restify.Request, res: restify.Response, next: restify.Next) {
+        try {
+            let path: string = "";
+            let content: string = "";
+            switch (req.params.kind) {
+                case "courses": {
+                    path = "./test/data/courses.zip";
+                    // TODO readFile might be incorrect to do here
+                    content = fs.readFileSync(path).toString("base64");
+                    break;
+                }
+                case "rooms": {
+                    path = "./test/data/rooms.zip";
+                    content = fs.readFileSync(path).toString("base64");
+                    break;
+                }
+            }
+            await Server.insightFacade.addDataset(req.params.id, content, req.params.kind)
+                .then(function (response: any) {
+                    res.json(200, {result: response});
+                })
+                .catch(function (err: any) {
+                    res.json(400, {error: err.toString()});
+                });
+            return next();
+        } catch (e) {
+            res.json(400, {error: e.toString()});
+        }
+        return next();
+    }
+    private static async sRemoveDataset(req: restify.Request, res: restify.Response, next: restify.Next) {
+        try {
+            await Server.insightFacade.removeDataset(req.params.id)
+                .then(function (response: any) {
+                    res.json(200, {result: response});
+                })
+                .catch(function (err: any) {
+                    // Log.error("Server::echo(..) - responding 400");
+                    let notFound: any = new NotFoundError();
+                    if ((typeof err) === (typeof notFound)) {
+                        res.json(404, {error: err.toString()});
+                    } else {
+                        res.json(400, {error: err.toString()});
+                    }
+                });
+            return next();
+        } catch (e) {
+            res.json(400, {error: e.toString()});
+        }
+        return next();
+    }
+    private static async sListDatasets(req: restify.Request, res: restify.Response, next: restify.Next) {
+        await Server.insightFacade.listDatasets()
+            .then(function (response: any) {
+                res.json(200, {result: response});
+            });
+        return next();
+    }
+    private static async sPerformQuery(req: restify.Request, res: restify.Response, next: restify.Next) {
+        try {
+            // TODO pass correct param (req is probably wrong)
+            await Server.insightFacade.performQuery(req)
+                .then(function (response: any) {
+                    res.json(200, {result: response});
+                })
+                .catch(function (err: any) {
+                    res.json(400, {error: err.toString()});
+                });
+            return next();
+        } catch (e) {
+            res.json(400, {error: e.toString()});
+        }
+        return next();
+    }
 }
