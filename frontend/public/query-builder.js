@@ -44,17 +44,21 @@ CampusExplorer.buildQuery = function() {
     // OPTIONS: COLUMNS: && (ORDER:)
     query["OPTIONS"] = {};
 
-    let columns = activeTabPanel.getElementsByClassName("form-group columns")[0].getElementsByClassName("control-group")[0];
+    let columns = activeTabPanel.getElementsByClassName("form-group columns")[0];
     query["OPTIONS"]["COLUMNS"] = getCols(columns);
+
 
     // 3) ORDER BLOCK
     let order = activeTabPanel.getElementsByClassName("form-group order")[0].getElementsByClassName("control-group")[0];
     let parsedOrder = getOrder(order);
 
     let dir = "";
+    let isDescending = false;
 
-    // TODO: fix:
-    let isDescending = order.getElementsByClassName("control descending")[0].getElementsByTagName("input").checked; // make bool
+    if (order.getElementsByClassName("control descending")[0].getAttribute("checked") === "checked") {
+        isDescending = true;
+    }
+
     if (isDescending) {
         dir = "DOWN"
     } else {
@@ -69,18 +73,27 @@ CampusExplorer.buildQuery = function() {
 
     // 4) GROUPS BLOCK
     // TRANSFORMATIONS: GROUP && APPLY
-    query["TRANSFORMATIONS"] = {};
+    let groups = activeTabPanel.getElementsByClassName("form-group groups")[0].getElementsByClassName("control-group")[0];
+    let groupBlock = getGroup(groups);
 
-    let groups = activeTabPanel.getElementsByClassName("form-group group")[0].getElementsByClassName("control-group")[0];
-    query["TRANSFORMATIONS"]["GROUP"] = getGroup(groups);
 
     // 5) TRANSFORMATIONS BLOCK
     // APPLY
     let transformations = activeTabPanel.getElementsByClassName("form-group transformations")[0].getElementsByClassName("control-group transformation")[0];
-    if (transformations.length > 0) {
-        query["TRANSFORMATIONS"]["APPLY"] = getTransform(transformations);
+    let applyBlock;
+    if (transformations !== undefined) {
+        applyBlock = getTransform(transformations);
     }
 
+
+    // 4 + 5 ) DO WE HAVE A TRANSFORM?!
+    // can only make TRANSFORMATION block if have a transformation
+    if ((groupBlock.length > 0) && (transformations !== undefined)) {
+        query["TRANSFORMATIONS"] = {};
+        query["TRANSFORMATIONS"]["GROUP"] = groupBlock;
+        query["TRANSFORMATIONS"]["APPLY"] = applyBlock;
+
+    }
 
     // console.log("CampusExplorer.buildQuery not implemented yet.");
     console.log(JSON.stringify(query));
@@ -171,6 +184,8 @@ getGroup = function(groups) {
     let allGroups = groups.getElementsByClassName("control field");
 
     for (let gr in allGroups) {
+        if (gr === "length") return returnGroup;
+
         if (allGroups[gr].getAttribute("checked") === "checked") {
             returnGroup.push(getID() + "_" + gr.getAttribute("value"));
         }
@@ -184,6 +199,7 @@ getOrder = function (order) {
     let allOrderOptions = order.getElementsByClassName("control order fields")[0].getElementsByTagName("option");
 
     for (let ord in allOrderOptions) {
+        if (ord === "length") return returnOrder;
         if (allOrderOptions[ord].getAttribute("selected") === "selected") {
             if (allOrderOptions[ord].getAttribute("class") === "transformation") {
                 returnOrder.push(allOrderOptions[ord].getAttribute("value"));
@@ -199,18 +215,17 @@ getOrder = function (order) {
 
 getCols = function (columns) {
     let returnCol = [];
-    let allGivenColumns = columns.getElementsByClassName("control-field");
-    let allTransformColumns = columns.getElementsByClassName("control transformation");
+    let allColumns = columns.children[1].children;
 
 
-    for (let col of allGivenColumns) {
-        if (col.firstElementChild.getAttribute("checked") === checked) {
-            returnCol.push(getID() + "_" + col.firstElementChild.getAttribute("value"));
-        }
-    }
-    for (let tcol of allTransformColumns) {
-        if (tcol.firstElementChild.getAttribute("checked") === checked) {
-            returnCol.push(tcol.firstElementChild.getAttribute("value"));
+    for (let col of allColumns) {
+        if (col.childNodes[1].getAttribute("checked") === "checked") {
+            if (col.className == "control transformation") {
+                returnCol.push(col.firstElementChild.getAttribute("value"));
+            }
+            else {
+                returnCol.push(getID() + "_" + col.firstElementChild.getAttribute("value"));
+            }
         }
     }
 
