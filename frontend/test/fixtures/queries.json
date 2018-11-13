@@ -263,6 +263,7 @@
                 "courses_instructor",
                 "courses_pass",
                 "courses_title",
+                "courses_uuid",
                 "courses_year"
             ]
         }
@@ -302,6 +303,7 @@
                 "courses_instructor",
                 "courses_pass",
                 "courses_title",
+                "courses_uuid",
                 "courses_year"
             ]
         }
