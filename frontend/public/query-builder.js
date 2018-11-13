@@ -203,7 +203,7 @@ getTransform = function(transformations) {
         allFields = transform.children[2].children[0].getElementsByTagName("option");
         for (let field in allFields) {
             if (allFields[field].getAttribute("selected") !== null) {
-                key = allFields[field].value;
+                key = getID() + "_" + allFields[field].value;
                 break;
             }
         }
@@ -211,6 +211,8 @@ getTransform = function(transformations) {
         let apply = {[applyKey]: {[APPLYTOKEN]: key}};
         returnApply.push(apply);
     }
+
+    return returnApply;
 
 
 };
@@ -223,8 +225,8 @@ getGroup = function(groups) {
     for (let gr in allGroups) {
         if (gr === "length") return returnGroup;
 
-        if (allGroups[gr].getAttribute("checked") === "checked") {
-            returnGroup.push(getID() + "_" + gr.getAttribute("value"));
+        if (allGroups[gr].children[0].checked === true) {
+            returnGroup.push(getID() + "_" + allGroups[gr].children[0].value);
         }
     }
 
