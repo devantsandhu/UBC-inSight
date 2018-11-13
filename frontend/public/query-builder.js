@@ -92,11 +92,12 @@ CampusExplorer.buildQuery = function() {
 
     // 5) TRANSFORMATIONS BLOCK
     // APPLY
-    let transformations = activeTabPanel.getElementsByClassName("form-group transformations")[0].getElementsByClassName("control-group transformation")[0];
+    let transformations = activeTabPanel.getElementsByClassName("form-group transformations")[0].getElementsByClassName("transformations-container");
     let applyBlock;
-    if (transformations !== undefined) {
-        applyBlock = getTransform(transformations);
+    if (transformations[0].children.length > 0) {
+        applyBlock = getTransform(transformations[0].children);
     }
+
 
 
     // 4 + 5 ) DO WE HAVE A TRANSFORM?!
@@ -180,13 +181,26 @@ getTransform = function(transformations) {
     // APPLY: [ {applyKey: {APPLYTOKEN : key}}]
     // APPLY: [ {MAXavg: { MAX : courses_avg}}]
     for (let transform of transformations) {
-        let applyKey = transformations[transform].getElementsByClassName("control term")[0].getAttribute("value");
+        let applyKey = transform.children[0].children[0].getAttribute("value");
 
-        let allAPPLYTOKENS = transformations[transform].getElementsByClassName("control operator")[0].getElementsByTagName("select");
-        let APPLYTOKEN = allAPPLYTOKENS.options[allAPPLYTOKENS.selectedIndex].value;
+        let allAPPLYTOKENS = transform.children[1].children[0].getElementsByTagName("option");
+        let APPLYTOKEN;
+        for (let at of allAPPLYTOKENS) {
+            if (at.getAttribute("selected") !== null) {
+                APPLYTOKEN = at.value;
+                break; //got it
 
-        let allKeys = transformations[transform].getElementsByClassName("control fields")[0].getElementsByTagName("select");
-        let key = allKeys.getAttribute("value");
+            }
+        }
+
+        let allFields = transform.children[2].children[0].getElementsByTagName("option");
+        let key;
+        for (let field in allFields) {
+            if (allFields[field].getAttribute("selected") !== null) {
+                key = allFields[field.value;
+                break;
+            }
+        }
 
         let apply = {[applyKey]: {[APPLYTOKEN]: key}};
         returnApply.push(apply);
