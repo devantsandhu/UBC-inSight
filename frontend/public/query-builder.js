@@ -19,18 +19,19 @@ CampusExplorer.buildQuery = function() {
     // get condition (all/any/none)
     let conditionBlock = activeTabPanel.getElementsByClassName("control-group condition-type");
     let conditions = conditionBlock[0].getElementsByTagName("input");
-    let condition = getCondition(conditions); // AND/OR/NOT
 
     let comparators = activeTabPanel.getElementsByClassName("conditions-container");
 
     let numberOfComparators = comparators[0].children.length;
+    let comparatorArray = [];
+
 
     // empty where/ base case
     if (numberOfComparators === 0) {
         query["WHERE"] = {};
     } else if (numberOfComparators === 1) {
         // cannot have AND/OR if only 1 comparator
-        let oneCondition = comparators[0].getElementsByClassName("control-group condition");
+        let oneCondition = comparators[0].getElementsByClassName("control-group condition")[0];
 
         let processedCond = processComparator(oneCondition);
 
@@ -40,12 +41,13 @@ CampusExplorer.buildQuery = function() {
         // each comparator must be processed/info extracted then pushed into array
         // WHERE: { AND/OR: {xxx}, {yyy}} then added
         // AND/OR only 1 OK - YES
-        let comparatorArray = [];
         let condition = comparators[0].getElementsByClassName("control-group condition");
-        for (let cond of conditions) {
+        let ANDORNOTcondition = getCondition(conditions); // AND/OR/NOT
+
+        for (let cond of condition) {
             comparatorArray.push(processComparator(cond));
         }
-        query["WHERE"] = {[condition]: comparatorArray}
+        query["WHERE"] = {[ANDORNOTcondition]: comparatorArray}
     }
 
 
@@ -76,9 +78,10 @@ CampusExplorer.buildQuery = function() {
     }
 
     // ORDER not required so don't create it if nothing specified
-    if (parsedOrder.length > 0) {
-        query["OPTIONS"]["ORDER"] = {"dir": dir, "keys": parsedOrder}
-
+    if (parsedOrder.length === 1 && dir === "UP") {
+        query["OPTIONS"]["ORDER"] = parsedOrder[0];
+    } else if (parsedOrder.length > 1) {
+        query["OPTIONS"]["ORDER"] = {"dir": dir, "keys": parsedOrder};
     }
 
     // 4) GROUPS BLOCK
@@ -113,15 +116,14 @@ CampusExplorer.buildQuery = function() {
 
 
 
-
-
 processComparator = function(cond) {
     let isNOTcond = false;
-    if (cond[0].getAttribute("checked") === "checked") {
+
+    if (cond.children[0].children[0].checked === true) {
         isNOTcond = true;
     }
 
-    let allFields = cond[0].children[1].children[0];
+    let allFields = cond.children[1].children[0];
     let selectedField = "";
     for (let field in allFields) {
         let selected = allFields[field].getAttribute("selected");
@@ -134,7 +136,7 @@ processComparator = function(cond) {
 
     let idField = getID() + "_" + selectedField;
 
-    let allOperators = cond[0].children[2].children[0];
+    let allOperators = cond.children[2].children[0];
     let selectedOperator = "";
     for (let operator of allOperators) {
         let selected = operator.getAttribute("selected");
@@ -145,14 +147,17 @@ processComparator = function(cond) {
         }
     }
 
-    let term = cond[0].children[3].children[0].getAttribute("value");
+    let term = cond.children[3].children[0].getAttribute("value");
 
     // need to make input a number (not a string) if MComparator
-    if (selectedOperator === ("GT" || "LT" || "EQ")) {
-        term = Number(term);
+    let properTerm;
+    if ((selectedOperator === "GT") || (selectedOperator === "LT") || (selectedOperator === "EQ")) {
+        properTerm = Number(term);
+    } else if (selectedOperator === "IS") {
+        properTerm = term;
     }
 
-    let comparatorObject = {[selectedOperator]: {[idField]: term}};
+    let comparatorObject = {[selectedOperator]: {[idField]: properTerm}};
 
 
     let returnCond = {};
