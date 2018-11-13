@@ -178,13 +178,20 @@ processComparator = function(cond) {
 getTransform = function(transformations) {
     let returnApply = [];
 
+    let applyKey;
+    let allAPPLYTOKENS;
+    let APPLYTOKEN;
+    let allFields;
+    let key;
+
     // APPLY: [ {applyKey: {APPLYTOKEN : key}}]
     // APPLY: [ {MAXavg: { MAX : courses_avg}}]
     for (let transform of transformations) {
-        let applyKey = transform.children[0].children[0].getAttribute("value");
 
-        let allAPPLYTOKENS = transform.children[1].children[0].getElementsByTagName("option");
-        let APPLYTOKEN;
+
+        applyKey = transform.children[0].children[0].getAttribute("value");
+
+        allAPPLYTOKENS = transform.children[1].children[0].getElementsByTagName("option");
         for (let at of allAPPLYTOKENS) {
             if (at.getAttribute("selected") !== null) {
                 APPLYTOKEN = at.value;
@@ -193,11 +200,10 @@ getTransform = function(transformations) {
             }
         }
 
-        let allFields = transform.children[2].children[0].getElementsByTagName("option");
-        let key;
+        allFields = transform.children[2].children[0].getElementsByTagName("option");
         for (let field in allFields) {
             if (allFields[field].getAttribute("selected") !== null) {
-                key = allFields[field.value;
+                key = allFields[field].value;
                 break;
             }
         }
