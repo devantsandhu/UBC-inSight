@@ -23,15 +23,25 @@ CampusExplorer.buildQuery = function() {
 
     let comparators = activeTabPanel.getElementsByClassName("conditions-container");
 
+    let numberOfComparators = comparators[0].children.length;
+
     // empty where/ base case
-    if (comparators.length === 0) {
+    if (numberOfComparators === 0) {
         query["WHERE"] = {};
-    } else {
+    } else if (numberOfComparators === 1) {
+        // cannot have AND/OR if only 1 comparator
+        let oneCondition = comparators[0].getElementsByClassName("control-group condition");
+
+        let processedCond = processComparator(oneCondition);
+
+        query["WHERE"] = processedCond;
+
+    } else if (numberOfComparators > 1) {
         // each comparator must be processed/info extracted then pushed into array
         // WHERE: { AND/OR: {xxx}, {yyy}} then added
         // AND/OR only 1 OK - YES
         let comparatorArray = [];
-        let conditions = comparators[0].getElementsByClassName("control-group condition");
+        let condition = comparators[0].getElementsByClassName("control-group condition");
         for (let cond of conditions) {
             comparatorArray.push(processComparator(cond));
         }
@@ -106,10 +116,12 @@ CampusExplorer.buildQuery = function() {
 
 
 processComparator = function(cond) {
-    // TODO: fix:
-    let isNOTcond = (cond.firstElementChild.getElementsByTagName("input")[0].getAttribute("checked") === "checked");
+    let isNOTcond = false;
+    if (cond[0].getAttribute("checked") === "checked") {
+        isNOTcond = true;
+    }
 
-    let allFields = cond.getElementsByClassName("control fields")[0].getElementsByTagName("option");
+    let allFields = cond[0].children[1].children[0];
     let selectedField = "";
     for (let field in allFields) {
         let selected = allFields[field].getAttribute("selected");
@@ -122,7 +134,7 @@ processComparator = function(cond) {
 
     let idField = getID() + "_" + selectedField;
 
-    let allOperators = cond.getElementsByClassName("control operators")[0].getElementsByTagName("option");
+    let allOperators = cond[0].children[2].children[0];
     let selectedOperator = "";
     for (let operator of allOperators) {
         let selected = operator.getAttribute("selected");
@@ -133,7 +145,7 @@ processComparator = function(cond) {
         }
     }
 
-    let term = cond.getElementsByClassName("control term")[0].firstElementChild.getAttribute("value");
+    let term = cond[0].children[3].children[0].getAttribute("value");
 
     // need to make input a number (not a string) if MComparator
     if (selectedOperator === ("GT" || "LT" || "EQ")) {
