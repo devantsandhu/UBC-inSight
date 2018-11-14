@@ -10,8 +10,8 @@ CampusExplorer.sendQuery = function(query) {
         // https://github.com/aahung/cpsc310-geolocation-ui/blob/checkpoint/7/public/query-sender.js
 
         let request = new XMLHttpRequest();
-        request.open('GET', 'http://localhost:4321/query', true);
-        http.setRequestHeader("Content-Type", "application/json");
+        request.open('POST', 'http://localhost:4321/query', true);
+        request.setRequestHeader("Content-Type", "application/json");
 
         request.onload = function() {
             let result = JSON.parse(request.responseText);
@@ -24,6 +24,6 @@ CampusExplorer.sendQuery = function(query) {
 
         request.send(JSON.stringify(query));
 
-        // console.log("CampusExplorer.sendQuery not implemented yet.");
+        //yarnconsole.log("CampusExplorer.sendQuery not implemented yet.");
     });
 };

@@ -17,7 +17,7 @@ document.getElementById("submit-button").addEventListener("click", function() {
     let query = CampusExplorer.buildQuery();
 
     // 3
-    sendQuery(query)
+    CampusExplorer.sendQuery(query)
         .then(function(result) {
             // 4
             CampusExplorer.renderResult(JSON.parse(resolve));
