@@ -142,8 +142,9 @@ export default class Server {
 
     private static async sAddDataset(req: restify.Request, res: restify.Response, next: restify.Next) {
         try {
-            let path: string = "";
+            // let path: string = "";
             let content: string = "";
+            /*
             switch (req.params.kind) {
                 case "courses": {
                     path = "./test/data/courses.zip";
@@ -157,6 +158,10 @@ export default class Server {
                     break;
                 }
             }
+            */
+            // let file: any = JSON.stringify(req.params.body);
+            // fs.writeFileSync(content, file);
+            content = req.params.body.toString("base64");
             await Server.insightFacade.addDataset(req.params.id, content, req.params.kind)
                 .then(function (response: any) {
                     res.json(200, {result: response});
@@ -172,7 +177,8 @@ export default class Server {
     }
     private static async sRemoveDataset(req: restify.Request, res: restify.Response, next: restify.Next) {
         try {
-            await Server.insightFacade.removeDataset(req.params.id)
+            let id: any = req.params.id;
+            await Server.insightFacade.removeDataset(id)
                 .then(function (response: any) {
                     res.json(200, {result: response});
                 })
@@ -201,7 +207,8 @@ export default class Server {
     private static async sPerformQuery(req: restify.Request, res: restify.Response, next: restify.Next) {
         try {
             // TODO pass correct param (req is probably wrong)
-            await Server.insightFacade.performQuery(req)
+            let query: any = req.params.body;
+            await Server.insightFacade.performQuery(query)
                 .then(function (response: any) {
                     res.json(200, {result: response});
                 })

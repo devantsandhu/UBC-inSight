@@ -100,7 +100,7 @@ describe("Facade D3", function () {
         try {
             return chai.request("http://localhost:4321")
                 .put("/dataset/rooms/rooms")
-                .attach("body", coursesDataset, "rooms.zip")
+                .attach("body", roomsDataset, "rooms.zip")
                 .then(function (res: ChaiHttp.Response) {
                     expect(res.status).to.be.equal(200);
                 })
