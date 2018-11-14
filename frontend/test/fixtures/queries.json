@@ -263,6 +263,7 @@
                 "courses_instructor",
                 "courses_pass",
                 "courses_title",
+                "courses_uuid",
                 "courses_year"
             ]
         }
@@ -281,6 +282,7 @@
                 "courses_instructor",
                 "courses_pass",
                 "courses_title",
+                "courses_uuid",
                 "courses_year"
             ]
         }
@@ -302,6 +304,7 @@
                 "courses_instructor",
                 "courses_pass",
                 "courses_title",
+                "courses_uuid",
                 "courses_year"
             ]
         }
@@ -410,8 +413,8 @@
             "COLUMNS": [
                 "courses_dept",
                 "courses_id",
-                "minAVG",
-                "overallCOUNT"
+                "overallCOUNT",
+                "minAVG"
             ]
         },
         "TRANSFORMATIONS": {
@@ -421,13 +424,13 @@
             ],
             "APPLY": [
                 {
-                    "minAVG": {
-                        "MIN": "courses_avg"
+                    "overallCOUNT": {
+                        "COUNT": "courses_uuid"
                     }
                 },
                 {
-                    "overallCOUNT": {
-                        "COUNT": "courses_uuid"
+                    "minAVG": {
+                        "MIN": "courses_avg"
                     }
                 }
             ]

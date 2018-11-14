@@ -19,23 +19,35 @@ CampusExplorer.buildQuery = function() {
     // get condition (all/any/none)
     let conditionBlock = activeTabPanel.getElementsByClassName("control-group condition-type");
     let conditions = conditionBlock[0].getElementsByTagName("input");
-    let condition = getCondition(conditions); // AND/OR/NOT
 
     let comparators = activeTabPanel.getElementsByClassName("conditions-container");
 
+    let numberOfComparators = comparators[0].children.length;
+    let comparatorArray = [];
+
+
     // empty where/ base case
-    if (comparators.length === 0) {
+    if (numberOfComparators === 0) {
         query["WHERE"] = {};
-    } else {
+    } else if (numberOfComparators === 1) {
+        // cannot have AND/OR if only 1 comparator
+        let oneCondition = comparators[0].getElementsByClassName("control-group condition")[0];
+
+        let processedCond = processComparator(oneCondition);
+
+        query["WHERE"] = processedCond;
+
+    } else if (numberOfComparators > 1) {
         // each comparator must be processed/info extracted then pushed into array
         // WHERE: { AND/OR: {xxx}, {yyy}} then added
         // AND/OR only 1 OK - YES
-        let comparatorArray = [];
-        let conditions = comparators[0].getElementsByClassName("control-group condition");
-        for (let cond of conditions) {
+        let condition = comparators[0].getElementsByClassName("control-group condition");
+        let ANDORNOTcondition = getCondition(conditions); // AND/OR/NOT
+
+        for (let cond of condition) {
             comparatorArray.push(processComparator(cond));
         }
-        query["WHERE"] = {[condition]: comparatorArray}
+        query["WHERE"] = {[ANDORNOTcondition]: comparatorArray}
     }
 
 
@@ -44,17 +56,21 @@ CampusExplorer.buildQuery = function() {
     // OPTIONS: COLUMNS: && (ORDER:)
     query["OPTIONS"] = {};
 
-    let columns = activeTabPanel.getElementsByClassName("form-group columns")[0].getElementsByClassName("control-group")[0];
+    let columns = activeTabPanel.getElementsByClassName("form-group columns")[0];
     query["OPTIONS"]["COLUMNS"] = getCols(columns);
+
 
     // 3) ORDER BLOCK
     let order = activeTabPanel.getElementsByClassName("form-group order")[0].getElementsByClassName("control-group")[0];
     let parsedOrder = getOrder(order);
 
     let dir = "";
+    let isDescending = false;
 
-    // TODO: fix:
-    let isDescending = order.getElementsByClassName("control descending")[0].getElementsByTagName("input").checked; // make bool
+    if (order.children[1].children[0].checked === true) {
+        isDescending = true;
+    }
+
     if (isDescending) {
         dir = "DOWN"
     } else {
@@ -62,25 +78,38 @@ CampusExplorer.buildQuery = function() {
     }
 
     // ORDER not required so don't create it if nothing specified
-    if (parsedOrder.length > 0) {
-        query["OPTIONS"]["ORDER"] = {"dir": dir, "keys": parsedOrder}
-
+    if ((parsedOrder.length === 1) && (dir === "UP")) {
+        query["OPTIONS"]["ORDER"] = parsedOrder[0];
+    } else if ((parsedOrder.length === 1) && (dir === "DOWN")){
+        query["OPTIONS"]["ORDER"] = {"dir": dir, "keys": parsedOrder};
+    } else if (parsedOrder.length > 1) {
+        query["OPTIONS"]["ORDER"] = {"dir": dir, "keys": parsedOrder};
     }
 
     // 4) GROUPS BLOCK
     // TRANSFORMATIONS: GROUP && APPLY
-    query["TRANSFORMATIONS"] = {};
+    let groups = activeTabPanel.getElementsByClassName("form-group groups")[0].getElementsByClassName("control-group")[0];
+    let groupBlock = getGroup(groups);
 
-    let groups = activeTabPanel.getElementsByClassName("form-group group")[0].getElementsByClassName("control-group")[0];
-    query["TRANSFORMATIONS"]["GROUP"] = getGroup(groups);
 
     // 5) TRANSFORMATIONS BLOCK
     // APPLY
-    let transformations = activeTabPanel.getElementsByClassName("form-group transformations")[0].getElementsByClassName("control-group transformation")[0];
-    if (transformations.length > 0) {
-        query["TRANSFORMATIONS"]["APPLY"] = getTransform(transformations);
+    let transformations = activeTabPanel.getElementsByClassName("form-group transformations")[0].getElementsByClassName("transformations-container");
+    let applyBlock;
+    if (transformations[0].children.length > 0) {
+        applyBlock = getTransform(transformations[0].children);
     }
 
+
+
+    // 4 + 5 ) DO WE HAVE A TRANSFORM?!
+    // can only make TRANSFORMATION block if have a transformation
+    if ((groupBlock.length > 0) && (transformations !== undefined)) {
+        query["TRANSFORMATIONS"] = {};
+        query["TRANSFORMATIONS"]["GROUP"] = groupBlock;
+        query["TRANSFORMATIONS"]["APPLY"] = applyBlock;
+
+    }
 
     // console.log("CampusExplorer.buildQuery not implemented yet.");
     console.log(JSON.stringify(query));
@@ -90,13 +119,14 @@ CampusExplorer.buildQuery = function() {
 
 
 
-
-
 processComparator = function(cond) {
-    // TODO: fix:
-    let isNOTcond = (cond.firstElementChild.getElementsByTagName("input")[0].getAttribute("checked") === "checked");
+    let isNOTcond = false;
 
-    let allFields = cond.getElementsByClassName("control fields")[0].getElementsByTagName("option");
+    if (cond.children[0].children[0].checked === true) {
+        isNOTcond = true;
+    }
+
+    let allFields = cond.children[1].children[0];
     let selectedField = "";
     for (let field in allFields) {
         let selected = allFields[field].getAttribute("selected");
@@ -109,7 +139,7 @@ processComparator = function(cond) {
 
     let idField = getID() + "_" + selectedField;
 
-    let allOperators = cond.getElementsByClassName("control operators")[0].getElementsByTagName("option");
+    let allOperators = cond.children[2].children[0];
     let selectedOperator = "";
     for (let operator of allOperators) {
         let selected = operator.getAttribute("selected");
@@ -120,14 +150,17 @@ processComparator = function(cond) {
         }
     }
 
-    let term = cond.getElementsByClassName("control term")[0].firstElementChild.getAttribute("value");
+    let term = cond.children[3].children[0].getAttribute("value");
 
     // need to make input a number (not a string) if MComparator
-    if (selectedOperator === ("GT" || "LT" || "EQ")) {
-        term = Number(term);
+    let properTerm;
+    if ((selectedOperator === "GT") || (selectedOperator === "LT") || (selectedOperator === "EQ")) {
+        properTerm = Number(term);
+    } else if (selectedOperator === "IS") {
+        properTerm = term;
     }
 
-    let comparatorObject = {[selectedOperator]: {[idField]: term}};
+    let comparatorObject = {[selectedOperator]: {[idField]: properTerm}};
 
 
     let returnCond = {};
@@ -147,20 +180,41 @@ processComparator = function(cond) {
 getTransform = function(transformations) {
     let returnApply = [];
 
+    let applyKey;
+    let allAPPLYTOKENS;
+    let APPLYTOKEN;
+    let allFields;
+    let key;
+
     // APPLY: [ {applyKey: {APPLYTOKEN : key}}]
     // APPLY: [ {MAXavg: { MAX : courses_avg}}]
     for (let transform of transformations) {
-        let applyKey = transformations[transform].getElementsByClassName("control term")[0].getAttribute("value");
 
-        let allAPPLYTOKENS = transformations[transform].getElementsByClassName("control operator")[0].getElementsByTagName("select");
-        let APPLYTOKEN = allAPPLYTOKENS.options[allAPPLYTOKENS.selectedIndex].value;
 
-        let allKeys = transformations[transform].getElementsByClassName("control fields")[0].getElementsByTagName("select");
-        let key = allKeys.getAttribute("value");
+        applyKey = transform.children[0].children[0].getAttribute("value");
+
+        allAPPLYTOKENS = transform.children[1].children[0].getElementsByTagName("option");
+        for (let at of allAPPLYTOKENS) {
+            if (at.getAttribute("selected") !== null) {
+                APPLYTOKEN = at.value;
+                break; //got it
+
+            }
+        }
+
+        allFields = transform.children[2].children[0].getElementsByTagName("option");
+        for (let field in allFields) {
+            if (allFields[field].getAttribute("selected") !== null) {
+                key = getID() + "_" + allFields[field].value;
+                break;
+            }
+        }
 
         let apply = {[applyKey]: {[APPLYTOKEN]: key}};
         returnApply.push(apply);
     }
+
+    return returnApply;
 
 
 };
@@ -171,8 +225,10 @@ getGroup = function(groups) {
     let allGroups = groups.getElementsByClassName("control field");
 
     for (let gr in allGroups) {
-        if (allGroups[gr].getAttribute("checked") === "checked") {
-            returnGroup.push(getID() + "_" + gr.getAttribute("value"));
+        if (gr === "length") return returnGroup;
+
+        if (allGroups[gr].children[0].checked === true) {
+            returnGroup.push(getID() + "_" + allGroups[gr].children[0].value);
         }
     }
 
@@ -184,6 +240,7 @@ getOrder = function (order) {
     let allOrderOptions = order.getElementsByClassName("control order fields")[0].getElementsByTagName("option");
 
     for (let ord in allOrderOptions) {
+        if (ord === "length") return returnOrder;
         if (allOrderOptions[ord].getAttribute("selected") === "selected") {
             if (allOrderOptions[ord].getAttribute("class") === "transformation") {
                 returnOrder.push(allOrderOptions[ord].getAttribute("value"));
@@ -199,18 +256,17 @@ getOrder = function (order) {
 
 getCols = function (columns) {
     let returnCol = [];
-    let allGivenColumns = columns.getElementsByClassName("control-field");
-    let allTransformColumns = columns.getElementsByClassName("control transformation");
+    let allColumns = columns.children[1].children;
 
 
-    for (let col of allGivenColumns) {
-        if (col.firstElementChild.getAttribute("checked") === checked) {
-            returnCol.push(getID() + "_" + col.firstElementChild.getAttribute("value"));
-        }
-    }
-    for (let tcol of allTransformColumns) {
-        if (tcol.firstElementChild.getAttribute("checked") === checked) {
-            returnCol.push(tcol.firstElementChild.getAttribute("value"));
+    for (let col of allColumns) {
+        if (col.childNodes[1].getAttribute("checked") === "checked") {
+            if (col.className == "control transformation") {
+                returnCol.push(col.firstElementChild.getAttribute("value"));
+            }
+            else {
+                returnCol.push(getID() + "_" + col.firstElementChild.getAttribute("value"));
+            }
         }
     }
 

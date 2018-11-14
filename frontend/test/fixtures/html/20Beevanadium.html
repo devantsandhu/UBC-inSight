@@ -3,11 +3,11 @@
         <legend>Conditions</legend>
         <div class="control-group condition-type">
             <div class="control conditions-all-radio">
-                <input checked="" id="courses-conditiontype-all" name="conditionType" value="all" type="radio">
+                <input id="courses-conditiontype-all" name="conditionType" value="all" type="radio">
                 <label for="courses-conditiontype-all">All of the following</label>
             </div>
             <div class="control conditions-any-radio">
-                <input id="courses-conditiontype-any" name="conditionType" value="any" type="radio">
+                <input id="courses-conditiontype-any" name="conditionType" value="any" type="radio" checked="checked">
                 <label for="courses-conditiontype-any">Any of the following</label>
             </div>
             <div class="control conditions-none-radio">
@@ -57,7 +57,7 @@
                 </option>    </select>
             </div>
             <div class="control term">
-                <input type="text" value="hist">
+                <input type="text" value="hist" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
             </div>    <a class="icon icon-minus" href="#"></a>
         </div></div>
         <div class="icon-container"><a class="icon icon-plus" href="#"></a></div>
@@ -106,12 +106,12 @@
                 <label for="courses-columns-field-year">Year</label>
             </div>
             <div class="control transformation">
-                <input type="checkbox" data-key="maxAVG" value="maxAVG" checked="checked">
-                <label>maxAVG</label>
+                <input type="checkbox" data-key="maxAvg" value="maxAvg" checked="checked">
+                <label>maxAvg</label>
             </div>
             <div class="control transformation">
-                <input type="checkbox" data-key="minAVG" value="minAVG" checked="checked">
-                <label>minAVG</label>
+                <input type="checkbox" data-key="minAvg" value="minAvg" checked="checked">
+                <label>minAvg</label>
             </div>
         </div>
     </div>
@@ -140,7 +140,7 @@
                     UUID
                 </option>                <option value="year">
                     Year
-                </option>    <option class="transformation" value="maxAVG">maxAVG</option><option class="transformation" value="minAVG">minAVG</option></select>
+                </option>    <option class="transformation" value="maxAvg">maxAvg</option><option class="transformation" value="minAvg">minAvg</option></select>
             </div>
             <div class="control descending">
                 <input type="checkbox" id="courses-order">
@@ -197,7 +197,7 @@
         <legend>Transformations</legend>
         <div class="transformations-container"><div class="control-group transformation">
             <div class="control term">
-                <input type="text" value="maxAVG">
+                <input type="text" value="maxAvg">
             </div>    <div class="control operators">
             <select>
                 <option value="COUNT">
@@ -239,7 +239,7 @@
             <a class="icon icon-minus" href="#"></a>
         </div><div class="control-group transformation">
             <div class="control term">
-                <input type="text" value="minAVG">
+                <input type="text" value="minAvg">
             </div>    <div class="control operators">
             <select>
                 <option value="COUNT">
