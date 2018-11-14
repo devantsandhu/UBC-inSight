@@ -67,7 +67,7 @@ CampusExplorer.buildQuery = function() {
     let dir = "";
     let isDescending = false;
 
-    if (order.getElementsByClassName("control descending")[0].getAttribute("checked") === "checked") {
+    if (order.children[1].children[0].checked === true) {
         isDescending = true;
     }
 
@@ -78,8 +78,10 @@ CampusExplorer.buildQuery = function() {
     }
 
     // ORDER not required so don't create it if nothing specified
-    if (parsedOrder.length === 1 && dir === "UP") {
+    if ((parsedOrder.length === 1) && (dir === "UP")) {
         query["OPTIONS"]["ORDER"] = parsedOrder[0];
+    } else if ((parsedOrder.length === 1) && (dir === "DOWN")){
+        query["OPTIONS"]["ORDER"] = {"dir": dir, "keys": parsedOrder};
     } else if (parsedOrder.length > 1) {
         query["OPTIONS"]["ORDER"] = {"dir": dir, "keys": parsedOrder};
     }
