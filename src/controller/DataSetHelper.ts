@@ -59,4 +59,8 @@ export default class DataSetHelper {
         }
         return true;
     }
+
+    public static StringifyANDparse(file: any) {
+        return JSON.parse(file.toString());
+    }
 }

@@ -8,6 +8,10 @@ import {expect} from "chai";
 import * as fs from "fs";
 import Log from "../src/Util";
 import {InsightError} from "../src/controller/IInsightFacade";
+import JSON = Mocha.reporters.JSON;
+import {stringify} from "querystring";
+import DataSetHelper from "../src/controller/DataSetHelper";
+import {queryParser} from "restify";
 
 describe("Facade D3", function () {
 
@@ -15,6 +19,8 @@ describe("Facade D3", function () {
     let server: Server = null;
     let coursesDataset: any = null;
     let roomsDataset: any = null;
+    let sampleQuery: any = null;
+    let queryFile: any = null;
 
     chai.use(chaiHttp);
 
@@ -33,6 +39,9 @@ describe("Facade D3", function () {
             });
         coursesDataset = fs.readFileSync("./test/data/courses.zip");
         roomsDataset = fs.readFileSync("./test/data/rooms.zip");
+
+        queryFile = fs.readFileSync("./test/queries/q1.json");
+        sampleQuery = DataSetHelper.StringifyANDparse(queryFile);
     });
 
     after(function () {
@@ -67,6 +76,48 @@ describe("Facade D3", function () {
                 .put("/dataset/courses/courses")
                 // .attach("body", YOUR_COURSES_DATASET, COURSES_ZIP_FILENAME)
                 .attach("body", coursesDataset, "courses.zip")
+                .then(function (res: ChaiHttp.Response) {
+                    // some logging here please!
+                    expect(res.status).to.be.equal(200);
+                })
+                .catch(function (err: any) {
+                    // some logging here please!
+                    Log.trace(err);
+                    expect.fail();
+                });
+        } catch (err) {
+            // and some more logging here!
+        }
+    });
+    it("POST test", function () {
+        try {
+            // return chai.request(URL)
+            return chai.request("http://localhost:4321")
+            // .put(YOUR_PUT_URL)
+                .post("/query")
+                // .attach("body", YOUR_COURSES_DATASET, COURSES_ZIP_FILENAME)
+                .send(sampleQuery.query)
+                .then(function (res: ChaiHttp.Response) {
+                    // some logging here please!
+                    expect(res.status).to.be.equal(200);
+                })
+                .catch(function (err: any) {
+                    // some logging here please!
+                    Log.trace(err);
+                    expect.fail();
+                });
+        } catch (err) {
+            // and some more logging here!
+        }
+    });
+    it("GET test with one dataset", function () {
+        try {
+            // return chai.request(URL)
+            return chai.request("http://localhost:4321")
+            // .put(YOUR_PUT_URL)
+                .get("/datasets")
+                // .attach("body", YOUR_COURSES_DATASET, COURSES_ZIP_FILENAME)
+                // .attach("body", coursesDataset, "courses.zip")
                 .then(function (res: ChaiHttp.Response) {
                     // some logging here please!
                     expect(res.status).to.be.equal(200);

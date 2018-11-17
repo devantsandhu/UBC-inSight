@@ -73,7 +73,7 @@ export default class Server {
                 that.rest.put("/dataset/:id/:kind", Server.sAddDataset);
                 that.rest.del("/dataset/:id", Server.sRemoveDataset);
                 that.rest.post("/query", Server.sPerformQuery);
-                that.rest.get("/dataset", Server.sListDatasets);
+                that.rest.get("/datasets", Server.sListDatasets);
 
                 // This must be the last endpoint!
                 that.rest.get("/.*", Server.getStatic);
@@ -207,7 +207,7 @@ export default class Server {
     private static async sPerformQuery(req: restify.Request, res: restify.Response, next: restify.Next) {
         try {
             // TODO pass correct param (req is probably wrong)
-            let query: any = req.params.body;
+            let query: any = req.body;
             await Server.insightFacade.performQuery(query)
                 .then(function (response: any) {
                     res.json(200, {result: response});
