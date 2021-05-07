@@ -3,7 +3,7 @@ import {isNumber, log} from "util";
 import DataSetHelper from "./DataSetHelper";
 import InsightFacade from "./InsightFacade";
 import QueryValidator from "./QueryValidator";
-import {Decimal} from "decimal.js";
+import {Decimal} from 'decimal.js';
 
 let offeringsCount = 0;
 // let negation = false;
